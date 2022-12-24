@@ -1,5 +1,6 @@
 # Tgc-System
 There won't be a SRC unless I change my mind don't ask for it!
+Bug Reports and Feature Request are welcome but I may won't implement them!
 
 # Features
 - SpawnElytra
