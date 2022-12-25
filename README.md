@@ -11,10 +11,11 @@
 - Show status on join
 - Sound when playername is typed in chat
 - Systemtime in chatmessages [HH:mm]
-- A reboot Command that reboots server in 15Minutes with chat messages and kickmessage
+- A reboot Command that reboots server in 15 Minutes with chat messages and kickmessage
 - A brodcast command
 - A reload command for the plugin
 - And a option to disable the playernames in the multiplayer list to prevent scanning servers for specific players/servers
+- Maintenance system 
 
 # Config (Features)
 - Custom join/quit mesages (toggle, messages)
@@ -25,3 +26,4 @@
 - Hide playernames in multiplayer menu (toggle)
 - Reboot Command (messages)
 - SpawnElytra (spawnradius, multiplyValue for boost, overworldname)
+- Maintenance (MOTD, KickMessage, Icon)
