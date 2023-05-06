@@ -1,0 +1,7 @@
+name: Tgc-System
+version: '${project.version}'
+main: timongcraft.Main
+api-version: 1.19
+load: STARTUP
+authors: [ Timongcraft ]
+description: A system plugin

@@ -1,0 +1,29 @@
+name: Feature Request
+description: Request/suggest a feature
+title: "[Feature Request]: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: linked-to-problem
+    attributes:
+      label: Related to a problem/bug?
+      description: Is your feature request related to a problem or bug? Please describe.
+      placeholder: A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+    validations:
+      required: false
+  - type: textarea
+    id: problem-solution
+    attributes:
+      label: You're solution to it
+      description: Describe the solution(s) you'd like/accept
+      placeholder: A clear and concise description of what you want to happen.
+    validations:
+      required: false
+  - type: textarea
+    id: no-problem
+    attributes:
+      label: Not related to a problem?
+      description: If you're feature request is not related to a problem the discribe it here
+      placeholder: A clear and concise description of you're feature
+    validations:
+      required: false
