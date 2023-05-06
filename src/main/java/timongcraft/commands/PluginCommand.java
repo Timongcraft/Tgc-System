@@ -64,12 +64,12 @@ public class PluginCommand {
             
             Plugin targetPlugin = Main.get().getServer().getPluginManager().getPlugin(pluginName);
             if(targetPlugin == null) {
-                sender.sendMessage(Main.get().getPrefix() + "§cPlugin " + pluginName + " not found.");
+                sender.sendMessage(Main.get().getPrefix() + "§c" + pluginName + " not found.");
                 return;
             }
 
             if(!Main.get().getDataConfig().isSet("disabledPlugins")) {
-                sender.sendMessage(Main.get().getPrefix() + "§cPlugin " + pluginName + " can't be enabled.");
+                sender.sendMessage(Main.get().getPrefix() + "§c" + pluginName + " can't be enabled.");
                 return;
             }
 
@@ -93,7 +93,7 @@ public class PluginCommand {
 
             Plugin targetPlugin = Main.get().getServer().getPluginManager().getPlugin(pluginName);
             if(targetPlugin == null) {
-                sender.sendMessage(Main.get().getPrefix() + "§cPlugin " + pluginName + " not found.");
+                sender.sendMessage(Main.get().getPrefix() + "§c" + pluginName + " not found.");
                 return;
             }
             if(targetPlugin.getName().equalsIgnoreCase(Main.get().getName())) {

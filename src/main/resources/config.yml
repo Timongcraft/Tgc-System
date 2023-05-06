@@ -64,7 +64,7 @@ motds:
   list: []
 
 maintenance:
-  motd: "§4Server is in Maintenance"
+  motd: "§cServer is in Maintenance"
   kickMessage: "This server is now in maintenance mode"
   #You can add a 64x64 png file to the Plugin directory and that will be set as you maintenance icon
   icon: false

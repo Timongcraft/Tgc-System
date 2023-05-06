@@ -35,6 +35,7 @@ public class OtherListeners implements Listener {
         } else {
             if(player.hasPermission("tgc-system.team")) {
                 playerChatName = "§4<§c" + player.getName() + "§4>§f";
+                message = message.replaceAll("&", "§");
             } else playerChatName = "§8<§7" + player.getName() + "§8>§7";
         }
 
@@ -43,7 +44,7 @@ public class OtherListeners implements Listener {
             for (String messagePart : message.split("\\s+")) {
                 Matcher matcher = urlPattern.matcher(messagePart);
                 if (matcher.matches()) {
-                    player.sendMessage(Main.get().getPrefix() + ChatColor.RED + "You don't have the permission to send links!");
+                    player.sendMessage(Main.get().getPrefix() + "§cYou don't have the permission to send links!");
                     event.setCancelled(true);
                     return;
                 }
@@ -51,7 +52,7 @@ public class OtherListeners implements Listener {
         }
 
         final String[] highlightedMessage = {message};
-        Bukkit.getOnlinePlayers().forEach(onlinePlayer -> {
+        for(Player onlinePlayer : Bukkit.getOnlinePlayers()) {
             if(highlightedMessage[0].contains(onlinePlayer.getName())) {
                 ChatColor highlightColor = (onlinePlayer.hasPermission("tgc-system.team") && (player.hasPermission("tgc-system.team"))) ? ChatColor.YELLOW : ChatColor.GRAY;
                 highlightedMessage[0] = highlightedMessage[0].replaceAll(onlinePlayer.getName(), highlightColor + onlinePlayer.getName() + ChatColor.RESET);
@@ -63,7 +64,7 @@ public class OtherListeners implements Listener {
 
             onlinePlayer.sendMessage(null, (Main.get().getConfig().getBoolean("chatSystem.timeStampInChat.enabled") ? "§7[" + DateTimeFormatter.ofPattern(Main.get().getConfig().getString("chatSystem.timeStampInChat.format")).format(ZonedDateTime.now(ZoneId.of(Main.get().getConfig().getString("chatSystem.timeStampInChat.timeZone")))) + "] §f" : "") + playerChatName + " " + highlightedMessage[0]);
             Bukkit.getLogger().info("Chat: " + playerChatName + " " + highlightedMessage[0]);
-        });
+        }
 
         event.setCancelled(true);
     }

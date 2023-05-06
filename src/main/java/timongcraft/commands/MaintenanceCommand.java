@@ -27,7 +27,7 @@ public class MaintenanceCommand {
                                         .toArray(String[]::new)))
                                 .executes(new MaintenanceAddExecutor())))
                 .then(new LiteralArgument("remove")
-                        .then(new StringArgument("target")
+                        .then(new EntitySelectorArgument.OnePlayer("target")
                                 .replaceSuggestions(ArgumentSuggestions.strings(info -> MaintenanceList()))
                                 .executes(new MaintenanceRemoveExecutor())))
                 .then(new LiteralArgument("list")
@@ -95,14 +95,14 @@ public class MaintenanceCommand {
         public void run(CommandSender sender, CommandArguments args) throws WrapperCommandSyntaxException {
             Player target = (Player) args.get("target");
             if(isAllowed(target)) {
-                sender.sendMessage(Main.get().getPrefix() + target + " is already on the maintenance list.");
+                sender.sendMessage(Main.get().getPrefix() + target.getName() + " is already on the maintenance list");
                 return;
             }
 
             Main.get().getDataConfig().set("players." + target.getUniqueId() + ".maintenanceAllowed", true);
             Main.get().getDataConfig().save();
 
-            sender.sendMessage(Main.get().getPrefix() + target + " has been added to the maintenance list.");
+            sender.sendMessage(Main.get().getPrefix() + target.getName() + " has been added to the maintenance list");
         }
     }
 
@@ -111,14 +111,14 @@ public class MaintenanceCommand {
         public void run(CommandSender sender, CommandArguments args) throws WrapperCommandSyntaxException {
             Player target = (Player) args.get("target");
             if(!isAllowed(target)) {
-                sender.sendMessage(Main.get().getPrefix() + target + " isn't on the maintenance list.");
+                sender.sendMessage(Main.get().getPrefix() + target.getName() + " isn't on the maintenance list");
                 return;
             }
 
             Main.get().getDataConfig().set("players." + target.getUniqueId() + ".maintenanceAllowed", false);
             Main.get().getDataConfig().save();
 
-            sender.sendMessage(Main.get().getPrefix() + target + " has been removed from the maintenance list.");
+            sender.sendMessage(Main.get().getPrefix() + target.getName() + " has been removed from the maintenance list");
         }
     }
 

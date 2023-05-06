@@ -1,6 +1,5 @@
 package timongcraft.listeners;
 
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -20,7 +19,7 @@ public class BlockCommandsListeners implements Listener {
         for (String blockedPrefixes : Main.get().getConfig().getStringList("blockedPrefixes")) {
             if(event.getMessage().toLowerCase().startsWith("/" + blockedPrefixes)) {
                 event.setCancelled(true);
-                player.sendMessage(Main.get().getPrefix() + ChatColor.RED + "The '" + blockedPrefixes + "' prefix is blocked!");
+                player.sendMessage(Main.get().getPrefix() + "§cThe '" + blockedPrefixes + "' prefix is blocked!");
                 break;
             }
         }
@@ -48,7 +47,7 @@ public class BlockCommandsListeners implements Listener {
         if(player.hasPermission("tgc-system.team") || Main.get().getConfig().getStringList("blockedCommands").isEmpty()) return;
         String command = event.getMessage().substring(1).toLowerCase().split("\\s+")[0];
         if(!Main.get().getConfig().getStringList("blockedCommands").contains(command)) return;
-        player.sendMessage(Main.get().getPrefix() + ChatColor.RED + "The '" + command + "' command is blocked!");
+        player.sendMessage(Main.get().getPrefix() + "§cThe '" + command + "' command is blocked!");
         event.setCancelled(true);
     }
 

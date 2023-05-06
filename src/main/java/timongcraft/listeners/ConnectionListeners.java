@@ -1,7 +1,6 @@
 package timongcraft.listeners;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -66,13 +65,13 @@ public class ConnectionListeners implements Listener {
     private void motdsHandler(ServerListPingEvent event) {
         if(Main.get().getConfig().getBoolean("motds.enabled") && !Main.get().getConfig().getStringList("motds.list").isEmpty()) {
             String motd = Main.get().getConfig().getStringList("motds.list").get(new Random().nextInt(Main.get().getConfig().getStringList("motds.list").size()));
-            event.setMotd(ChatColor.translateAlternateColorCodes('&', motd));
+            event.setMotd(motd.replaceAll("&", "§"));
         }
     }
 
     private void maintenanceServerPingHandler(ServerListPingEvent event) {
         if(Main.get().getDataConfig().getBoolean("maintenance.enabled")) {
-            event.setMotd(Main.get().getConfig().getString("Maintenance.motd"));
+            event.setMotd(Main.get().getConfig().getString("maintenance.motd"));
             event.setMaxPlayers(0);
             if(Main.get().getConfig().getBoolean("maintenance.icon")) {
                 File maintenanceIcon = new File(Main.get().getDataFolder(), "maintenance-icon.png");
@@ -140,17 +139,19 @@ public class ConnectionListeners implements Listener {
 
     private void teamJoinHandler(PlayerJoinEvent event, Player player) {
         if(player.hasPermission("tgc-system.team")) {
-            Bukkit.getOnlinePlayers().forEach(players -> {
-                if(players.hasPermission("tgc-system.team") && players.getGameMode().equals(GameMode.SPECTATOR)) player.hidePlayer(Main.get(), players);
-            });
+            for(Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+                if(onlinePlayer.hasPermission("tgc-system.team") && onlinePlayer.getGameMode().equals(GameMode.SPECTATOR)) player.hidePlayer(Main.get(), onlinePlayer);
+
+            }
 
             if(player.getGameMode().equals(GameMode.SPECTATOR) && Bukkit.getOnlinePlayers().size() > 1) {
                 event.setJoinMessage(null);
-                Bukkit.getOnlinePlayers().forEach(players -> {
-                    if(players.hasPermission("tgc-system.team")) {
-                        players.sendMessage(Main.get().getConfig().getString("joinQuitMessage.joinMessage").replaceAll("%Player%",player.getName().replaceAll("&", "§")));
+
+                for(Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+                    if(onlinePlayer.hasPermission("tgc-system.team")) {
+                        onlinePlayer.sendMessage(Main.get().getConfig().getString("joinQuitMessage.joinMessage").replaceAll("%Player%",player.getName().replaceAll("&", "§")));
                     }
-                });
+                }
             }
         }
     }
@@ -158,11 +159,12 @@ public class ConnectionListeners implements Listener {
     private void teamQuitHandler(PlayerQuitEvent event, Player player) {
         if(player.hasPermission("tgc-system.team") && player.getGameMode().equals(GameMode.SPECTATOR) && Bukkit.getOnlinePlayers().size() > 1) {
             event.setQuitMessage(null);
-            Bukkit.getOnlinePlayers().forEach(players -> {
-                if(players.hasPermission("tgc-system.team")) {
-                    players.sendMessage(Main.get().getConfig().getString("joinQuitMessage.quitMessage").replaceAll("%Player%",player.getName().replaceAll("&", "§")));
+
+            for(Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+                if(onlinePlayer.hasPermission("tgc-system.team")) {
+                    onlinePlayer.sendMessage(Main.get().getConfig().getString("joinQuitMessage.quitMessage").replaceAll("%Player%",player.getName().replaceAll("&", "§")));
                 }
-            });
+            }
         }
     }
 
@@ -173,14 +175,14 @@ public class ConnectionListeners implements Listener {
 
         if(Main.get().getConfig().getBoolean("onJoin.enabled")){
             if(Main.get().getConfig().getString("onJoin.message") != null) {
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', Main.get().getConfig().getString("onJoin.message")).replaceAll("%AlertPrefix%", Main.get().getConfig().getString("prefix.alertPrefix")));
+                player.sendMessage(Main.get().getConfig().getString("onJoin.message").replaceAll("%AlertPrefix%", Main.get().getConfig().getString("prefix.alertPrefix").replaceAll("&", "§")));
             }
         }
 
         String status = StatusHandler.getStatus(player);
         if(Main.get().getConfig().getBoolean("onJoin.status")){
             if(status != null) {
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', Main.get().getPrefix() + "&aYour status is set to: " + status));
+                player.sendMessage(Main.get().getPrefix() + "§aYour status is set to: " + status.replaceAll("&", "§"));
             }
         }
     }

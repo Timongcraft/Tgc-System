@@ -10,6 +10,7 @@ import timongcraft.Main;
 public class ResourcePackCommand {
     public static void register() {
         new CommandTree("resourcepack")
+                .withFullDescription("With this you can toggle the resource pack on/off")
                 .withRequirement(sender -> (Main.get().getConfig().isSet("resourcePack.url") && !Main.get().getConfig().getString("resourcePack.url").isEmpty()) && (Main.get().getConfig().isSet("resourcePack.hash") && !Main.get().getConfig().getString("resourcePack.hash").isEmpty()))
                 .withPermission("tgc-system.team")
                 .executesPlayer(new ResourcePackExecutor())

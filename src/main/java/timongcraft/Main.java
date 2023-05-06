@@ -3,7 +3,6 @@ package timongcraft;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIBukkitConfig;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import timongcraft.commands.*;
@@ -39,9 +38,9 @@ public class Main extends JavaPlugin {
         double configVersion = getConfig().getDouble("version");
         double version = Double.parseDouble(getDescription().getVersion());
         if(configVersion != version) {
-            getLogger().info(ChatColor.RED + "The version of the config.yml does not match with the current plugin version!");
-            getLogger().info(ChatColor.RED + "Unless you delete the config and restart the server the plugin will be stopped!");
-            getLogger().info(ChatColor.RED + "Do not edit the version in the config.yml or things will break!");
+            getLogger().info("§cThe version of the config.yml does not match with the current plugin version!");
+            getLogger().info("§cUnless you delete the config and restart the server the plugin will be stopped!");
+            getLogger().info("§cDo not edit the version in the config.yml or things will break!");
             Bukkit.getPluginManager().disablePlugin(this);
             return;
         }
@@ -54,7 +53,7 @@ public class Main extends JavaPlugin {
 
         registerEvents();
 
-        if(getConfig().getBoolean("Maintenance.icon")) {
+        if(getConfig().getBoolean("maintenance.icon")) {
             File maintenanceicon = new File(getDataFolder(), "maintenance-icon.png");
             if(!maintenanceicon.exists()) {
                 saveResource("maintenance-icon.png", false); }}

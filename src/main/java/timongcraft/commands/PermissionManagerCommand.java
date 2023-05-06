@@ -6,7 +6,6 @@ import dev.jorel.commandapi.exceptions.WrapperCommandSyntaxException;
 import dev.jorel.commandapi.executors.CommandArguments;
 import dev.jorel.commandapi.executors.CommandExecutor;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
@@ -139,7 +138,7 @@ public class PermissionManagerCommand {
             String group = (String) args.get("group");
 
             if(targetPlayer == null) {
-                sender.sendMessage(Main.get().getPrefix() + ChatColor.RED + "Player not found");
+                sender.sendMessage(Main.get().getPrefix() + "§cPlayer not found");
                 return;
             }
 
