@@ -35,10 +35,7 @@ body:
       label: Minecraft Version
       description: What version of minecraft are you using?
       options:
-        - 1.19.3
-        - 1.19.2
-        - 1.19.1
-        - 1.19
+        - 1.19.4
     validations:
       required: true
   - type: dropdown
@@ -47,8 +44,7 @@ body:
       label: Plugin Version
       description: What version of the plugin are you using?
       options:
-        - v1.2
-        - v1.1
+        - v1.3
     validations:
       required: true
   - type: textarea
