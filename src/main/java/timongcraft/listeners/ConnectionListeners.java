@@ -14,6 +14,7 @@ import timongcraft.commands.MaintenanceCommand;
 import timongcraft.util.StatusHandler;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HexFormat;
 import java.util.List;
 import java.util.Random;
@@ -22,7 +23,7 @@ public class ConnectionListeners implements Listener {
 
     @EventHandler
     public void onServerListPing(ServerListPingEvent event) {
-        motdsHandler(event);
+        motdHandler(event);
 
         maintenanceServerPingHandler(event);
     }
@@ -43,7 +44,7 @@ public class ConnectionListeners implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        Main.get().getDataConfig().set("players." + player.getUniqueId() + ".ipAdress", player.getAddress().toString().substring(1).split(":")[0]);
+        Main.get().getDataConfig().set("players." + player.getUniqueId() + ".ipAddress", player.getAddress().toString().substring(1).split(":")[0]);
         Main.get().getDataConfig().save();
 
         resourcePackJoinHandler(player);
@@ -62,7 +63,25 @@ public class ConnectionListeners implements Listener {
         teamQuitHandler(event, player);
     }
 
-    private void motdsHandler(ServerListPingEvent event) {
+    private void motdHandler(ServerListPingEvent event) {
+        if(Main.get().getConfig().getBoolean("motds.hiddenMode")) {
+            String ipAddress = event.getAddress().toString().substring(1).split(":")[0];
+            List<String> knownIpAddresses = new ArrayList<>();
+
+            for(Player player : Bukkit.getOnlinePlayers()) {
+                if(Main.get().getDataConfig().isSet("players." + player.getUniqueId() + ".ipAddress")) {
+                    knownIpAddresses.add(Main.get().getDataConfig().getString("players." + player.getUniqueId() + ".ipAddress"));
+                }
+            }
+
+            if (!knownIpAddresses.contains(ipAddress)) {
+                event.setMotd("A Minecraft Server");
+                event.setServerIcon(null);
+                event.setMaxPlayers(20);
+                return;
+            }
+        }
+
         if(Main.get().getConfig().getBoolean("motds.enabled") && !Main.get().getConfig().getStringList("motds.list").isEmpty()) {
             String motd = Main.get().getConfig().getStringList("motds.list").get(new Random().nextInt(Main.get().getConfig().getStringList("motds.list").size()));
             event.setMotd(motd.replaceAll("&", "§"));

@@ -2,18 +2,27 @@ package timongcraft.listeners;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.block.Block;
+import org.bukkit.block.data.Ageable;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerResourcePackStatusEvent;
 import timongcraft.Main;
+import timongcraft.util.CropDrop;
+import timongcraft.util.CropDrops;
 import timongcraft.util.StatusHandler;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -67,6 +76,42 @@ public class OtherListeners implements Listener {
         }
 
         event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onPlayerCropInteract(PlayerInteractEvent event) {
+        if(!Main.get().getConfig().getBoolean("easyHarvest.enabled")) return;
+        if(event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
+
+        Block block = event.getClickedBlock();
+        if(block == null) return;
+        final Map<Material, CropDrops> cropDrops = Map.of(
+                Material.WHEAT, new CropDrops(new CropDrop(1, 1, Material.WHEAT, 100), new CropDrop(1, 3, Material.WHEAT_SEEDS, 100)),
+                Material.POTATOES, new CropDrops(new CropDrop(2, 4, Material.POTATO, 100), new CropDrop(1, 1, Material.POISONOUS_POTATO, 2)),
+                Material.CARROTS, new CropDrops(new CropDrop(1, 4, Material.CARROT, 100)),
+                Material.BEETROOTS, new CropDrops(new CropDrop(1, 1, Material.BEETROOT, 100), new CropDrop(1, 3, Material.BEETROOT_SEEDS, 100)),
+                Material.COCOA, new CropDrops(new CropDrop(2, 2, Material.COCOA_BEANS, 100))
+        );
+        if(!cropDrops.containsKey(block.getType())) return;
+
+        Player player = event.getPlayer();
+        if(player.isSneaking()) return;
+
+        Ageable ageable = (Ageable) block.getBlockData();
+        if(ageable.getAge() != ageable.getMaximumAge()) return;
+
+        CropDrops drops = cropDrops.get(block.getType());
+        if(drops == null) return;
+
+        ageable.setAge(0);
+        block.setBlockData(ageable);
+        player.swingMainHand();
+
+        for(CropDrop cropDrop : drops.getRandoms()) {
+            block.getWorld().dropItemNaturally(block.getLocation(), cropDrop.getRandom());
+        }
+        player.playSound(player.getLocation(), Sound.BLOCK_CROP_BREAK, 1.0f, 1.0f);
+        event.setUseItemInHand(Event.Result.DENY);
     }
 
     @EventHandler

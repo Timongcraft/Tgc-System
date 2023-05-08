@@ -38,7 +38,7 @@ public class SpawnElytraListeners implements Listener {
                     },5);
                 }
             }
-        }, 0, 3);
+        }, 0, 4);
 
     }
 

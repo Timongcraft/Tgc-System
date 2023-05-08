@@ -3,6 +3,7 @@ package timongcraft;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIBukkitConfig;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import timongcraft.commands.*;
@@ -34,9 +35,8 @@ public class Main extends JavaPlugin {
 
         instance = this;
 
-        double configVersion = getConfig().getDouble("version");
-        double pluginConfigVersion = 1.4;
-        if(configVersion != pluginConfigVersion) {
+        double configVersion = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "config.yml")).getDouble("configVersion");
+        if(configVersion != 1.5) {
             getLogger().info("§cThe version of the config.yml does not match with the current plugin version!");
             getLogger().info("§cUnless you delete the config and restart the server the plugin will be stopped!");
             getLogger().info("§cDo not edit the version in the config.yml or things will break!");
@@ -59,7 +59,7 @@ public class Main extends JavaPlugin {
     public void onDisable() {
         if(firstLoad) return;
 
-        autoSaveHandler.cancel();
+        if(getConfig().getBoolean("autoSave.enabled")) autoSaveHandler.cancel();
     }
 
     private void registerCommandsInOnEnable() {

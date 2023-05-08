@@ -1,5 +1,5 @@
 #Do not edit or things might break!
-version: 1.4
+configVersion: 1.5
 
 prefix:
   pluginPrefix: '§7[§1System§7] §f'
@@ -62,6 +62,10 @@ resourcePack:
 #Use \n for the second line
 motds:
   enabled: false
+  #This means that the real motd will only be show to ip addresses that players one the servers have
+  #So if someone random has the ip the default "A Minecraft Server" Motd will be shown and the max player
+  #count will be 20 so it is harder to find the server with a scanner
+  hiddenMode: false
   list: []
 
 maintenance:
@@ -75,6 +79,10 @@ maintenance:
 autoSave:
   enabled: false
   time: '1h'
+
+#This makes to so if you right-click on wheat, potatoes, carrots, beetroots and cocoa beans
+easyHarvest:
+  enabled: false
 
 #These commands are blocked e.g. plugins
 blockedCommands: []

@@ -47,8 +47,8 @@ public class MsgCommand {
                 message = message.replaceAll("&", "§");
             }
 
-            player.sendMessage("§7§oYou whisper to " + "§7§o" + target.getName() + "§7§o: " + message);
-            target.sendMessage("§7§o" + player.getName() + "§7§o whispers to you§7§o: " + message);
+            player.sendMessage("§7§oYou whisper to " + target.getName() + ": " + message);
+            target.sendMessage("§7§o" + player.getName() + " whispers to you: " + message);
             ReplyCommand.setLastReply(player.getUniqueId(), target.getUniqueId());
         }
     }
@@ -60,8 +60,8 @@ public class MsgCommand {
             String message = (String) args.get("message");
             message = message.replaceAll("&", "§");
 
-            sender.sendMessage("§7§oYou whisper to " + "§7§o" + target.getName() + "§7§o: " + message);
-            target.sendMessage("§7§oServer whispers to you§7§o: " + message);
+            sender.sendMessage("§7§oYou whisper to " + target.getName() + ": " + message);
+            target.sendMessage("§7§oServer whispers to you: " + message);
         }
     }
 
@@ -72,8 +72,8 @@ public class MsgCommand {
             String message = (String) args.get("message");
             message = message.replaceAll("&", "§");
 
-            sender.sendMessage("§7§oYou whisper to " + "§7§o" + target.getName() + "§7§o: " + message);
-            target.sendMessage("§7§o@ whispers to you§7§o: " + message);
+            sender.sendMessage("§7§oYou whisper to " + target.getName() + message);
+            target.sendMessage("§7§o@ whispers to you: " + message);
         }
     }
 }
