@@ -41,14 +41,14 @@ public class MsgCommand {
         @Override
         public void run(Player player, CommandArguments args) throws WrapperCommandSyntaxException {
             Player target = (Player) args.get("target");
-            String msg = (String) args.get("message");
+            String message = (String) args.get("message");
 
             if(player.hasPermission("tgc-system.team")) {
-                msg = msg.replaceAll("&", "§");
+                message = message.replaceAll("&", "§");
             }
 
-            player.sendMessage("§7§oYou whisper to " + "§7§o" + target.getName() + "§7§o: " + msg);
-            target.sendMessage("§7§o" + player.getName() + "§7§o whispers to you§7§o: " + msg);
+            player.sendMessage("§7§oYou whisper to " + "§7§o" + target.getName() + "§7§o: " + message);
+            target.sendMessage("§7§o" + player.getName() + "§7§o whispers to you§7§o: " + message);
             ReplyCommand.setLastReply(player.getUniqueId(), target.getUniqueId());
         }
     }
@@ -57,11 +57,11 @@ public class MsgCommand {
         @Override
         public void run(ConsoleCommandSender sender, CommandArguments args) throws WrapperCommandSyntaxException {
             Player target = (Player) args.get("target");
-            String msg = (String) args.get("message");
-            msg = msg.replaceAll("&", "§");
+            String message = (String) args.get("message");
+            message = message.replaceAll("&", "§");
 
-            sender.sendMessage("§7§oYou whisper to " + "§7§o" + target.getName() + "§7§o: " + msg);
-            target.sendMessage("§7§oServer whispers to you§7§o: " + msg);
+            sender.sendMessage("§7§oYou whisper to " + "§7§o" + target.getName() + "§7§o: " + message);
+            target.sendMessage("§7§oServer whispers to you§7§o: " + message);
         }
     }
 
@@ -69,11 +69,11 @@ public class MsgCommand {
         @Override
         public void run(BlockCommandSender sender, CommandArguments args) throws WrapperCommandSyntaxException {
             Player target = (Player) args.get("target");
-            String msg = (String) args.get("message");
-            msg = msg.replaceAll("&", "§");
+            String message = (String) args.get("message");
+            message = message.replaceAll("&", "§");
 
-            sender.sendMessage("§7§oYou whisper to " + "§7§o" + target.getName() + "§7§o: " + msg);
-            target.sendMessage("§7§o@ whispers to you§7§o: " + msg);
+            sender.sendMessage("§7§oYou whisper to " + "§7§o" + target.getName() + "§7§o: " + message);
+            target.sendMessage("§7§o@ whispers to you§7§o: " + message);
         }
     }
 }

@@ -7,7 +7,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import timongcraft.commands.*;
 import timongcraft.listeners.*;
-import timongcraft.util.AutoSave;
+import timongcraft.util.AutoSaveHandler;
 import timongcraft.util.DataConfigHandler;
 
 import java.io.File;
@@ -16,14 +16,13 @@ public class Main extends JavaPlugin {
     private static Main instance;
     private final String prefix = getConfig().getString("prefix.pluginPrefix");
     private DataConfigHandler dataConfigHandler;
+    private AutoSaveHandler autoSaveHandler;
     private boolean firstLoad;
 
     @Override
     public void onLoad() {
         firstLoad = isFirstLoad();
         if(firstLoad) return;
-
-        getLogger().warning("§cExperimental rewrite build!");
 
         CommandAPI.onLoad(new CommandAPIBukkitConfig(this).silentLogs(true).missingExecutorImplementationMessage("This command can't be executed with the %s"));
     }
@@ -36,8 +35,8 @@ public class Main extends JavaPlugin {
         instance = this;
 
         double configVersion = getConfig().getDouble("version");
-        double version = Double.parseDouble(getDescription().getVersion());
-        if(configVersion != version) {
+        double pluginConfigVersion = 1.4;
+        if(configVersion != pluginConfigVersion) {
             getLogger().info("§cThe version of the config.yml does not match with the current plugin version!");
             getLogger().info("§cUnless you delete the config and restart the server the plugin will be stopped!");
             getLogger().info("§cDo not edit the version in the config.yml or things will break!");
@@ -53,17 +52,14 @@ public class Main extends JavaPlugin {
 
         registerEvents();
 
-        if(getConfig().getBoolean("maintenance.icon")) {
-            File maintenanceicon = new File(getDataFolder(), "maintenance-icon.png");
-            if(!maintenanceicon.exists()) {
-                saveResource("maintenance-icon.png", false); }}
-
-        if(getConfig().getBoolean("autoSave.enabled")) new AutoSave();
+        enableAutoSave();
     }
 
     @Override
     public void onDisable() {
         if(firstLoad) return;
+
+        autoSaveHandler.cancel();
     }
 
     private void registerCommandsInOnEnable() {
@@ -100,6 +96,11 @@ public class Main extends JavaPlugin {
             pluginManager.registerEvents(new SpawnElytraListeners(), this);
         }
 
+    }
+
+    private void enableAutoSave() {
+        autoSaveHandler = new AutoSaveHandler();
+        if(getConfig().getBoolean("autoSave.enabled")) autoSaveHandler.runTaskTimer(this, autoSaveHandler.parseInterval(Main.get().getConfig().getString("autoSave.time")), autoSaveHandler.parseInterval(Main.get().getConfig().getString("autoSave.time")));
     }
 
     private boolean isFirstLoad() {

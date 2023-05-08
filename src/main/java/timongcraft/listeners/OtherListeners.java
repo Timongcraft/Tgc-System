@@ -36,7 +36,7 @@ public class OtherListeners implements Listener {
             if(player.hasPermission("tgc-system.team")) {
                 playerChatName = "§4<§c" + player.getName() + "§4>§f";
                 message = message.replaceAll("&", "§");
-            } else playerChatName = "§8<§7" + player.getName() + "§8>§7";
+            } else playerChatName = "§f<" + player.getName() + "§f>";
         }
 
         if(Main.get().getConfig().getBoolean("chatSystem.noLinks") && !player.hasPermission("sb.team")) {

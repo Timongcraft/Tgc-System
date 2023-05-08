@@ -175,7 +175,7 @@ public class ConnectionListeners implements Listener {
 
         if(Main.get().getConfig().getBoolean("onJoin.enabled")){
             if(Main.get().getConfig().getString("onJoin.message") != null) {
-                player.sendMessage(Main.get().getConfig().getString("onJoin.message").replaceAll("%AlertPrefix%", Main.get().getConfig().getString("prefix.alertPrefix").replaceAll("&", "§")));
+                player.sendMessage(Main.get().getConfig().getString("onJoin.message").replaceAll("%prefix%", Main.get().getPrefix().replaceAll("%alertPrefix%", Main.get().getConfig().getString("prefix.alertPrefix").replaceAll("&", "§"))));
             }
         }
 

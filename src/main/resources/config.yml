@@ -13,8 +13,9 @@ joinQuitMessage:
 
 onJoin:
   enabled: false
-  #Here you also can use color codes and "%AlertPrefix%" will be replaced with the alert Prefix
-  message: "Edit in /plugins/Tgc-System/config.yml"
+  #Here you also can use color codes, %prefix% will be replaced with the plugins prefix and
+  #%alertPrefix% will be replaced with the alert Prefix
+  message: "%prefix%Edit in /plugins/Tgc-System/config.yml"
   #If a player joins and has a status set he will be shown a message with the players status
   status: false
 
@@ -67,6 +68,7 @@ maintenance:
   motd: "§cServer is in Maintenance"
   kickMessage: "This server is now in maintenance mode"
   #You can add a 64x64 png file to the Plugin directory and that will be set as you maintenance icon
+  #Must be called maintenance-icon.png
   icon: false
 
 #Auto save your world if your hoster doesn't have that functionality

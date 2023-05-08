@@ -25,16 +25,15 @@ public class StatusCommand {
         @Override
         public void run(Player player, CommandArguments args) throws WrapperCommandSyntaxException {
             String status = (String) args.get("status");
-            StatusHandler statusHandler = new StatusHandler();
 
             if(args.args().length == 0) {
-                if(statusHandler.getStatus(player) == null) {
+                if(StatusHandler.getStatus(player) == null) {
                     player.sendMessage(Main.get().getPrefix() + "§cUsage: /status <status>");
                     return;
                 }
 
-                statusHandler.setStatus(player, "");
-                statusHandler.setAllPlayerTeams();
+                StatusHandler.setStatus(player, "");
+                StatusHandler.setAllPlayerTeams();
                 player.sendMessage(Main.get().getPrefix() + "§aSuccessfully reset your status");
             } else if(args.args().length == 1) {
                 if(status.replaceAll("&[a-z-0-9]", "").length() > Main.get().getConfig().getInt("statuses.characterLimit")) {
@@ -42,9 +41,9 @@ public class StatusCommand {
                     return;
                 }
 
-                statusHandler.setStatus(player, status.replaceAll("&", "§"));
-                statusHandler.setAllPlayerTeams();
-                player.sendMessage(Main.get().getPrefix() + "§aSuccessfully set your status to " + status);
+                StatusHandler.setStatus(player, status.replaceAll("&", "§"));
+                StatusHandler.setAllPlayerTeams();
+                player.sendMessage(Main.get().getPrefix() + "§aSuccessfully set your status to: " + status);
             }
         }
     }

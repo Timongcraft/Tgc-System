@@ -12,6 +12,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import timongcraft.Main;
+import timongcraft.util.TeamUtils;
 
 public class RebootCommand {
     static int seconds;
@@ -31,18 +32,21 @@ public class RebootCommand {
             seconds = (int) args.get("minutes") * 60;
             String reason = (String) args.get("reason");
 
+            sender.sendMessage(Main.get().getPrefix() + "Scheduled reboot task in: " + args.get("minutes") + " Minutes with reason: " + reason);
+            TeamUtils.sendToTeam(sender.getName(), null , "Scheduled reboot task in: " + args.get("minutes") + " Minutes with reason: " + reason);
+
             BukkitRunnable runnable = new BukkitRunnable() {
                 @Override
                 public void run() {
                     if(seconds == 600) {
                         for(Player player : Bukkit.getOnlinePlayers()) {
-                            player.sendMessage(Main.get().getConfig().getString("prefix.alertPrefix") + "The server will restart in " + seconds / 60 + " minutes because " + reason.replaceAll("&", "§"));
+                            player.sendMessage(Main.get().getConfig().getString("prefix.alertPrefix") + "The server will restart in " + seconds / 60 + " minutes because: " + reason.replaceAll("&", "§"));
                             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1.0F,.5F);
                         }
                     }
                     if(seconds == 60 || seconds == 10|| seconds == 3|| seconds == 2|| seconds == 1) {
                         for(Player player : Bukkit.getOnlinePlayers()) {
-                            player.sendMessage(Main.get().getConfig().getString("prefix.alertPrefix") + "The server will restart in " + seconds + " seconds because " + reason.replaceAll("&", "§"));
+                            player.sendMessage(Main.get().getConfig().getString("prefix.alertPrefix") + "The server will restart in " + seconds + " seconds because: " + reason.replaceAll("&", "§"));
                             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1.0F,.5F);
                         }
                     }
