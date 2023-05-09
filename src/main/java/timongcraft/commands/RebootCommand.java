@@ -15,7 +15,6 @@ import timongcraft.Main;
 import timongcraft.util.TeamUtils;
 
 public class RebootCommand {
-    static int seconds;
     public static void register() {
         new CommandTree("reboot")
                 .withFullDescription("Reboot the server after a specified time")
@@ -27,6 +26,8 @@ public class RebootCommand {
     }
 
     private static class RebootExecutor implements CommandExecutor {
+        static int seconds;
+
         @Override
         public void run(CommandSender sender, CommandArguments args) throws WrapperCommandSyntaxException {
             seconds = (int) args.get("minutes") * 60;
@@ -40,19 +41,19 @@ public class RebootCommand {
                 public void run() {
                     if(seconds == 600) {
                         for(Player player : Bukkit.getOnlinePlayers()) {
-                            player.sendMessage(Main.get().getConfig().getString("prefix.alertPrefix") + "The server will restart in " + seconds / 60 + " minutes because: " + reason.replaceAll("&", "§"));
+                            player.sendMessage(Main.get().getConfig().getString("prefix.alertPrefix") + "The server will reboot in " + seconds / 60 + " minutes because: " + reason.replaceAll("&", "§"));
                             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1.0F,.5F);
                         }
                     }
                     if(seconds == 60 || seconds == 10|| seconds == 3|| seconds == 2|| seconds == 1) {
                         for(Player player : Bukkit.getOnlinePlayers()) {
-                            player.sendMessage(Main.get().getConfig().getString("prefix.alertPrefix") + "The server will restart in " + seconds + " seconds because: " + reason.replaceAll("&", "§"));
+                            player.sendMessage(Main.get().getConfig().getString("prefix.alertPrefix") + "The server will reboot in " + seconds + " seconds because: " + reason.replaceAll("&", "§"));
                             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1.0F,.5F);
                         }
                     }
                     if(seconds == 0) {
                         for(Player player : Bukkit.getOnlinePlayers()) {
-                            player.kickPlayer("The server is restarting because:\n" + reason.replaceAll("&", "§"));
+                            player.kickPlayer("The server is rebooting because:\n" + reason.replaceAll("&", "§"));
                         }
                         cancel();
                         Bukkit.spigot().restart();

@@ -122,7 +122,11 @@ public class OtherListeners implements Listener {
         PlayerResourcePackStatusEvent.Status status = event.getStatus();
 
         if(status == PlayerResourcePackStatusEvent.Status.DECLINED || status == PlayerResourcePackStatusEvent.Status.FAILED_DOWNLOAD) {
-            player.kickPlayer("You must use the server's resource pack. Without it the game doesn't work.");
+            player.kickPlayer("§cYou must use the server's resource pack.");
+        }
+
+        if (status == PlayerResourcePackStatusEvent.Status.SUCCESSFULLY_LOADED) {
+            ConnectionListeners.resourcePackLoaded.add(player.getUniqueId());
         }
     }
 

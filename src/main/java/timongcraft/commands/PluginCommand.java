@@ -23,16 +23,16 @@ public class PluginCommand {
                 .withPermission("tgc-system.team")
                 .then(new LiteralArgument("enable")
                         .then(new StringArgument("plugin")
-                                .replaceSuggestions(ArgumentSuggestions.strings(info -> getDisabledPluginsList()))
+                                .replaceSuggestions(ArgumentSuggestions.strings(info -> getDisabledPlugins()))
                                 .executes(new PluginEnableExecutor())))
                 .then(new LiteralArgument("disable")
                         .then(new StringArgument("plugin")
-                                .replaceSuggestions(ArgumentSuggestions.strings(info -> getEnabledPluginsList()))
+                                .replaceSuggestions(ArgumentSuggestions.strings(info -> getEnabledPlugins()))
                                 .executes(new PluginDisableExecutor())))
                 .register();
     }
 
-    private static String[] getDisabledPluginsList() {
+    private static String[] getDisabledPlugins() {
         List<String> plugins = new ArrayList<>();
         List<String> disabledPlugins = Main.get().getDataConfig().getStringList("disabledPlugins");
         for (Plugin plugin : Bukkit.getPluginManager().getPlugins()) {
@@ -45,7 +45,7 @@ public class PluginCommand {
         return plugins.toArray(new String[0]);
     }
 
-    private static String[] getEnabledPluginsList() {
+    private static String[] getEnabledPlugins() {
         List<String> plugins = new ArrayList<>();
         for (Plugin plugin : Bukkit.getPluginManager().getPlugins()) {
             if(!plugin.getName().equalsIgnoreCase(Main.get().getName())) {
@@ -68,7 +68,7 @@ public class PluginCommand {
                 return;
             }
 
-            if(!Main.get().getDataConfig().isSet("disabledPlugins")) {
+            if(!Main.get().getDataConfig().isSet("disabledPlugins") || Main.get().getDataConfig().getStringList("disabledPlugins").isEmpty()) {
                 sender.sendMessage(Main.get().getPrefix() + "§c" + pluginName + " can't be enabled.");
                 return;
             }
@@ -96,7 +96,8 @@ public class PluginCommand {
                 sender.sendMessage(Main.get().getPrefix() + "§c" + pluginName + " not found.");
                 return;
             }
-            if(targetPlugin.getName().equalsIgnoreCase(Main.get().getName())) {
+
+            if(targetPlugin.getName().equals(Main.get().getName())) {
                 sender.sendMessage(Main.get().getPrefix() + "§cThis plugin can't be disabled.");
                 return;
             }
@@ -113,7 +114,7 @@ public class PluginCommand {
         }
     }
 
-    public void disablePluginsOnBoot() {
+    public static void disablePluginsOnBoot() {
         List<String> disabledPlugins = Main.get().getDataConfig().getStringList("disabledPlugins");
         if(disabledPlugins.isEmpty()) {
             return;

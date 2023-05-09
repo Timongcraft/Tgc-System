@@ -94,6 +94,8 @@ resourcePack:
   hash: ''
   promt: ''
   force: false
+  #The time after which the player gets kicked if he hasn't loaded the pack in seconds (force must be true for this)
+  maxLoadTime: 10
 
 #You can create multiple motds and everytime someone loads/refreshes his multiplayer menu that player will see a random motd
 #Use \n for the second line
@@ -120,6 +122,10 @@ autoSave:
 #This makes to so if you right-click on wheat, potatoes, carrots, beetroots and cocoa beans
 easyHarvest:
   enabled: false
+
+#Checks for new updates with the modrinth api
+newUpdateNotifications:
+  console: true
 
 #These commands are blocked e.g. plugins
 blockedCommands: []
@@ -193,6 +199,8 @@ resourcePack:
   hash: ''
   promt: ''
   force: false
+  #The time after which the player gets kicked if he hasn't loaded the pack in seconds (force must be true for this)
+  maxLoadTime: 10
 
 #You can create multiple motds and everytime someone loads/refreshes his multiplayer menu that player will see a random motd
 #Use \n for the second line
@@ -218,6 +226,10 @@ autoSave:
 #This makes to so if you right-click on wheat, potatoes, carrots, beetroots and cocoa beans
 easyHarvest:
   enabled: true
+
+#Checks for new updates with the modrinth api
+newUpdateNotifications:
+  console: true
 
 #These commands are blocked e.g. plugins
 #Do 'blockedCommands: []' if it should be empty

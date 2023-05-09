@@ -10,6 +10,7 @@ import timongcraft.commands.*;
 import timongcraft.listeners.*;
 import timongcraft.util.AutoSaveHandler;
 import timongcraft.util.DataConfigHandler;
+import timongcraft.util.UpdateCheckHandler;
 
 import java.io.File;
 
@@ -18,12 +19,12 @@ public class Main extends JavaPlugin {
     private final String prefix = getConfig().getString("prefix.pluginPrefix");
     private DataConfigHandler dataConfigHandler;
     private AutoSaveHandler autoSaveHandler;
-    private boolean firstLoad;
+    private boolean noLoad;
 
     @Override
     public void onLoad() {
-        firstLoad = isFirstLoad();
-        if(firstLoad) return;
+        noLoad = !new File(getDataFolder(), "config.yml").exists();
+        if(noLoad) return;
 
         CommandAPI.onLoad(new CommandAPIBukkitConfig(this).silentLogs(true).missingExecutorImplementationMessage("This command can't be executed with the %s"));
     }
@@ -31,20 +32,18 @@ public class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         loadConfigs();
-        if(firstLoad) return;
+        if(noLoad) return;
 
         instance = this;
 
-        double configVersion = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "config.yml")).getDouble("configVersion");
-        if(configVersion != 1.5) {
-            getLogger().info("§cThe version of the config.yml does not match with the current plugin version!");
-            getLogger().info("§cUnless you delete the config and restart the server the plugin will be stopped!");
-            getLogger().info("§cDo not edit the version in the config.yml or things will break!");
-            Bukkit.getPluginManager().disablePlugin(this);
-            return;
-        }
+        configVersionCheck();
+        if(noLoad) return;
 
-        new PluginCommand().disablePluginsOnBoot();
+        PluginCommand.disablePluginsOnBoot();
+
+        if(getConfig().getBoolean("newUpdateNotifications.console")) {
+            UpdateCheckHandler.checkForUpdate(Double.parseDouble(getDescription().getVersion()));
+        }
 
         CommandAPI.onEnable();
 
@@ -57,9 +56,20 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        if(firstLoad) return;
+        if(noLoad) return;
 
         if(getConfig().getBoolean("autoSave.enabled")) autoSaveHandler.cancel();
+    }
+
+    private void configVersionCheck() {
+        double configVersion = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "config.yml")).getDouble("configVersion");
+        if(configVersion != 1.5) {
+            getLogger().info("§cThe version of the config.yml does not match with the current plugin version!");
+            getLogger().info("§cUnless you delete the config and restart the server the plugin will be stopped!");
+            getLogger().info("§cDo not edit the version in the config.yml or things will break!");
+            noLoad = true;
+            Bukkit.getPluginManager().disablePlugin(this);
+        }
     }
 
     private void registerCommandsInOnEnable() {
@@ -101,10 +111,6 @@ public class Main extends JavaPlugin {
     private void enableAutoSave() {
         autoSaveHandler = new AutoSaveHandler();
         if(getConfig().getBoolean("autoSave.enabled")) autoSaveHandler.runTaskTimer(this, autoSaveHandler.parseInterval(Main.get().getConfig().getString("autoSave.time")), autoSaveHandler.parseInterval(Main.get().getConfig().getString("autoSave.time")));
-    }
-
-    private boolean isFirstLoad() {
-        return !new File(getDataFolder(), "config.yml").exists();
     }
 
     private void loadConfigs() {

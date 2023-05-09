@@ -14,12 +14,10 @@ import timongcraft.commands.MaintenanceCommand;
 import timongcraft.util.StatusHandler;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HexFormat;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class ConnectionListeners implements Listener {
+    public static final List<UUID> resourcePackLoaded = new ArrayList<>();
 
     @EventHandler
     public void onServerListPing(ServerListPingEvent event) {
@@ -152,6 +150,17 @@ public class ConnectionListeners implements Listener {
 
             if(url != null && hash != null && player.hasPermission("tgc-system.team") && Main.get().getDataConfig().getBoolean("players." + player.getUniqueId() + ".resourcepack")) {
                 player.setResourcePack(url, hash, false);
+            }
+
+            if(Main.get().getConfig().getBoolean("resourcePack.force")) {
+                Bukkit.getScheduler().runTaskLater(Main.get(), () -> {
+                    if (!player.isOnline() || player.hasPermission("tgc-system.team")) return;
+
+                    if (!resourcePackLoaded.contains(player.getUniqueId())) {
+                        player.kickPlayer("§cYou must use the server's resource pack.");
+                    }
+                    resourcePackLoaded.remove(player.getUniqueId());
+                }, Main.get().getConfig().isSet("resourcePack.maxLoadTime") ? Main.get().getConfig().getInt("resourcePack.maxLoadTime") * 20L : 300L);
             }
         }
     }
