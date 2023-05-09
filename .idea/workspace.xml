@@ -4,17 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c085279f-3fca-4b5c-a6cc-39ec7ca0c6a2" name="Changes" comment="Fixed error in onDisable if you don't have AutoSave enabled&#10;Fixed version check returning true when the version isn't set&#10;Fixed the config in the ReadMe&#10;Renamed the version in the config to ConfigVersion because it is a different version than the pluings version&#10;Removed default maintenance-icon file&#10;Added hidden motd mode&#10;Added easy harvest&#10;Added an extra layer of security for loading the resourc epack with force&#10;Added [CommandAPI](https://github.com/JorelAli/CommandAPI) dependency to ReadMe">
-      <change afterPath="$PROJECT_DIR$/src/main/java/timongcraft/util/UpdateCheckHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/commands/PluginCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/commands/PluginCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/commands/RebootCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/commands/RebootCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/listeners/ConnectionListeners.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/listeners/ConnectionListeners.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/listeners/OtherListeners.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/listeners/OtherListeners.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
-    </list>
+    <list default="true" id="c085279f-3fca-4b5c-a6cc-39ec7ca0c6a2" name="Changes" comment="&#10;Added an extra layer of security for loading the resource pack with force&#10;Added a update checker (will return false until release is uploaded to modrinth)&#10;Tweaked some other things slightly" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -123,7 +113,7 @@
       <workItem from="1683546789475" duration="5873000" />
       <workItem from="1683559276682" duration="3848000" />
       <workItem from="1683566580235" duration="3159000" />
-      <workItem from="1683610099079" duration="9064000" />
+      <workItem from="1683610099079" duration="9403000" />
     </task>
     <task id="LOCAL-00001" summary="Because with this the entire plugin was rewritten there may be some bugs I have overlooked please report them to me &#10;- Rewrote the entire plugin&#10;- Now uses the [CommandAPI](https://commandapi.jorel.dev)&#10;- Made the src available&#10;- Added a permission system&#10;- Added a reply command&#10;- Added highlighting for chat messages with your name&#10;- Added a fly speed command&#10;- Some other small changes and fixes">
       <created>1683395873207</created>
@@ -160,7 +150,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683568407855</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="&#10;Added an extra layer of security for loading the resource pack with force&#10;Added a update checker (will return false until release is uploaded to modrinth)&#10;Tweaked some other things slightly">
+      <created>1683634093475</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1683634093475</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -183,6 +180,7 @@
     <MESSAGE value="Fixed some small errors&#10;Changed some messages slightly&#10;Made players with the tgc-system.team permission able to use colorcodes in chat&#10;Changed left forEach to for loops for a minimal better performance" />
     <MESSAGE value="Fixed some small errors&#10;Fixed MaintenanceCommand&#10;Fixed AutoSave and made it use BukkitRunnable&#10;Changed some messages slightly&#10;Made players with the tgc-system.team permission able to use colorcodes in chat&#10;Changed left forEach to for loops for a minimal better performance&#10;Removed default maintenance-icon&#10;Differentiated plugin version and config version&#10;Simplified sendToTeam methode&#10;Added modrinth link while it is not even on there (at the moment)" />
     <MESSAGE value="Fixed error in onDisable if you don't have AutoSave enabled&#10;Fixed version check returning true when the version isn't set&#10;Fixed the config in the ReadMe&#10;Renamed the version in the config to ConfigVersion because it is a different version than the pluings version&#10;Removed default maintenance-icon file&#10;Added hidden motd mode&#10;Added easy harvest&#10;Added [CommandAPI](https://github.com/JorelAli/CommandAPI) dependency to ReadMe" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed error in onDisable if you don't have AutoSave enabled&#10;Fixed version check returning true when the version isn't set&#10;Fixed the config in the ReadMe&#10;Renamed the version in the config to ConfigVersion because it is a different version than the pluings version&#10;Removed default maintenance-icon file&#10;Added hidden motd mode&#10;Added easy harvest&#10;Added [CommandAPI](https://github.com/JorelAli/CommandAPI) dependency to ReadMe" />
+    <MESSAGE value="&#10;Added an extra layer of security for loading the resource pack with force&#10;Added a update checker (will return false until release is uploaded to modrinth)&#10;Tweaked some other things slightly" />
+    <option name="LAST_COMMIT_MESSAGE" value="&#10;Added an extra layer of security for loading the resource pack with force&#10;Added a update checker (will return false until release is uploaded to modrinth)&#10;Tweaked some other things slightly" />
   </component>
 </project>

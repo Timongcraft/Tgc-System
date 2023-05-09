@@ -36,7 +36,7 @@
 
 ````
 #Do not edit or things might break!
-version: 1.4
+version: 1.5
 
 prefix:
   pluginPrefix: '§7[§1System§7] §f'
@@ -141,7 +141,7 @@ blockedPrefixes: []
 
 ````
 #Do not edit or things might break!
-version: 1.4
+version: 1.5
 
 prefix:
   pluginPrefix: '§7[§1System§7] §f'
