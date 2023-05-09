@@ -22,20 +22,18 @@ public class MaintenanceCommand {
                 .executes(new MaintenanceExecutor())
                 .then(new LiteralArgument("add")
                         .then(new EntitySelectorArgument.OnePlayer("target")
-                                .replaceSuggestions(ArgumentSuggestions.strings(info -> Bukkit.getOnlinePlayers().stream()
-                                        .map(Player::getName)
-                                        .toArray(String[]::new)))
+                                .replaceSuggestions(ArgumentSuggestions.strings(info -> notMaintenanceList()))
                                 .executes(new MaintenanceAddExecutor())))
                 .then(new LiteralArgument("remove")
-                        .then(new StringArgument("target")
-                                .replaceSuggestions(ArgumentSuggestions.strings(info -> MaintenanceList()))
+                        .then(new EntitySelectorArgument.OnePlayer("target")
+                                .replaceSuggestions(ArgumentSuggestions.strings(info -> maintenanceList()))
                                 .executes(new MaintenanceRemoveExecutor())))
                 .then(new LiteralArgument("list")
                         .executes(new MaintenanceListExecutor()))
                 .register();
     }
 
-    private static String[] MaintenanceList() {
+    private static String[] maintenanceList() {
         List<String> inMainenanceList = new ArrayList<>();
 
         for(Player player : Bukkit.getOnlinePlayers()) {
@@ -45,6 +43,18 @@ public class MaintenanceCommand {
         }
 
         return inMainenanceList.toArray(new String[0]);
+    }
+
+    private static String[] notMaintenanceList() {
+        List<String> notInMainenanceList = new ArrayList<>();
+
+        for(Player player : Bukkit.getOnlinePlayers()) {
+            if(!Main.get().getDataConfig().getBoolean("players." + player.getUniqueId() + ".maintenanceAllowed")) {
+                notInMainenanceList.add(player.getName());
+            }
+        }
+
+        return notInMainenanceList.toArray(new String[0]);
     }
 
     private static class MaintenanceExecutor implements CommandExecutor {
@@ -60,7 +70,7 @@ public class MaintenanceCommand {
 
                 if(maintenanceMode) {
                     sender.sendMessage(Main.get().getPrefix() + "Maintenance mode enabled.");
-                    TeamUtils.sendToTeam(sender.getName(), null, false, "Enabled maintenance mode");
+                    TeamUtils.sendToTeam(sender.getName(), null, "Enabled maintenance mode");
                     for(Player player : Bukkit.getOnlinePlayers()) {
                         if(!isAllowed(player)) {
                             player.kickPlayer(maintenanceKickMessage);
@@ -68,7 +78,7 @@ public class MaintenanceCommand {
                     }
                 } else {
                     sender.sendMessage(Main.get().getPrefix() + "Maintenance mode disabled.");
-                    TeamUtils.sendToTeam(sender.getName(), null, false, "Disabled maintenance mode");
+                    TeamUtils.sendToTeam(sender.getName(), null, "Disabled maintenance mode");
                 }
 
             }
@@ -82,7 +92,7 @@ public class MaintenanceCommand {
 
             for (String uuid : Main.get().getDataConfig().getConfigurationSection("players").getKeys(false)) {
                 boolean maintenanceAllowed = Main.get().getDataConfig().getBoolean("players." + uuid + ".maintenanceAllowed");
-                if (!maintenanceAllowed) {
+                if (maintenanceAllowed) {
                     String playerName = Main.get().getDataConfig().getString("players." + uuid + ".name");
                     sender.sendMessage(playerName);
                 }
@@ -95,14 +105,14 @@ public class MaintenanceCommand {
         public void run(CommandSender sender, CommandArguments args) throws WrapperCommandSyntaxException {
             Player target = (Player) args.get("target");
             if(isAllowed(target)) {
-                sender.sendMessage(Main.get().getPrefix() + target + " is already on the maintenance list.");
+                sender.sendMessage(Main.get().getPrefix() + target.getName() + " is already on the maintenance list");
                 return;
             }
 
             Main.get().getDataConfig().set("players." + target.getUniqueId() + ".maintenanceAllowed", true);
             Main.get().getDataConfig().save();
 
-            sender.sendMessage(Main.get().getPrefix() + target + " has been added to the maintenance list.");
+            sender.sendMessage(Main.get().getPrefix() + target.getName() + " has been added to the maintenance list");
         }
     }
 
@@ -111,14 +121,14 @@ public class MaintenanceCommand {
         public void run(CommandSender sender, CommandArguments args) throws WrapperCommandSyntaxException {
             Player target = (Player) args.get("target");
             if(!isAllowed(target)) {
-                sender.sendMessage(Main.get().getPrefix() + target + " isn't on the maintenance list.");
+                sender.sendMessage(Main.get().getPrefix() + target.getName() + " isn't on the maintenance list");
                 return;
             }
 
             Main.get().getDataConfig().set("players." + target.getUniqueId() + ".maintenanceAllowed", false);
             Main.get().getDataConfig().save();
 
-            sender.sendMessage(Main.get().getPrefix() + target + " has been removed from the maintenance list.");
+            sender.sendMessage(Main.get().getPrefix() + target.getName() + " has been removed from the maintenance list");
         }
     }
 

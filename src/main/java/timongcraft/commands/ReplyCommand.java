@@ -28,7 +28,7 @@ public class ReplyCommand {
     private static class PlayerMsgExecutor implements PlayerCommandExecutor {
         @Override
         public void run(Player player, CommandArguments args) throws WrapperCommandSyntaxException {
-            String msg = (String) args.get("message");
+            String message = (String) args.get("message");
 
             if (!lastRepliedTo.containsKey(player.getUniqueId())) {
                 player.sendMessage(Main.get().getPrefix() + "§cYou have no one to reply to.");
@@ -43,11 +43,11 @@ public class ReplyCommand {
             }
 
             if(player.hasPermission("tgc-system.team")) {
-                msg = msg.replaceAll("&", "§");
+                message = message.replaceAll("&", "§");
             }
 
-            player.sendMessage("§7§oYou whisper to " + "§7§o" + target.getName() + "§7§o: " + msg);
-            target.sendMessage("§7§o" + player.getName() + "§7§o whispers to you§7§o: " + msg);
+            player.sendMessage("§7§oYou whisper to " + "§7§o" + target.getName() + "§7§o: " + message);
+            target.sendMessage("§7§o" + player.getName() + "§7§o whispers to you§7§o: " + message);
         }
     }
 

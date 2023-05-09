@@ -25,21 +25,20 @@ public class SpawnElytraListeners implements Listener {
 
     public SpawnElytraListeners() {
         Bukkit.getScheduler().runTaskTimer(Main.get(), () -> {
-            Bukkit.getWorld(String.valueOf(Main.get().getConfig().getString("spawnElytra.worldName"))).getPlayers().forEach(player -> {
-                if(player.getGameMode() == GameMode.SPECTATOR) return;
-                if(player.getGameMode() == GameMode.CREATIVE) return;
-                player.setAllowFlight(isInSpawnRadius(player));
-                if(flying.contains(player) && !player.getLocation().getBlock().getRelative(BlockFace.DOWN).getType().isAir()) {
-                    player.setAllowFlight(false);
-                    player.setFlying(false);
-                    player.setGliding(false);
-                    boosted.remove(player);
+            for(Player playerInWorld : Bukkit.getWorld(String.valueOf(Main.get().getConfig().getString("spawnElytra.worldName"))).getPlayers()) {
+                if(playerInWorld.getGameMode() == GameMode.SPECTATOR || playerInWorld.getGameMode() == GameMode.CREATIVE) return;
+                playerInWorld.setAllowFlight(isInSpawnRadius(playerInWorld));
+                if(flying.contains(playerInWorld) && !playerInWorld.getLocation().getBlock().getRelative(BlockFace.DOWN).getType().isAir()) {
+                    playerInWorld.setAllowFlight(false);
+                    playerInWorld.setFlying(false);
+                    playerInWorld.setGliding(false);
+                    boosted.remove(playerInWorld);
                     Bukkit.getScheduler().runTaskLater(Main.get(), () -> {
-                        flying.remove(player);
+                        flying.remove(playerInWorld);
                     },5);
                 }
-            });
-        }, 0, 3);
+            }
+        }, 0, 4);
 
     }
 
@@ -73,9 +72,9 @@ public class SpawnElytraListeners implements Listener {
         event.setCancelled(true);
         boosted.add(player);
 
-        Bukkit.getWorld(String.valueOf(Main.get().getConfig().getString("spawnElytra.worldName"))).getPlayers().forEach(playersInWorld -> {
-            if(flying.contains(playersInWorld) && playersInWorld.getLocation().getBlock().getRelative(BlockFace.DOWN).getType().isAir()) player.setVelocity(player.getLocation().getDirection().multiply(Main.get().getConfig().getInt("spawnElytra.boost.enabled.multiplyValue")));
-        });
+        for(Player playerInWorld : Bukkit.getWorld(String.valueOf(Main.get().getConfig().getString("spawnElytra.worldName"))).getPlayers()) {
+            if(flying.contains(playerInWorld) && playerInWorld.getLocation().getBlock().getRelative(BlockFace.DOWN).getType().isAir()) player.setVelocity(player.getLocation().getDirection().multiply(Main.get().getConfig().getInt("spawnElytra.boost.enabled.multiplyValue")));
+        }
     }
 
     @EventHandler

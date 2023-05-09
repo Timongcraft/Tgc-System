@@ -1,7 +1,6 @@
 package timongcraft.listeners;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,15 +14,14 @@ import timongcraft.commands.MaintenanceCommand;
 import timongcraft.util.StatusHandler;
 
 import java.io.File;
-import java.util.HexFormat;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class ConnectionListeners implements Listener {
+    public static final List<UUID> resourcePackLoaded = new ArrayList<>();
 
     @EventHandler
     public void onServerListPing(ServerListPingEvent event) {
-        motdsHandler(event);
+        motdHandler(event);
 
         maintenanceServerPingHandler(event);
     }
@@ -44,7 +42,7 @@ public class ConnectionListeners implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        Main.get().getDataConfig().set("players." + player.getUniqueId() + ".ipAdress", player.getAddress().toString().substring(1).split(":")[0]);
+        Main.get().getDataConfig().set("players." + player.getUniqueId() + ".ipAddress", player.getAddress().toString().substring(1).split(":")[0]);
         Main.get().getDataConfig().save();
 
         resourcePackJoinHandler(player);
@@ -63,16 +61,34 @@ public class ConnectionListeners implements Listener {
         teamQuitHandler(event, player);
     }
 
-    private void motdsHandler(ServerListPingEvent event) {
+    private void motdHandler(ServerListPingEvent event) {
+        if(Main.get().getConfig().getBoolean("motds.hiddenMode")) {
+            String ipAddress = event.getAddress().toString().substring(1).split(":")[0];
+            List<String> knownIpAddresses = new ArrayList<>();
+
+            for(Player player : Bukkit.getOnlinePlayers()) {
+                if(Main.get().getDataConfig().isSet("players." + player.getUniqueId() + ".ipAddress")) {
+                    knownIpAddresses.add(Main.get().getDataConfig().getString("players." + player.getUniqueId() + ".ipAddress"));
+                }
+            }
+
+            if (!knownIpAddresses.contains(ipAddress)) {
+                event.setMotd("A Minecraft Server");
+                event.setServerIcon(null);
+                event.setMaxPlayers(20);
+                return;
+            }
+        }
+
         if(Main.get().getConfig().getBoolean("motds.enabled") && !Main.get().getConfig().getStringList("motds.list").isEmpty()) {
             String motd = Main.get().getConfig().getStringList("motds.list").get(new Random().nextInt(Main.get().getConfig().getStringList("motds.list").size()));
-            event.setMotd(ChatColor.translateAlternateColorCodes('&', motd));
+            event.setMotd(motd.replaceAll("&", "§"));
         }
     }
 
     private void maintenanceServerPingHandler(ServerListPingEvent event) {
         if(Main.get().getDataConfig().getBoolean("maintenance.enabled")) {
-            event.setMotd(Main.get().getConfig().getString("Maintenance.motd"));
+            event.setMotd(Main.get().getConfig().getString("maintenance.motd"));
             event.setMaxPlayers(0);
             if(Main.get().getConfig().getBoolean("maintenance.icon")) {
                 File maintenanceIcon = new File(Main.get().getDataFolder(), "maintenance-icon.png");
@@ -135,22 +151,35 @@ public class ConnectionListeners implements Listener {
             if(url != null && hash != null && player.hasPermission("tgc-system.team") && Main.get().getDataConfig().getBoolean("players." + player.getUniqueId() + ".resourcepack")) {
                 player.setResourcePack(url, hash, false);
             }
+
+            if(Main.get().getConfig().getBoolean("resourcePack.force")) {
+                Bukkit.getScheduler().runTaskLater(Main.get(), () -> {
+                    if (!player.isOnline() || player.hasPermission("tgc-system.team")) return;
+
+                    if (!resourcePackLoaded.contains(player.getUniqueId())) {
+                        player.kickPlayer("§cYou must use the server's resource pack.");
+                    }
+                    resourcePackLoaded.remove(player.getUniqueId());
+                }, Main.get().getConfig().isSet("resourcePack.maxLoadTime") ? Main.get().getConfig().getInt("resourcePack.maxLoadTime") * 20L : 300L);
+            }
         }
     }
 
     private void teamJoinHandler(PlayerJoinEvent event, Player player) {
         if(player.hasPermission("tgc-system.team")) {
-            Bukkit.getOnlinePlayers().forEach(players -> {
-                if(players.hasPermission("tgc-system.team") && players.getGameMode().equals(GameMode.SPECTATOR)) player.hidePlayer(Main.get(), players);
-            });
+            for(Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+                if(onlinePlayer.hasPermission("tgc-system.team") && onlinePlayer.getGameMode().equals(GameMode.SPECTATOR)) player.hidePlayer(Main.get(), onlinePlayer);
+
+            }
 
             if(player.getGameMode().equals(GameMode.SPECTATOR) && Bukkit.getOnlinePlayers().size() > 1) {
                 event.setJoinMessage(null);
-                Bukkit.getOnlinePlayers().forEach(players -> {
-                    if(players.hasPermission("tgc-system.team")) {
-                        players.sendMessage(Main.get().getConfig().getString("joinQuitMessage.joinMessage").replaceAll("%Player%",player.getName().replaceAll("&", "§")));
+
+                for(Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+                    if(onlinePlayer.hasPermission("tgc-system.team")) {
+                        onlinePlayer.sendMessage(Main.get().getConfig().getString("joinQuitMessage.joinMessage").replaceAll("%Player%",player.getName().replaceAll("&", "§")));
                     }
-                });
+                }
             }
         }
     }
@@ -158,11 +187,12 @@ public class ConnectionListeners implements Listener {
     private void teamQuitHandler(PlayerQuitEvent event, Player player) {
         if(player.hasPermission("tgc-system.team") && player.getGameMode().equals(GameMode.SPECTATOR) && Bukkit.getOnlinePlayers().size() > 1) {
             event.setQuitMessage(null);
-            Bukkit.getOnlinePlayers().forEach(players -> {
-                if(players.hasPermission("tgc-system.team")) {
-                    players.sendMessage(Main.get().getConfig().getString("joinQuitMessage.quitMessage").replaceAll("%Player%",player.getName().replaceAll("&", "§")));
+
+            for(Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+                if(onlinePlayer.hasPermission("tgc-system.team")) {
+                    onlinePlayer.sendMessage(Main.get().getConfig().getString("joinQuitMessage.quitMessage").replaceAll("%Player%",player.getName().replaceAll("&", "§")));
                 }
-            });
+            }
         }
     }
 
@@ -173,14 +203,14 @@ public class ConnectionListeners implements Listener {
 
         if(Main.get().getConfig().getBoolean("onJoin.enabled")){
             if(Main.get().getConfig().getString("onJoin.message") != null) {
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', Main.get().getConfig().getString("onJoin.message")).replaceAll("%AlertPrefix%", Main.get().getConfig().getString("prefix.alertPrefix")));
+                player.sendMessage(Main.get().getConfig().getString("onJoin.message").replaceAll("%prefix%", Main.get().getPrefix().replaceAll("%alertPrefix%", Main.get().getConfig().getString("prefix.alertPrefix").replaceAll("&", "§"))));
             }
         }
 
         String status = StatusHandler.getStatus(player);
         if(Main.get().getConfig().getBoolean("onJoin.status")){
             if(status != null) {
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', Main.get().getPrefix() + "&aYour status is set to: " + status));
+                player.sendMessage(Main.get().getPrefix() + "§aYour status is set to: " + status.replaceAll("&", "§"));
             }
         }
     }

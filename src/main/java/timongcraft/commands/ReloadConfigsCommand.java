@@ -23,7 +23,7 @@ public class ReloadConfigsCommand {
             Main.get().reloadConfig();
             Main.get().getDataConfig().load();
             sender.sendMessage(Main.get().getPrefix() + "The Configs have been reloaded!");
-            TeamUtils.sendToTeam(sender.getName(), null, false, "Reloaded the Tgc-System's configs");
+            TeamUtils.sendToTeam(sender.getName(), null, "Reloaded the plugins's configs");
         }
     }
 }

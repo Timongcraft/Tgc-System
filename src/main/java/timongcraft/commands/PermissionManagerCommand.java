@@ -6,7 +6,6 @@ import dev.jorel.commandapi.exceptions.WrapperCommandSyntaxException;
 import dev.jorel.commandapi.executors.CommandArguments;
 import dev.jorel.commandapi.executors.CommandExecutor;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
@@ -106,7 +105,7 @@ public class PermissionManagerCommand {
             playerPermissions.removeIf(s -> s.split(":")[0].equals(permission));
             playerPermissions.add(permissionString);
             sender.sendMessage(Main.get().getPrefix() + "Set permission " + permission + " for player " + targetPlayer.getName());
-            TeamUtils.sendToTeam(sender.getName(), null, false, "Set permission " + permission + " from " + targetPlayer.getName());
+            TeamUtils.sendToTeam(sender.getName(), null, "Set permission " + permission + " from " + targetPlayer.getName());
 
             Main.get().getDataConfig().set("players." + targetPlayer.getUniqueId() + ".permissions", playerPermissions);
             Main.get().getDataConfig().save();
@@ -124,7 +123,7 @@ public class PermissionManagerCommand {
 
             playerPermissions.removeIf(s -> s.split(":")[0].equals(permission));
             sender.sendMessage(Main.get().getPrefix() + "Unset permission " + permission + " from player " + targetPlayer.getName());
-            TeamUtils.sendToTeam(sender.getName(), null, false, "Unset permission " + permission + " from " + targetPlayer.getName());
+            TeamUtils.sendToTeam(sender.getName(), null, "Unset permission " + permission + " from " + targetPlayer.getName());
 
             Main.get().getDataConfig().set("players." + targetPlayer.getUniqueId() + ".permissions", playerPermissions);
             Main.get().getDataConfig().save();
@@ -139,7 +138,7 @@ public class PermissionManagerCommand {
             String group = (String) args.get("group");
 
             if(targetPlayer == null) {
-                sender.sendMessage(Main.get().getPrefix() + ChatColor.RED + "Player not found");
+                sender.sendMessage(Main.get().getPrefix() + "§cPlayer not found");
                 return;
             }
 
@@ -149,11 +148,11 @@ public class PermissionManagerCommand {
             if(action.equalsIgnoreCase("set")) {
                 if(!playerGroups.contains(group)) playerGroups.add(group);
                 sender.sendMessage(Main.get().getPrefix() + "Added player " + targetPlayer.getPlayer().getName() + " to group " + group);
-                TeamUtils.sendToTeam(sender.getName(), null, false, "Added player " + targetPlayer.getPlayer().getName() + " to group " + group);
+                TeamUtils.sendToTeam(sender.getName(), null, "Added player " + targetPlayer.getPlayer().getName() + " to group " + group);
             } else if(action.equalsIgnoreCase("unset")) {
                 playerGroups.remove(group);
                 sender.sendMessage(Main.get().getPrefix() + "Removed player " + targetPlayer.getPlayer().getName() + " from group " + group);
-                TeamUtils.sendToTeam(sender.getName(), null, false, "Removed player " + targetPlayer.getPlayer().getName() + " from group " + group);
+                TeamUtils.sendToTeam(sender.getName(), null, "Removed player " + targetPlayer.getPlayer().getName() + " from group " + group);
             }
 
             Main.get().getDataConfig().set("players." + targetPlayer.getUniqueId() + ".groups", playerGroups);
@@ -176,7 +175,7 @@ public class PermissionManagerCommand {
             groupPermissions.removeIf(s -> s.split(":")[0].equals(permission));
             groupPermissions.add(permissionString);
             sender.sendMessage(Main.get().getPrefix() + "Set permission " + permissionString + " for group " + groupName);
-            TeamUtils.sendToTeam(sender.getName(), null, false, "Set permission " + permission + " for group " + groupName);
+            TeamUtils.sendToTeam(sender.getName(), null, "Set permission " + permission + " for group " + groupName);
 
             Main.get().getDataConfig().set("groups." + groupName + ".permissions", groupPermissions);
             Main.get().getDataConfig().save();
@@ -194,7 +193,7 @@ public class PermissionManagerCommand {
 
             groupPermissions.removeIf(s -> s.split(":")[0].equals(permission));
             sender.sendMessage(Main.get().getPrefix() + "Unset permission " + permission + " from group " + groupName);
-            TeamUtils.sendToTeam(sender.getName(), null, false, "Unset permission " + permission + " from group " + groupName);
+            TeamUtils.sendToTeam(sender.getName(), null, "Unset permission " + permission + " from group " + groupName);
 
             Main.get().getDataConfig().set("groups." + groupName + ".permissions", groupPermissions);
             Main.get().getDataConfig().save();

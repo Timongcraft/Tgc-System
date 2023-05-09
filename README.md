@@ -2,17 +2,20 @@
    **Information**
 - Bug Reports and Feature Request are welcome, but I maybe won't implement them!
 - You can toggle most features look at the config below
+- The status system will break things if you are using teams because it is not packet based and uses teams to display the status in the tab list!
+
+-----
 
 # Features
 - SpawnElytra
 - Statuses
 - AntiChatReporting (by overriding the default msg command and sending chat messages as server)
 - A reply command
-- A colorcodes command, so you can check the colorcodes if you forgot one
+- A colorcodes command, so you can check the colorcodes if you forgot them
 - Join & quit message
-- Message on join
-- Show status on join
-- Sound/Highlighting your player name is typed in chat
+- Custom message on join
+- Message with the current status on join
+- Sound/Highlight your player name in chat
 - A permission system
 - A maintenance system
 - A auto save system
@@ -25,6 +28,8 @@
 - A configs reload command for the plugin
 - Block commands & prefixes
 
+-----
+
 # Config
 
 <details>
@@ -32,7 +37,7 @@
 
 ````
 #Do not edit or things might break!
-version: 1.4
+version: 1.5
 
 prefix:
   pluginPrefix: '§7[§1System§7] §f'
@@ -46,8 +51,9 @@ joinQuitMessage:
 
 onJoin:
   enabled: false
-  #Here you also can use color codes and "%AlertPrefix%" will be replaced with the alert Prefix
-  message: "Edit in /plugins/Tgc-System/config.yml"
+  #Here you also can use color codes, %prefix% will be replaced with the plugins prefix and
+  #%alertPrefix% will be replaced with the alert Prefix
+  message: "%prefix%Edit in /plugins/Tgc-System/config.yml"
   #If a player joins and has a status set he will be shown a message with the players status
   status: false
 
@@ -89,23 +95,38 @@ resourcePack:
   hash: ''
   promt: ''
   force: false
+  #The time after which the player gets kicked if he hasn't loaded the pack in seconds (force must be true for this)
+  maxLoadTime: 10
 
 #You can create multiple motds and everytime someone loads/refreshes his multiplayer menu that player will see a random motd
 #Use \n for the second line
 motds:
   enabled: false
+  #This means that the real motd will only be show to ip addresses that players one the servers have
+  #So if someone random has the ip the default "A Minecraft Server" Motd will be shown and the max player
+  #count will be 20 so it is harder to find the server with a scanner
+  hiddenMode: false
   list: []
 
 maintenance:
-  motd: "§4Server is in Maintenance"
+  motd: "§cServer is in Maintenance"
   kickMessage: "This server is now in maintenance mode"
   #You can add a 64x64 png file to the Plugin directory and that will be set as you maintenance icon
+  #Must be called maintenance-icon.png
   icon: false
 
 #Auto save your world if your hoster doesn't have that functionality
 autoSave:
   enabled: false
   time: '1h'
+
+#This makes to so if you right-click on wheat, potatoes, carrots, beetroots and cocoa beans
+easyHarvest:
+  enabled: false
+
+#Checks for new updates with the modrinth api
+newUpdateNotifications:
+  console: true
 
 #These commands are blocked e.g. plugins
 blockedCommands: []
@@ -121,7 +142,7 @@ blockedPrefixes: []
 
 ````
 #Do not edit or things might break!
-version: 1.4
+version: 1.5
 
 prefix:
   pluginPrefix: '§7[§1System§7] §f'
@@ -135,8 +156,9 @@ joinQuitMessage:
 
 onJoin:
   enabled: false
-  #Here you also can use color codes and "%AlertPrefix%" will be replaced with the alert Prefix
-  message: "Edit in /plugins/Tgc-System/config.yml"
+  #Here you also can use color codes, %prefix% will be replaced with the plugins prefix and
+  #%alertPrefix% will be replaced with the alert Prefix
+  message: "%prefix%Edit in /plugins/Tgc-System/config.yml"
   #If a player joins and has a status set he will be shown a message with the players status
   status: true
 
@@ -178,15 +200,21 @@ resourcePack:
   hash: ''
   promt: ''
   force: false
+  #The time after which the player gets kicked if he hasn't loaded the pack in seconds (force must be true for this)
+  maxLoadTime: 10
 
 #You can create multiple motds and everytime someone loads/refreshes his multiplayer menu that player will see a random motd
 #Use \n for the second line
 motds:
   enabled: true
+  #This means that the real motd will only be show to ip addresses that players one the servers have
+  #So if someone random has the ip the default "A Minecraft Server" Motd will be shown and the max player
+  #count will be 20 so it is harder to find the server with a scanner
+  hiddenMode: true
   list: ["Example1 1. Line\nExample1 2. Line", "Example2 1. Line\nExample2 2. Line"]
 
 maintenance:
-  motd: "§4Server is in Maintenance"
+  motd: "§cServer is in Maintenance"
   kickMessage: "This server is now in maintenance mode"
   #You can add a 64x64 png file to the Plugin directory and that will be set as you maintenance icon
   icon: true
@@ -195,6 +223,14 @@ maintenance:
 autoSave:
   enabled: true
   time: '1h'
+
+#This makes to so if you right-click on wheat, potatoes, carrots, beetroots and cocoa beans
+easyHarvest:
+  enabled: true
+
+#Checks for new updates with the modrinth api
+newUpdateNotifications:
+  console: true
 
 #These commands are blocked e.g. plugins
 #Do 'blockedCommands: []' if it should be empty
@@ -219,3 +255,9 @@ blockedPrefix:
   - 'sbs-system:'
 ````
 </details>
+
+-----
+
+# Dependencies
+
+- [CommandAPI](https://github.com/JorelAli/CommandAPI) (MIT License)

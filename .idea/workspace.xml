@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c085279f-3fca-4b5c-a6cc-39ec7ca0c6a2" name="Changes" comment="Because with this the entire plugin was rewritten there may be some bugs I have overlooked please report them to me &#10;- Rewrote the entire plugin&#10;- Now uses the [CommandAPI](https://commandapi.jorel.dev)&#10;- Made the src available&#10;- Added a permission system&#10;- Added a reply command&#10;- Added highlighting for chat messages with your name&#10;- Added a fly speed command&#10;- Some other small changes and fixes">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="c085279f-3fca-4b5c-a6cc-39ec7ca0c6a2" name="Changes" comment="&#10;Added an extra layer of security for loading the resource pack with force&#10;Added a update checker (will return false until release is uploaded to modrinth)&#10;Tweaked some other things slightly" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -36,23 +34,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/Timongcraft/IdeaProjects/Tgc-System (Plugin)",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Timongcraft/IdeaProjects/Tgc-System (Plugin)/src/main/java/timongcraft/util&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Timongcraft\IdeaProjects\Tgc-System (Plugin)\src\main\java\timongcraft\util" />
       <recent name="C:\Users\Timongcraft\IdeaProjects\Tgc-System new\src\main\java\timongcraft\commands" />
       <recent name="C:\Users\Timongcraft\IdeaProjects\Tgc-System new\src\main\resources" />
       <recent name="C:\Users\Timongcraft\IdeaProjects\Tgc-System new\src\main\java\timongcraft" />
@@ -106,6 +105,15 @@
       <workItem from="1683396271460" duration="55000" />
       <workItem from="1683396330532" duration="78000" />
       <workItem from="1683396427546" duration="127000" />
+      <workItem from="1683396562070" duration="4887000" />
+      <workItem from="1683444814596" duration="2469000" />
+      <workItem from="1683454679930" duration="7970000" />
+      <workItem from="1683479628954" duration="4921000" />
+      <workItem from="1683523352817" duration="8310000" />
+      <workItem from="1683546789475" duration="5873000" />
+      <workItem from="1683559276682" duration="3848000" />
+      <workItem from="1683566580235" duration="3159000" />
+      <workItem from="1683610099079" duration="9403000" />
     </task>
     <task id="LOCAL-00001" summary="Because with this the entire plugin was rewritten there may be some bugs I have overlooked please report them to me &#10;- Rewrote the entire plugin&#10;- Now uses the [CommandAPI](https://commandapi.jorel.dev)&#10;- Made the src available&#10;- Added a permission system&#10;- Added a reply command&#10;- Added highlighting for chat messages with your name&#10;- Added a fly speed command&#10;- Some other small changes and fixes">
       <created>1683395873207</created>
@@ -114,7 +122,42 @@
       <option name="project" value="LOCAL" />
       <updated>1683395873207</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Changed available version in issue template">
+      <created>1683397020501</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1683397020501</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Fixed some small errors&#10;Changed some messages slightly&#10;Made players with the tgc-system.team permission able to use colorcodes in chat&#10;Changed left forEach to for loops for a minimal better performance">
+      <created>1683403586320</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1683403586320</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Fixed some small errors&#10;Fixed MaintenanceCommand&#10;Fixed AutoSave and made it use BukkitRunnable&#10;Changed some messages slightly&#10;Made players with the tgc-system.team permission able to use colorcodes in chat&#10;Changed left forEach to for loops for a minimal better performance&#10;Removed default maintenance-icon&#10;Differentiated plugin version and config version&#10;Simplified sendToTeam methode&#10;Added modrinth link while it is not even on there (at the moment)">
+      <created>1683543500829</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1683543500829</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Fixed error in onDisable if you don't have AutoSave enabled&#10;Fixed version check returning true when the version isn't set&#10;Fixed the config in the ReadMe&#10;Renamed the version in the config to ConfigVersion because it is a different version than the pluings version&#10;Removed default maintenance-icon file&#10;Added hidden motd mode&#10;Added easy harvest&#10;Added [CommandAPI](https://github.com/JorelAli/CommandAPI) dependency to ReadMe">
+      <created>1683568407855</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1683568407855</updated>
+    </task>
+    <task id="LOCAL-00006" summary="&#10;Added an extra layer of security for loading the resource pack with force&#10;Added a update checker (will return false until release is uploaded to modrinth)&#10;Tweaked some other things slightly">
+      <created>1683634093475</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1683634093475</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -133,6 +176,11 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Because with this the entire plugin was rewritten there may be some bugs I have overlooked please report them to me &#10;- Rewrote the entire plugin&#10;- Now uses the [CommandAPI](https://commandapi.jorel.dev)&#10;- Made the src available&#10;- Added a permission system&#10;- Added a reply command&#10;- Added highlighting for chat messages with your name&#10;- Added a fly speed command&#10;- Some other small changes and fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Because with this the entire plugin was rewritten there may be some bugs I have overlooked please report them to me &#10;- Rewrote the entire plugin&#10;- Now uses the [CommandAPI](https://commandapi.jorel.dev)&#10;- Made the src available&#10;- Added a permission system&#10;- Added a reply command&#10;- Added highlighting for chat messages with your name&#10;- Added a fly speed command&#10;- Some other small changes and fixes" />
+    <MESSAGE value="Changed available version in issue template" />
+    <MESSAGE value="Fixed some small errors&#10;Changed some messages slightly&#10;Made players with the tgc-system.team permission able to use colorcodes in chat&#10;Changed left forEach to for loops for a minimal better performance" />
+    <MESSAGE value="Fixed some small errors&#10;Fixed MaintenanceCommand&#10;Fixed AutoSave and made it use BukkitRunnable&#10;Changed some messages slightly&#10;Made players with the tgc-system.team permission able to use colorcodes in chat&#10;Changed left forEach to for loops for a minimal better performance&#10;Removed default maintenance-icon&#10;Differentiated plugin version and config version&#10;Simplified sendToTeam methode&#10;Added modrinth link while it is not even on there (at the moment)" />
+    <MESSAGE value="Fixed error in onDisable if you don't have AutoSave enabled&#10;Fixed version check returning true when the version isn't set&#10;Fixed the config in the ReadMe&#10;Renamed the version in the config to ConfigVersion because it is a different version than the pluings version&#10;Removed default maintenance-icon file&#10;Added hidden motd mode&#10;Added easy harvest&#10;Added [CommandAPI](https://github.com/JorelAli/CommandAPI) dependency to ReadMe" />
+    <MESSAGE value="&#10;Added an extra layer of security for loading the resource pack with force&#10;Added a update checker (will return false until release is uploaded to modrinth)&#10;Tweaked some other things slightly" />
+    <option name="LAST_COMMIT_MESSAGE" value="&#10;Added an extra layer of security for loading the resource pack with force&#10;Added a update checker (will return false until release is uploaded to modrinth)&#10;Tweaked some other things slightly" />
   </component>
 </project>
