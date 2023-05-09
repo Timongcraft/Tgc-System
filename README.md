@@ -2,6 +2,7 @@
    **Information**
 - Bug Reports and Feature Request are welcome, but I maybe won't implement them!
 - You can toggle most features look at the config below
+- The status system will break things if you are using teams because it is not packet based and uses teams to display the status in the tab list!
 
 -----
 
