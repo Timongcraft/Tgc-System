@@ -6,7 +6,7 @@
 
     <groupId>timongcraft</groupId>
     <artifactId>Tgc-System</artifactId>
-    <version>1.41</version>
+    <version>1.42</version>
     <packaging>jar</packaging>
 
     <name>Tgc-System</name>
@@ -74,7 +74,7 @@
         <dependency>
             <groupId>dev.jorel</groupId>
             <artifactId>commandapi-bukkit-shade</artifactId>
-            <version>9.0.0</version>
+            <version>9.0.1</version>
         </dependency>
     </dependencies>
 </project>

@@ -2,14 +2,17 @@
    **Information**
 - Bug Reports and Feature Request are welcome, but I maybe won't implement them!
 - You can toggle most features look at the config below
-- The status system will break things if you are using teams because it is not packet based and uses teams to display the status in the tab list!
+- If you are using vanilla teams for chat formatting they are only updated while the player joins for performance reason!
+- If you are using version 1.41 and below and vanilla teams can't be used for chat formatting
+
+[![Modrinth](modrinth.png)](https://modrinth.com/plugin/tgc-system)
 
 -----
 
 # Features
 - SpawnElytra
 - Statuses
-- AntiChatReporting (by overriding the default msg command and sending chat messages as server)
+- AntiChatReporting (by overriding the default msg and say command and sending chat messages as server)
 - A reply command
 - A colorcodes command, so you can check the colorcodes if you forgot them
 - Join & quit message
@@ -19,9 +22,10 @@
 - A permission system
 - A maintenance system
 - A auto save system
+- A team chat
 - A resource pack system
 - A alert/broadcast command
-- A fly speed command
+- A speed, walkspeed and flyspeed command
 - A reboot command that reboots server after a specified amount of minutes with a reason
 - A plugin command to disable plugins
 - Time in chat messages with formatting
@@ -37,11 +41,13 @@
 
 ````
 #Do not edit or things might break!
-version: 1.5
+version: 1.6
 
 prefix:
   pluginPrefix: '§7[§1System§7] §f'
   alertPrefix: '§7[§4Alert§7] §f'
+  teamChatPrefix: '§7[§4TeamChat§7] §r'
+  teamChatPrefixInChat: '#'
 
 #You can use color codes and "%Player%" will be replaced with the player name
 joinQuitMessage:
@@ -142,11 +148,13 @@ blockedPrefixes: []
 
 ````
 #Do not edit or things might break!
-version: 1.5
+version: 1.6
 
 prefix:
   pluginPrefix: '§7[§1System§7] §f'
   alertPrefix: '§7[§4Alert§7] §f'
+  teamChatPrefix: '§7[§4TeamChat§7] §r'
+  teamChatPrefixInChat: '#'
 
 #You can use color codes and "%Player%" will be replaced with the player name
 joinQuitMessage:

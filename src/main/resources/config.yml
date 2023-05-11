@@ -1,9 +1,11 @@
 #Do not edit or things might break!
-configVersion: 1.5
+configVersion: 1.6
 
 prefix:
   pluginPrefix: '§7[§1System§7] §f'
   alertPrefix: '§7[§4Alert§7] §f'
+  teamChatPrefix: '§7[§4TeamChat§7] §r'
+  teamChatPrefixInChat: '#'
 
 #You can use color codes and "%Player%" will be replaced with the player name
 joinQuitMessage:

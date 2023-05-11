@@ -12,14 +12,14 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import timongcraft.Main;
-import timongcraft.util.TeamUtils;
+import timongcraft.util.PlayerUtils;
 
 public class RebootCommand {
     public static void register() {
         new CommandTree("reboot")
                 .withFullDescription("Reboot the server after a specified time")
                 .withPermission("tgc-system.team")
-                .then(new IntegerArgument("minutes", 1, 59)
+                .then(new IntegerArgument("minutes", 1)
                         .then(new GreedyStringArgument("reason")
                                 .executes(new RebootExecutor())))
                 .register();
@@ -34,7 +34,7 @@ public class RebootCommand {
             String reason = (String) args.get("reason");
 
             sender.sendMessage(Main.get().getPrefix() + "Scheduled reboot task in: " + args.get("minutes") + " Minutes with reason: " + reason);
-            TeamUtils.sendToTeam(sender.getName(), null , "Scheduled reboot task in: " + args.get("minutes") + " Minutes with reason: " + reason);
+            PlayerUtils.sendToTeam(sender.getName(), null , "Scheduled reboot task in: " + args.get("minutes") + " Minutes with reason: " + reason);
 
             BukkitRunnable runnable = new BukkitRunnable() {
                 @Override

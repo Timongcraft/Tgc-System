@@ -11,7 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import timongcraft.Main;
-import timongcraft.util.TeamUtils;
+import timongcraft.util.PlayerUtils;
 
 public class FlySpeedCommand {
     public static void register() {
@@ -42,35 +42,46 @@ public class FlySpeedCommand {
 
                 player.setFlySpeed(0.1f);
                 player.sendMessage(Main.get().getPrefix() + "Fly speed has been reset");
-                TeamUtils.sendToTeam(player.getName(), null, "Reset his fly speed");
+                PlayerUtils.sendToTeam(player.getName(), null, "Reset his fly speed");
             } else if(args.args().length == 1 || (args.args().length == 2 && sender == args.get("target"))) {
                 if(!(sender instanceof Player player)) {
                     sender.sendMessage(Main.get().getPrefix() + "§cUsage: /flyspeed [<flyspeed>] [<player>]");
                     return;
                 }
 
-                float flySpeed = Float.parseFloat(args.get("flyspeed").toString())/10;
+                float flySpeed = 0.2f;
+
+                if((int) args.get("speed") <= 9) {
+                    flySpeed = Float.parseFloat("0." + args.get("speed"));
+
+                } else if((int) args.get("speed") == 10) flySpeed = 1f;
 
                 player.setFlySpeed(flySpeed);
                 if((int) args.get("flyspeed") == 1) {
                     player.sendMessage(Main.get().getPrefix() + "Fly speed has been reset");
-                    TeamUtils.sendToTeam(player.getName(), null, "Reset his fly speed" );
+                    PlayerUtils.sendToTeam(player.getName(), null, "Reset his fly speed" );
                 } else  {
                     player.sendMessage(Main.get().getPrefix() + "Set fly speed to " + args.get("flyspeed"));
-                    TeamUtils.sendToTeam(player.getName(), null, "Set his fly speed to " + args.get("flyspeed"));
+                    PlayerUtils.sendToTeam(player.getName(), null, "Set his fly speed to " + args.get("flyspeed"));
                 }
             } else if(args.args().length == 2) {
-                float flySpeed = Float.parseFloat(args.get("flyspeed").toString())/10;
+                float flySpeed = 0.2f;
+
+                if((int) args.get("speed") <= 9) {
+                    flySpeed = Float.parseFloat("0." + args.get("speed"));
+
+                } else if((int) args.get("speed") == 10) flySpeed = 1f;
+
                 Player target = (Player) args.get("target");
                 target.setFlySpeed(flySpeed);
                 if((int) args.get("flyspeed") == 1) {
                     target.sendMessage(Main.get().getPrefix() + "Fly speed has been reset by " + sender.getName());
                     sender.sendMessage(Main.get().getPrefix() + "Reset fly speed of " + target.getName());
-                    TeamUtils.sendToTeam(sender.getName(), target.getName(), "Reset the fly speed of " + target.getName());
+                    PlayerUtils.sendToTeam(sender.getName(), target.getName(), "Reset the fly speed of " + target.getName());
                 } else {
                     target.sendMessage(Main.get().getPrefix() + "Fly speed has been set to " + args.get("flyspeed") + " by " + sender.getName());
                     sender.sendMessage(Main.get().getPrefix() + "Set fly speed of " + target.getName() + " to " + args.get("flyspeed"));
-                    TeamUtils.sendToTeam(sender.getName(), target.getName(), "Set the fly speed of " + target.getName() + " to " + args.get("flyspeed"));
+                    PlayerUtils.sendToTeam(sender.getName(), target.getName(), "Set the fly speed of " + target.getName() + " to " + args.get("flyspeed"));
                 }
             }
 

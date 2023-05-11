@@ -63,7 +63,7 @@ public class Main extends JavaPlugin {
 
     private void configVersionCheck() {
         double configVersion = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "config.yml")).getDouble("configVersion");
-        if(configVersion != 1.5) {
+        if(configVersion != 1.6) {
             getLogger().info("§cThe version of the config.yml does not match with the current plugin version!");
             getLogger().info("§cUnless you delete the config and restart the server the plugin will be stopped!");
             getLogger().info("§cDo not edit the version in the config.yml or things will break!");
@@ -89,9 +89,11 @@ public class Main extends JavaPlugin {
         ReloadConfigsCommand.register();
         ResourcePackCommand.register();
         if(Main.get().getConfig().getBoolean("statuses.enabled")) {
-            PermissionManagerCommand.register();
+            StatusCommand.register();
         }
-        StatusCommand.register();
+        SayCommand.register();
+        SpeedCommand.register();
+        WalkSpeedCommand.register();
     }
 
     private void registerEvents() {
