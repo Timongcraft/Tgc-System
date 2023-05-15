@@ -1,6 +1,7 @@
 package timongcraft.commands;
 
 import dev.jorel.commandapi.CommandAPI;
+import dev.jorel.commandapi.CommandPermission;
 import dev.jorel.commandapi.CommandTree;
 import dev.jorel.commandapi.arguments.GreedyStringArgument;
 import dev.jorel.commandapi.exceptions.WrapperCommandSyntaxException;
@@ -16,6 +17,7 @@ public class SayCommand {
 
         new CommandTree("say")
                 .withFullDescription("Send a message from that sender")
+                .withPermission(CommandPermission.OP)
                 .then(new GreedyStringArgument("message")
                         .executes(new SayExecutor()))
                 .register();

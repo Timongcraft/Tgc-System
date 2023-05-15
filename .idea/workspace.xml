@@ -4,20 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c085279f-3fca-4b5c-a6cc-39ec7ca0c6a2" name="Changes" comment="Added a simple TeamChat&#10;Added a walk speed command&#10;Added a speed command&#10;Added the say command because chat reporting also applies there&#10;Updated CommandAPi to version 9.0.1 -&gt; RebootCommand's max minutes can now be as high as the int limit">
-      <change afterPath="$PROJECT_DIR$/modrinth.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/timongcraft/commands/SayCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/timongcraft/commands/SpeedCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/timongcraft/commands/WalkSpeedCommand.java" afterDir="false" />
+    <list default="true" id="c085279f-3fca-4b5c-a6cc-39ec7ca0c6a2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/commands/FlySpeedCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/commands/FlySpeedCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/commands/RebootCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/commands/RebootCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/listeners/ConnectionListeners.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/listeners/ConnectionListeners.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/listeners/OtherListeners.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/listeners/OtherListeners.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/commands/SayCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/commands/SayCommand.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,9 +64,9 @@
       <recent name="C:\Users\Timongcraft\IdeaProjects\Tgc-System (Plugin)" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="timongcraft.util" />
       <recent name="timongcraft.commands" />
       <recent name="timongcraft.listeners" />
-      <recent name="timongcraft.util" />
     </key>
   </component>
   <component name="RunManager">
@@ -140,6 +130,13 @@
       <workItem from="1683803170315" duration="369000" />
       <workItem from="1683804555408" duration="222000" />
       <workItem from="1683805700096" duration="798000" />
+      <workItem from="1683807268575" duration="4628000" />
+      <workItem from="1683814055280" duration="33000" />
+      <workItem from="1683814394437" duration="721000" />
+      <workItem from="1683891804875" duration="32000" />
+      <workItem from="1683891901123" duration="3082000" />
+      <workItem from="1683988011020" duration="23000" />
+      <workItem from="1684124239033" duration="1288000" />
     </task>
     <task id="LOCAL-00001" summary="Because with this the entire plugin was rewritten there may be some bugs I have overlooked please report them to me &#10;- Rewrote the entire plugin&#10;- Now uses the [CommandAPI](https://commandapi.jorel.dev)&#10;- Made the src available&#10;- Added a permission system&#10;- Added a reply command&#10;- Added highlighting for chat messages with your name&#10;- Added a fly speed command&#10;- Some other small changes and fixes">
       <created>1683395873207</created>
@@ -204,7 +201,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683635797498</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Added a simple TeamChat&#10;Added a walk speed command&#10;Added a speed command&#10;Added the say command because chat reporting also applies there&#10;Updated CommandAPI to version 9.0.1 -&gt; RebootCommands max minutes can now be as high as the int limit&#10;Reworked the StatusHandler so it no longer relies on minecrafts teams">
+      <created>1683811095673</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1683811095673</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -231,6 +235,8 @@
     <MESSAGE value="Fixed the config version in the ReadMe examples" />
     <MESSAGE value="Added status disclaimer" />
     <MESSAGE value="Changed versions in bug report template" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changed versions in bug report template" />
+    <MESSAGE value="Added a simple TeamChat&#10;Added a walk speed command&#10;Added a speed command&#10;Added the say command because chat reporting also applies there&#10;Updated CommandAPI to version 9.0.1 -&gt; RebootCommand's max minutes can now be as high as the int limit&#10;Reworked the StatusHandler so it no longer relies on minecrafts teams" />
+    <MESSAGE value="Added a simple TeamChat&#10;Added a walk speed command&#10;Added a speed command&#10;Added the say command because chat reporting also applies there&#10;Updated CommandAPI to version 9.0.1 -&gt; RebootCommands max minutes can now be as high as the int limit&#10;Reworked the StatusHandler so it no longer relies on minecrafts teams" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added a simple TeamChat&#10;Added a walk speed command&#10;Added a speed command&#10;Added the say command because chat reporting also applies there&#10;Updated CommandAPI to version 9.0.1 -&gt; RebootCommands max minutes can now be as high as the int limit&#10;Reworked the StatusHandler so it no longer relies on minecrafts teams" />
   </component>
 </project>

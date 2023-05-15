@@ -1,11 +1,11 @@
 # Tgc-System
    **Information**
-- Bug Reports and Feature Request are welcome, but I maybe won't implement them!
+- [Bug Report](https://github.com/Timongcraft/Tgc-System/issues/new?labels=bug&projects=&template=bug_report.yml&title=%5BBug%5D%3A+)s and [Feature Request](https://github.com/Timongcraft/Tgc-System/issues/new?labels=enhancement&projects=&template=feature_request.yml&title=%5BFeature+Request%5D%3A+)s are welcome, but I maybe won't implement them!
 - You can toggle most features look at the config below
-- If you are using vanilla teams for chat formatting they are only updated while the player joins for performance reason!
-- If you are using version 1.41 and below and vanilla teams can't be used for chat formatting
+- Version 1.4.2 and higher: Vanilla teams prefix/suffix is only updated while the player joins for performance reason!
+- Version 1.4.1 and below: Vanilla teams can't be used at all if you use the statuses feature!
 
-[![Modrinth](modrinth.png)](https://modrinth.com/plugin/tgc-system)
+[![Modrinth](https://raw.githubusercontent.com/Timongcraft/Tgc-System/master/modrinth.png)](https://modrinth.com/plugin/tgc-system)
 
 -----
 
