@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c085279f-3fca-4b5c-a6cc-39ec7ca0c6a2" name="Changes" comment="&#10;Added an extra layer of security for loading the resource pack with force&#10;Added a update checker (will return false until release is uploaded to modrinth)&#10;Tweaked some other things slightly" />
+    <list default="true" id="c085279f-3fca-4b5c-a6cc-39ec7ca0c6a2" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/commands/SayCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/commands/SayCommand.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -56,10 +60,13 @@
       <recent name="C:\Users\Timongcraft\IdeaProjects\Tgc-System new\src\main\resources" />
       <recent name="C:\Users\Timongcraft\IdeaProjects\Tgc-System new\src\main\java\timongcraft" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Timongcraft\IdeaProjects\Tgc-System (Plugin)" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="timongcraft.listeners" />
-      <recent name="timongcraft.commands" />
       <recent name="timongcraft.util" />
+      <recent name="timongcraft.commands" />
+      <recent name="timongcraft.listeners" />
     </key>
   </component>
   <component name="RunManager">
@@ -113,7 +120,23 @@
       <workItem from="1683546789475" duration="5873000" />
       <workItem from="1683559276682" duration="3848000" />
       <workItem from="1683566580235" duration="3159000" />
-      <workItem from="1683610099079" duration="9403000" />
+      <workItem from="1683610099079" duration="11233000" />
+      <workItem from="1683636938136" duration="142000" />
+      <workItem from="1683637120362" duration="2261000" />
+      <workItem from="1683646324121" duration="5685000" />
+      <workItem from="1683727102118" duration="351000" />
+      <workItem from="1683778283765" duration="1320000" />
+      <workItem from="1683802627864" duration="526000" />
+      <workItem from="1683803170315" duration="369000" />
+      <workItem from="1683804555408" duration="222000" />
+      <workItem from="1683805700096" duration="798000" />
+      <workItem from="1683807268575" duration="4628000" />
+      <workItem from="1683814055280" duration="33000" />
+      <workItem from="1683814394437" duration="721000" />
+      <workItem from="1683891804875" duration="32000" />
+      <workItem from="1683891901123" duration="3082000" />
+      <workItem from="1683988011020" duration="23000" />
+      <workItem from="1684124239033" duration="1288000" />
     </task>
     <task id="LOCAL-00001" summary="Because with this the entire plugin was rewritten there may be some bugs I have overlooked please report them to me &#10;- Rewrote the entire plugin&#10;- Now uses the [CommandAPI](https://commandapi.jorel.dev)&#10;- Made the src available&#10;- Added a permission system&#10;- Added a reply command&#10;- Added highlighting for chat messages with your name&#10;- Added a fly speed command&#10;- Some other small changes and fixes">
       <created>1683395873207</created>
@@ -157,7 +180,35 @@
       <option name="project" value="LOCAL" />
       <updated>1683634093475</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Fixed the config version in the ReadMe examples">
+      <created>1683634328508</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1683634328508</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Added status disclaimer">
+      <created>1683634564053</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1683634564053</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Changed versions in bug report template">
+      <created>1683635797498</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1683635797498</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Added a simple TeamChat&#10;Added a walk speed command&#10;Added a speed command&#10;Added the say command because chat reporting also applies there&#10;Updated CommandAPI to version 9.0.1 -&gt; RebootCommands max minutes can now be as high as the int limit&#10;Reworked the StatusHandler so it no longer relies on minecrafts teams">
+      <created>1683811095673</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1683811095673</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -181,6 +232,11 @@
     <MESSAGE value="Fixed some small errors&#10;Fixed MaintenanceCommand&#10;Fixed AutoSave and made it use BukkitRunnable&#10;Changed some messages slightly&#10;Made players with the tgc-system.team permission able to use colorcodes in chat&#10;Changed left forEach to for loops for a minimal better performance&#10;Removed default maintenance-icon&#10;Differentiated plugin version and config version&#10;Simplified sendToTeam methode&#10;Added modrinth link while it is not even on there (at the moment)" />
     <MESSAGE value="Fixed error in onDisable if you don't have AutoSave enabled&#10;Fixed version check returning true when the version isn't set&#10;Fixed the config in the ReadMe&#10;Renamed the version in the config to ConfigVersion because it is a different version than the pluings version&#10;Removed default maintenance-icon file&#10;Added hidden motd mode&#10;Added easy harvest&#10;Added [CommandAPI](https://github.com/JorelAli/CommandAPI) dependency to ReadMe" />
     <MESSAGE value="&#10;Added an extra layer of security for loading the resource pack with force&#10;Added a update checker (will return false until release is uploaded to modrinth)&#10;Tweaked some other things slightly" />
-    <option name="LAST_COMMIT_MESSAGE" value="&#10;Added an extra layer of security for loading the resource pack with force&#10;Added a update checker (will return false until release is uploaded to modrinth)&#10;Tweaked some other things slightly" />
+    <MESSAGE value="Fixed the config version in the ReadMe examples" />
+    <MESSAGE value="Added status disclaimer" />
+    <MESSAGE value="Changed versions in bug report template" />
+    <MESSAGE value="Added a simple TeamChat&#10;Added a walk speed command&#10;Added a speed command&#10;Added the say command because chat reporting also applies there&#10;Updated CommandAPI to version 9.0.1 -&gt; RebootCommand's max minutes can now be as high as the int limit&#10;Reworked the StatusHandler so it no longer relies on minecrafts teams" />
+    <MESSAGE value="Added a simple TeamChat&#10;Added a walk speed command&#10;Added a speed command&#10;Added the say command because chat reporting also applies there&#10;Updated CommandAPI to version 9.0.1 -&gt; RebootCommands max minutes can now be as high as the int limit&#10;Reworked the StatusHandler so it no longer relies on minecrafts teams" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added a simple TeamChat&#10;Added a walk speed command&#10;Added a speed command&#10;Added the say command because chat reporting also applies there&#10;Updated CommandAPI to version 9.0.1 -&gt; RebootCommands max minutes can now be as high as the int limit&#10;Reworked the StatusHandler so it no longer relies on minecrafts teams" />
   </component>
 </project>

@@ -7,7 +7,7 @@ public class AutoSaveHandler extends BukkitRunnable {
     @Override
     public void run() {
         Bukkit.getLogger().info("[AutoSave] saving the game..");
-        TeamUtils.sendToTeam("AutoSave", null, "saving the game...");
+        PlayerUtils.sendToTeam("AutoSave", null, "saving the game...");
 
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "save-all");
     }

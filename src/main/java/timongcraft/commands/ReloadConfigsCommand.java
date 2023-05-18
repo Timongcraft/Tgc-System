@@ -6,7 +6,7 @@ import dev.jorel.commandapi.executors.CommandArguments;
 import dev.jorel.commandapi.executors.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import timongcraft.Main;
-import timongcraft.util.TeamUtils;
+import timongcraft.util.PlayerUtils;
 
 public class ReloadConfigsCommand {
     public static void register() {
@@ -23,7 +23,7 @@ public class ReloadConfigsCommand {
             Main.get().reloadConfig();
             Main.get().getDataConfig().load();
             sender.sendMessage(Main.get().getPrefix() + "The Configs have been reloaded!");
-            TeamUtils.sendToTeam(sender.getName(), null, "Reloaded the plugins's configs");
+            PlayerUtils.sendToTeam(sender.getName(), null, "Reloaded the plugins's configs");
         }
     }
 }

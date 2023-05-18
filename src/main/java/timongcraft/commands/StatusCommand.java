@@ -32,8 +32,7 @@ public class StatusCommand {
                     return;
                 }
 
-                StatusHandler.setStatus(player, "");
-                StatusHandler.setAllPlayerTeams();
+                StatusHandler.setStatus(player, null);
                 player.sendMessage(Main.get().getPrefix() + "§aSuccessfully reset your status");
             } else if(args.args().length == 1) {
                 if(status.replaceAll("&[a-z-0-9]", "").length() > Main.get().getConfig().getInt("statuses.characterLimit")) {
@@ -42,7 +41,6 @@ public class StatusCommand {
                 }
 
                 StatusHandler.setStatus(player, status.replaceAll("&", "§"));
-                StatusHandler.setAllPlayerTeams();
                 player.sendMessage(Main.get().getPrefix() + "§aSuccessfully set your status to: " + status);
             }
         }

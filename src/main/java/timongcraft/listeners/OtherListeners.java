@@ -17,7 +17,7 @@ import org.bukkit.event.player.PlayerResourcePackStatusEvent;
 import timongcraft.Main;
 import timongcraft.util.CropDrop;
 import timongcraft.util.CropDrops;
-import timongcraft.util.StatusHandler;
+import timongcraft.util.PlayerUtils;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -39,16 +39,31 @@ public class OtherListeners implements Listener {
 
         if(Main.get().getConfig().getBoolean("statuses.enabled")) {
             if(player.hasPermission("tgc-system.team")) {
-                playerChatName = (new StatusHandler().getStatus(player) != null ? new StatusHandler().getStatusWithBrackets(player) : "") + "§4<§c" + player.getName() + "§4>§f";
-            } else playerChatName = (new StatusHandler().getStatus(player) != null ? new StatusHandler().getStatusWithBrackets(player) : "") + "§8<§7" + player.getName() + "§8>§7";
+                playerChatName = "§4<§c" + PlayerUtils.getPlayerNameWithStatus(player, true) + "§4>§f";
+            } else playerChatName = "§8<§7" + PlayerUtils.getPlayerNameWithStatus(player, true) + "§8>§7";
         } else {
             if(player.hasPermission("tgc-system.team")) {
-                playerChatName = "§4<§c" + player.getName() + "§4>§f";
-                message = message.replaceAll("&", "§");
-            } else playerChatName = "§f<" + player.getName() + "§f>";
+                playerChatName = "§4<§c" + PlayerUtils.getPlayerNameWithStatus(player, false) + "§4>§f";
+            } else playerChatName = "§f<" + PlayerUtils.getPlayerNameWithStatus(player, false) + "§f>";
         }
 
-        if(Main.get().getConfig().getBoolean("chatSystem.noLinks") && !player.hasPermission("sb.team")) {
+        if(player.hasPermission("sbs.team")) {
+            message = message.replaceAll("&", "§");
+
+            if (message.startsWith(Main.get().getConfig().getString("prefix.teamChatPrefixInChat"))) {
+                for (Player teamPlayer : Bukkit.getOnlinePlayers()) {
+                    if (teamPlayer.hasPermission("sbs.team")) {
+                        teamPlayer.sendMessage(Main.get().getConfig().getString("prefix.teamChatPrefix") + message);
+
+                    }
+                }
+                event.setCancelled(true);
+                return;
+            }
+        }
+
+
+        if(Main.get().getConfig().getBoolean("chatSystem.noLinks") && !player.hasPermission("tgc-system.team")) {
             Pattern urlPattern = Pattern.compile("^(http:\\/\\/www\\.|https:\\/\\/www\\.|http:\\/\\/|https:\\/\\/)?[a-z0-9]+([\\-\\.]{1}[a-z0-9]+)*\\.[a-z]{2,5}(:[0-9]{1,5})?(\\/.*)?$");
             for (String messagePart : message.split("\\s+")) {
                 Matcher matcher = urlPattern.matcher(messagePart);

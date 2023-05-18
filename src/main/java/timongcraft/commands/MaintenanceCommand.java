@@ -9,7 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import timongcraft.Main;
-import timongcraft.util.TeamUtils;
+import timongcraft.util.PlayerUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +70,7 @@ public class MaintenanceCommand {
 
                 if(maintenanceMode) {
                     sender.sendMessage(Main.get().getPrefix() + "Maintenance mode enabled.");
-                    TeamUtils.sendToTeam(sender.getName(), null, "Enabled maintenance mode");
+                    PlayerUtils.sendToTeam(sender.getName(), null, "Enabled maintenance mode");
                     for(Player player : Bukkit.getOnlinePlayers()) {
                         if(!isAllowed(player)) {
                             player.kickPlayer(maintenanceKickMessage);
@@ -78,7 +78,7 @@ public class MaintenanceCommand {
                     }
                 } else {
                     sender.sendMessage(Main.get().getPrefix() + "Maintenance mode disabled.");
-                    TeamUtils.sendToTeam(sender.getName(), null, "Disabled maintenance mode");
+                    PlayerUtils.sendToTeam(sender.getName(), null, "Disabled maintenance mode");
                 }
 
             }

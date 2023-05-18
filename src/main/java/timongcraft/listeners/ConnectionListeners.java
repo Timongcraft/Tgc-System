@@ -1,7 +1,6 @@
 package timongcraft.listeners;
 
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -36,6 +35,8 @@ public class ConnectionListeners implements Listener {
         maintenanceJoinHandler(player, event);
 
         permissionJoinHandler(player);
+
+        StatusHandler.refreshStatus(player);
     }
 
     @EventHandler
@@ -48,8 +49,6 @@ public class ConnectionListeners implements Listener {
         resourcePackJoinHandler(player);
 
         playerJoinMessageJoinHandler(player, event);
-
-        teamJoinHandler(event, player);
     }
 
     @EventHandler
@@ -57,8 +56,6 @@ public class ConnectionListeners implements Listener {
         Player player = event.getPlayer();
 
         playerNameQuitHandler(player, event);
-
-        teamQuitHandler(event, player);
     }
 
     private void motdHandler(ServerListPingEvent event) {
@@ -103,6 +100,18 @@ public class ConnectionListeners implements Listener {
         }
     }
 
+    private void maintenanceJoinHandler(Player player, PlayerLoginEvent event) {
+        if(Main.get().getDataConfig().getBoolean("maintenance.enabled") && !MaintenanceCommand.isAllowed(player)) {
+            Main.get().getLogger().info(Main.get().getPrefix() + player.getName() + " tried to join while maintenance mode");
+            for (Player onlinePlayers : Bukkit.getOnlinePlayers()) {
+                if(onlinePlayers.hasPermission("tgc-system.team")) {
+                    onlinePlayers.sendMessage(Main.get().getPrefix() + player.getName() + " tried to join while maintenance mode");
+                }
+            }
+            event.disallow(PlayerLoginEvent.Result.KICK_OTHER, Main.get().getConfig().getString("maintenance.kickMessage"));
+        }
+    }
+
     private void permissionJoinHandler(Player player) {
         List<String> playerPermissions = Main.get().getDataConfig().getStringList("players." + player.getUniqueId() + ".permissions");
         List<String> playerGroups = Main.get().getDataConfig().getStringList("players." + player.getUniqueId() + ".groups");
@@ -122,18 +131,6 @@ public class ConnectionListeners implements Listener {
                 boolean value = Boolean.parseBoolean(parts[1]);
                 player.addAttachment(Main.get(), permission, value);
             }
-        }
-    }
-
-    private void maintenanceJoinHandler(Player player, PlayerLoginEvent event) {
-        if(Main.get().getDataConfig().getBoolean("maintenance.enabled") && !MaintenanceCommand.isAllowed(player)) {
-            Main.get().getLogger().info(Main.get().getPrefix() + player.getName() + " tried to join while maintenance mode");
-            for (Player onlinePlayers : Bukkit.getOnlinePlayers()) {
-                if(onlinePlayers.hasPermission("tgc-system.team")) {
-                    onlinePlayers.sendMessage(Main.get().getPrefix() + player.getName() + " tried to join while maintenance mode");
-                }
-            }
-            event.disallow(PlayerLoginEvent.Result.KICK_OTHER, Main.get().getConfig().getString("maintenance.kickMessage"));
         }
     }
 
@@ -165,45 +162,14 @@ public class ConnectionListeners implements Listener {
         }
     }
 
-    private void teamJoinHandler(PlayerJoinEvent event, Player player) {
-        if(player.hasPermission("tgc-system.team")) {
-            for(Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-                if(onlinePlayer.hasPermission("tgc-system.team") && onlinePlayer.getGameMode().equals(GameMode.SPECTATOR)) player.hidePlayer(Main.get(), onlinePlayer);
-
-            }
-
-            if(player.getGameMode().equals(GameMode.SPECTATOR) && Bukkit.getOnlinePlayers().size() > 1) {
-                event.setJoinMessage(null);
-
-                for(Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-                    if(onlinePlayer.hasPermission("tgc-system.team")) {
-                        onlinePlayer.sendMessage(Main.get().getConfig().getString("joinQuitMessage.joinMessage").replaceAll("%Player%",player.getName().replaceAll("&", "§")));
-                    }
-                }
-            }
-        }
-    }
-
-    private void teamQuitHandler(PlayerQuitEvent event, Player player) {
-        if(player.hasPermission("tgc-system.team") && player.getGameMode().equals(GameMode.SPECTATOR) && Bukkit.getOnlinePlayers().size() > 1) {
-            event.setQuitMessage(null);
-
-            for(Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-                if(onlinePlayer.hasPermission("tgc-system.team")) {
-                    onlinePlayer.sendMessage(Main.get().getConfig().getString("joinQuitMessage.quitMessage").replaceAll("%Player%",player.getName().replaceAll("&", "§")));
-                }
-            }
-        }
-    }
-
     private void playerJoinMessageJoinHandler(Player player, PlayerJoinEvent event) {
         if(Main.get().getConfig().getBoolean("joinQuitMessage.enabled")) {
-            event.setJoinMessage(Main.get().getConfig().getString("joinQuitMessage.joinMessage").replaceAll("%Player%",player.getName().replaceAll("&", "§")));
+            event.setJoinMessage(Main.get().getConfig().getString("joinQuitMessage.joinMessage").replaceAll("%Player%", player.getName()).replaceAll("&", "§"));
         }
 
         if(Main.get().getConfig().getBoolean("onJoin.enabled")){
             if(Main.get().getConfig().getString("onJoin.message") != null) {
-                player.sendMessage(Main.get().getConfig().getString("onJoin.message").replaceAll("%prefix%", Main.get().getPrefix().replaceAll("%alertPrefix%", Main.get().getConfig().getString("prefix.alertPrefix").replaceAll("&", "§"))));
+                player.sendMessage(Main.get().getConfig().getString("onJoin.message").replaceAll("%prefix%", Main.get().getPrefix().replaceAll("%alertPrefix%", Main.get().getConfig().getString("prefix.alertPrefix")).replaceAll("&", "§")));
             }
         }
 
@@ -217,7 +183,7 @@ public class ConnectionListeners implements Listener {
 
     private void playerNameQuitHandler(Player player, PlayerQuitEvent event) {
         if(Main.get().getConfig().getBoolean("joinQuitMessage.enabled")) {
-            event.setQuitMessage(Main.get().getConfig().getString("joinQuitMessage.quitMessage").replaceAll("%Player%",player.getName().replaceAll("&", "§")));
+            event.setQuitMessage(Main.get().getConfig().getString("joinQuitMessage.quitMessage").replaceAll("%Player%", player.getName()).replaceAll("&", "§"));
         }
     }
     
