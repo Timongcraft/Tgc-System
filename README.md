@@ -249,9 +249,6 @@ blockedCommands:
   - 'icanhasbukkit'
   - 'pl'
   - 'plugins'
-  - 'me'
-  - 'tm'
-  - 'teammsg'
   - 'ver'
   - 'version'
 
@@ -260,7 +257,7 @@ blockedCommands:
 blockedPrefix:
   - 'bukkit:'
   - 'minecraft:'
-  - 'sbs-system:'
+  - 'tgc-system:'
 ````
 </details>
 

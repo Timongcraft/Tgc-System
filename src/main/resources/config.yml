@@ -21,8 +21,8 @@ onJoin:
   #If a player joins and has a status set he will be shown a message with the players status
   status: false
 
-#This makes chat reporting impossible my overriding the msg command and sending all chat messages as the server
-#But also includes features like a sound/highlighting when your name is in a message
+#This makes chat reporting impossible by overriding the msg, say and me commands and sending all chat messages as the server
+#But also includes features like a sound/highlighting when your name is in a message and a reply command
 chatSystem:
   enabled: true
   noLinks: false
