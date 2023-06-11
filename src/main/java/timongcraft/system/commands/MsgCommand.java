@@ -3,7 +3,6 @@ package timongcraft.system.commands;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandTree;
 import dev.jorel.commandapi.arguments.GreedyStringArgument;
-import dev.jorel.commandapi.exceptions.WrapperCommandSyntaxException;
 import dev.jorel.commandapi.executors.*;
 import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -21,52 +20,47 @@ public class MsgCommand {
 
         new CommandTree("msg")
                 .withShortDescription("Send a private message to a player")
+                .withUsage("/msg <target> <message>")
                 .withAliases("tell", "w")
                 .then(new PlayerOnlyArgument("target")
                         .then(new GreedyStringArgument("message")
-                                .executesPlayer(new PlayerMsgExecutor())
-                                .executesCommandBlock(new CommandBlockMsgExecutor())
-                                .executesConsole(new ConsoleMsgExecutor())))
+                                .executesPlayer(MsgCommand::playerMsgManager)
+                                .executesCommandBlock(MsgCommand::commandBlockManager)
+                                .executesConsole(MsgCommand::consoleMsgManager)))
                 .register();
     }
 
-    private static class PlayerMsgExecutor implements PlayerCommandExecutor {
-        @Override
-        public void run(Player player, CommandArguments args) throws WrapperCommandSyntaxException {
-            Player target = (Player) args.get("target");
-            String message = (String) args.get("message");
+    private static int playerMsgManager(Player sender, CommandArguments args) {
+        Player target = (Player) args.get("target");
+        String message = (String) args.get("message");
 
-            if(player.hasPermission("tgc-system.team")) {
-                message = message.replaceAll("&", "§");
-            }
-
-            player.sendMessage("§7§oYou whisper to " + target.getName() + ": " + message);
-            target.sendMessage("§7§o" + player.getName() + " whispers to you: " + message);
-            ReplyCommand.setLastReply(player.getUniqueId(), target.getUniqueId());
+        if(sender.hasPermission("tgc-system.team")) {
+            message = message.replaceAll("&", "§");
         }
+
+        sender.sendMessage("§7§oYou whisper to " + target.getName() + ": " + message);
+        target.sendMessage("§7§o" + sender.getName() + " whispers to you: " + message);
+        ReplyCommand.setLastReply(sender.getUniqueId(), target.getUniqueId());
+        return 1;
     }
 
-    private static class ConsoleMsgExecutor implements ConsoleCommandExecutor {
-        @Override
-        public void run(ConsoleCommandSender sender, CommandArguments args) throws WrapperCommandSyntaxException {
-            Player target = (Player) args.get("target");
-            String message = (String) args.get("message");
-            message = message.replaceAll("&", "§");
+    private static int consoleMsgManager(ConsoleCommandSender sender, CommandArguments args) {
+        Player target = (Player) args.get("target");
+        String message = (String) args.get("message");
+        message = message.replaceAll("&", "§");
 
-            sender.sendMessage("§7§oYou whisper to " + target.getName() + ": " + message);
-            target.sendMessage("§7§oServer whispers to you: " + message);
-        }
+        sender.sendMessage("§7§oYou whisper to " + target.getName() + ": " + message);
+        target.sendMessage("§7§oServer whispers to you: " + message);
+        return 1;
     }
 
-    private static class CommandBlockMsgExecutor implements CommandBlockCommandExecutor {
-        @Override
-        public void run(BlockCommandSender sender, CommandArguments args) throws WrapperCommandSyntaxException {
-            Player target = (Player) args.get("target");
-            String message = (String) args.get("message");
-            message = message.replaceAll("&", "§");
+    private static int commandBlockManager(BlockCommandSender sender, CommandArguments args) {
+        Player target = (Player) args.get("target");
+        String message = (String) args.get("message");
+        message = message.replaceAll("&", "§");
 
-            sender.sendMessage("§7§oYou whisper to " + target.getName() + message);
-            target.sendMessage("§7§o@ whispers to you: " + message);
-        }
+        sender.sendMessage("§7§oYou whisper to " + target.getName() + message);
+        target.sendMessage("§7§o@ whispers to you: " + message);
+        return 1;
     }
 }

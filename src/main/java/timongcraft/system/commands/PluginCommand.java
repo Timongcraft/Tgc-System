@@ -4,9 +4,7 @@ import dev.jorel.commandapi.CommandTree;
 import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.LiteralArgument;
 import dev.jorel.commandapi.arguments.StringArgument;
-import dev.jorel.commandapi.exceptions.WrapperCommandSyntaxException;
 import dev.jorel.commandapi.executors.CommandArguments;
-import dev.jorel.commandapi.executors.CommandExecutor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
@@ -19,16 +17,17 @@ import java.util.List;
 public class PluginCommand {
     public static void register() {
         new CommandTree("plugin")
-                .withShortDescription("Turn Plugins on/off")
+                .withShortDescription("Toggle plugins")
+                .withUsage("/plugin <enable|disable>")
                 .withPermission("tgc-system.team")
                 .then(new LiteralArgument("enable")
                         .then(new StringArgument("plugin")
                                 .replaceSuggestions(ArgumentSuggestions.strings(info -> getDisabledPlugins()))
-                                .executes(new PluginEnableExecutor())))
+                                .executes(PluginCommand::pluginEnableManager)))
                 .then(new LiteralArgument("disable")
                         .then(new StringArgument("plugin")
                                 .replaceSuggestions(ArgumentSuggestions.strings(info -> getEnabledPlugins()))
-                                .executes(new PluginDisableExecutor())))
+                                .executes(PluginCommand::pluginDisableManager)))
                 .register();
     }
 
@@ -57,61 +56,57 @@ public class PluginCommand {
         return plugins.toArray(new String[0]);
     }
 
-    private static class PluginEnableExecutor implements CommandExecutor {
-        @Override
-        public void run(CommandSender sender, CommandArguments args) throws WrapperCommandSyntaxException {
-            String pluginName = (String) args.get("plugin");
-            
-            Plugin targetPlugin = Main.get().getServer().getPluginManager().getPlugin(pluginName);
-            if(targetPlugin == null) {
-                sender.sendMessage(Main.get().getPrefix() + "§c" + pluginName + " not found.");
-                return;
-            }
+    private static int pluginEnableManager(CommandSender sender, CommandArguments args) {
+        String pluginName = (String) args.get("plugin");
 
-            if(!Main.get().getDataConfig().isSet("disabledPlugins") || Main.get().getDataConfig().getStringList("disabledPlugins").isEmpty()) {
-                sender.sendMessage(Main.get().getPrefix() + "§c" + pluginName + " can't be enabled.");
-                return;
-            }
-
-            List<String> disabledPlugins = Main.get().getDataConfig().getStringList("disabledPlugins");
-            if(disabledPlugins.contains(pluginName)) {
-                Main.get().getServer().getPluginManager().enablePlugin(targetPlugin);
-                disabledPlugins.remove(pluginName);
-                Main.get().getDataConfig().set("disabledPlugins", disabledPlugins);
-                Main.get().getDataConfig().save();
-                sender.sendMessage(Main.get().getPrefix() + pluginName + " has been enabled.");
-            } else {
-                sender.sendMessage(Main.get().getPrefix() + "§c" + pluginName + " is not disabled.");
-            }
+        Plugin targetPlugin = Main.get().getServer().getPluginManager().getPlugin(pluginName);
+        if(targetPlugin == null) {
+            sender.sendMessage(Main.get().getPrefix() + "§c" + pluginName + " not found.");
+            return 1;
         }
-    }
 
-    private static class PluginDisableExecutor implements CommandExecutor {
-        @Override
-        public void run(CommandSender sender, CommandArguments args) throws WrapperCommandSyntaxException {
-            String pluginName = (String) args.get("plugin");
+        if(!Main.get().getDataConfig().isSet("disabledPlugins") || Main.get().getDataConfig().getStringList("disabledPlugins").isEmpty()) {
+            sender.sendMessage(Main.get().getPrefix() + "§c" + pluginName + " can't be enabled.");
+            return 1;
+        }
 
-            Plugin targetPlugin = Main.get().getServer().getPluginManager().getPlugin(pluginName);
-            if(targetPlugin == null) {
-                sender.sendMessage(Main.get().getPrefix() + "§c" + pluginName + " not found.");
-                return;
-            }
-
-            if(targetPlugin.getName().equals(Main.get().getName())) {
-                sender.sendMessage(Main.get().getPrefix() + "§cThis plugin can't be disabled.");
-                return;
-            }
-            
-            Main.get().getServer().getPluginManager().disablePlugin(targetPlugin);
-            if(!Main.get().getDataConfig().isSet("disabledPlugins")) {
-                Main.get().getDataConfig().set("disabledPlugins", new ArrayList<>());
-            }
-            List<String> disabledPlugins = Main.get().getDataConfig().getStringList("disabledPlugins");
-            disabledPlugins.add(pluginName);
+        List<String> disabledPlugins = Main.get().getDataConfig().getStringList("disabledPlugins");
+        if(disabledPlugins.contains(pluginName)) {
+            Main.get().getServer().getPluginManager().enablePlugin(targetPlugin);
+            disabledPlugins.remove(pluginName);
             Main.get().getDataConfig().set("disabledPlugins", disabledPlugins);
             Main.get().getDataConfig().save();
-            sender.sendMessage(Main.get().getPrefix() + pluginName + " has been disabled.");
+            sender.sendMessage(Main.get().getPrefix() + pluginName + " has been enabled.");
+        } else {
+            sender.sendMessage(Main.get().getPrefix() + "§c" + pluginName + " is not disabled.");
         }
+        return 1;
+    }
+
+    private static int pluginDisableManager(CommandSender sender, CommandArguments args) {
+        String pluginName = (String) args.get("plugin");
+
+        Plugin targetPlugin = Main.get().getServer().getPluginManager().getPlugin(pluginName);
+        if(targetPlugin == null) {
+            sender.sendMessage(Main.get().getPrefix() + "§c" + pluginName + " not found.");
+            return 1;
+        }
+
+        if(targetPlugin.getName().equals(Main.get().getName())) {
+            sender.sendMessage(Main.get().getPrefix() + "§cThis plugin can't be disabled.");
+            return 1;
+        }
+
+        Main.get().getServer().getPluginManager().disablePlugin(targetPlugin);
+        if(!Main.get().getDataConfig().isSet("disabledPlugins")) {
+            Main.get().getDataConfig().set("disabledPlugins", new ArrayList<>());
+        }
+        List<String> disabledPlugins = Main.get().getDataConfig().getStringList("disabledPlugins");
+        disabledPlugins.add(pluginName);
+        Main.get().getDataConfig().set("disabledPlugins", disabledPlugins);
+        Main.get().getDataConfig().save();
+        sender.sendMessage(Main.get().getPrefix() + pluginName + " has been disabled.");
+        return 1;
     }
 
     public static void disablePluginsOnBoot() {

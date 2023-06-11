@@ -47,12 +47,12 @@ public class OtherListeners implements Listener {
             } else playerChatName = "§f<" + new PlayerUtils().getPlayerNameWithStatus(player, false) + "§f>";
         }
 
-        if(player.hasPermission("sbs.team")) {
+        if(player.hasPermission("tgc-system.team")) {
             message = message.replaceAll("&", "§");
 
             if (message.startsWith(Main.get().getConfig().getString("prefix.teamChatPrefixInChat"))) {
                 for (Player teamPlayer : Bukkit.getOnlinePlayers()) {
-                    if (teamPlayer.hasPermission("sbs.team")) {
+                    if (teamPlayer.hasPermission("tgc-system.team")) {
                         teamPlayer.sendMessage(Main.get().getConfig().getString("prefix.teamChatPrefix") + message);
 
                     }
