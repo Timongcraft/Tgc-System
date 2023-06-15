@@ -11,7 +11,7 @@ public class StatusHandler {
     public static String getStatusWithBrackets(Player player) {
         String status = Main.get().getDataConfig().getString("players." + player.getUniqueId() + ".status");
 
-        if(status == null) return "";
+        if (status == null) return "";
 
         return "§f[" + status + "§f] ";
     }

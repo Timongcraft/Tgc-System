@@ -29,7 +29,7 @@ public class PermissionManagerCommand {
                 .withAliases("pm")
                 .then(new LiteralArgument("player")
                         .then(new OfflinePlayerArgument("target")
-                               .replaceSuggestions(ArgumentSuggestions.strings(info -> Bukkit.getOnlinePlayers().stream()
+                                .replaceSuggestions(ArgumentSuggestions.strings(info -> Bukkit.getOnlinePlayers().stream()
                                         .map(OfflinePlayer::getName)
                                         .toArray(String[]::new)))
                                 .then(new LiteralArgument("permission")
@@ -40,7 +40,7 @@ public class PermissionManagerCommand {
                                         .then(new LiteralArgument("unset")
                                                 .then(new StringArgument("permission")
                                                         .replaceSuggestions(ArgumentSuggestions.strings(info -> getPermissionsForPlayer((OfflinePlayer) info.previousArgs().get("target"))))
-                                                                .executes(PermissionManagerCommand::permissionUnsetManager))))
+                                                        .executes(PermissionManagerCommand::permissionUnsetManager))))
                                 .then(new LiteralArgument("group")
                                         .then(new MultiLiteralArgument("mode", List.of("set", "unset"))
                                                 .then(new StringArgument("group")
@@ -100,7 +100,7 @@ public class PermissionManagerCommand {
         Boolean value = (Boolean) args.get("value");
 
         List<String> playerPermissions = Main.get().getDataConfig().getStringList("players." + targetPlayer.getUniqueId() + ".permissions");
-        if(playerPermissions.equals(new ArrayList<>())) playerPermissions = new ArrayList<>();
+        if (playerPermissions.equals(new ArrayList<>())) playerPermissions = new ArrayList<>();
 
         String permissionString = permission + ":" + value;
 
@@ -119,7 +119,7 @@ public class PermissionManagerCommand {
         String permission = (String) args.get("permission");
 
         List<String> playerPermissions = Main.get().getDataConfig().getStringList("players." + targetPlayer.getUniqueId() + ".permissions");
-        if(playerPermissions.equals(new ArrayList<>())) playerPermissions = new ArrayList<>();
+        if (playerPermissions.equals(new ArrayList<>())) playerPermissions = new ArrayList<>();
 
         playerPermissions.removeIf(s -> s.split(":")[0].equals(permission));
         sender.sendMessage(Main.get().getPrefix() + "Unset permission " + permission + " from player " + targetPlayer.getName());
@@ -135,19 +135,19 @@ public class PermissionManagerCommand {
         String action = (String) args.get("mode");
         String group = (String) args.get("group");
 
-        if(targetPlayer == null) {
+        if (targetPlayer == null) {
             sender.sendMessage(Main.get().getPrefix() + "§cPlayer not found");
             return 1;
         }
 
         List<String> playerGroups = Main.get().getDataConfig().getStringList("players." + targetPlayer.getUniqueId() + ".groups");
-        if(playerGroups.equals(new ArrayList<>())) playerGroups = new ArrayList<>();
+        if (playerGroups.equals(new ArrayList<>())) playerGroups = new ArrayList<>();
 
-        if(action.equalsIgnoreCase("set")) {
-            if(!playerGroups.contains(group)) playerGroups.add(group);
+        if (action.equalsIgnoreCase("set")) {
+            if (!playerGroups.contains(group)) playerGroups.add(group);
             sender.sendMessage(Main.get().getPrefix() + "Added player " + targetPlayer.getPlayer().getName() + " to group " + group);
             PlayerUtils.sendToTeam(sender.getName(), null, "Added player " + targetPlayer.getPlayer().getName() + " to group " + group);
-        } else if(action.equalsIgnoreCase("unset")) {
+        } else if (action.equalsIgnoreCase("unset")) {
             playerGroups.remove(group);
             sender.sendMessage(Main.get().getPrefix() + "Removed player " + targetPlayer.getPlayer().getName() + " from group " + group);
             PlayerUtils.sendToTeam(sender.getName(), null, "Removed player " + targetPlayer.getPlayer().getName() + " from group " + group);
@@ -164,7 +164,7 @@ public class PermissionManagerCommand {
         Boolean value = (Boolean) args.get("value");
 
         List<String> groupPermissions = Main.get().getDataConfig().getStringList("groups." + groupName + ".permissions");
-        if(groupPermissions.equals(new ArrayList<>())) groupPermissions = new ArrayList<>();
+        if (groupPermissions.equals(new ArrayList<>())) groupPermissions = new ArrayList<>();
 
         String permissionString = permission + ":" + value;
 
@@ -183,7 +183,7 @@ public class PermissionManagerCommand {
         String permission = (String) args.get("permission");
 
         List<String> groupPermissions = Main.get().getDataConfig().getStringList("groups." + groupName + ".permissions");
-        if(groupPermissions.equals(new ArrayList<>())) groupPermissions = new ArrayList<>();
+        if (groupPermissions.equals(new ArrayList<>())) groupPermissions = new ArrayList<>();
 
         groupPermissions.removeIf(s -> s.split(":")[0].equals(permission));
         sender.sendMessage(Main.get().getPrefix() + "Unset permission " + permission + " from group " + groupName);

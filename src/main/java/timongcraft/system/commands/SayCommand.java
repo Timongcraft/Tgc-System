@@ -25,7 +25,7 @@ public class SayCommand {
     private static int sayManager(CommandSender sender, CommandArguments args) {
         String msg = (String) args.get("message");
 
-        for(Player player : Bukkit.getOnlinePlayers()) {
+        for (Player player : Bukkit.getOnlinePlayers()) {
             player.sendMessage("[" + sender.getName() + "] " + msg);
         }
         return 1;

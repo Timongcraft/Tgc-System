@@ -23,16 +23,16 @@ public class StatusCommand {
     private static int statusManager(Player sender, CommandArguments args) {
         String status = (String) args.get("status");
 
-        if(args.args().length == 0) {
-            if(StatusHandler.getStatus(sender) == null) {
+        if (args.args().length == 0) {
+            if (StatusHandler.getStatus(sender) == null) {
                 sender.sendMessage(Main.get().getPrefix() + "§cUsage: /status [<status>]");
                 return 1;
             }
 
             StatusHandler.setStatus(sender, null);
             sender.sendMessage(Main.get().getPrefix() + "Reset your status");
-        } else if(args.args().length == 1) {
-            if(status.replaceAll("&[a-z-0-9]", "").length() > Main.get().getConfig().getInt("statuses.characterLimit")) {
+        } else if (args.args().length == 1) {
+            if (status.replaceAll("&[a-z-0-9]", "").length() > Main.get().getConfig().getInt("statuses.characterLimit")) {
                 sender.sendMessage(Main.get().getPrefix() + "§cStatus can only be up to " + Main.get().getConfig().getInt("statuses.characterLimit") + " characters long!");
                 return 1;
             }

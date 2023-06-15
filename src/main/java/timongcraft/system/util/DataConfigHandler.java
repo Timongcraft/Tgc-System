@@ -35,7 +35,7 @@ public class DataConfigHandler extends YamlConfiguration {
     }
 
     public void checkIfExists() throws IOException {
-        if(!file.exists()) {
+        if (!file.exists()) {
             file.getParentFile().mkdirs();
             file.createNewFile();
         }

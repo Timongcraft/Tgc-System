@@ -32,29 +32,29 @@ public class RebootCommand {
         String reason = (String) args.get("reason");
 
         sender.sendMessage(Main.get().getPrefix() + "Scheduled reboot in: " + args.get("minutes") + " minutes with reason: " + reason);
-        PlayerUtils.sendToTeam(sender.getName(), null , "Scheduled reboot in: " + args.get("minutes") + " minutes with reason: " + reason);
+        PlayerUtils.sendToTeam(sender.getName(), null, "Scheduled reboot in: " + args.get("minutes") + " minutes with reason: " + reason);
 
-        if(runnable != null) {
+        if (runnable != null) {
             runnable.cancel();
         }
 
         runnable = new BukkitRunnable() {
             @Override
             public void run() {
-                if(seconds == 600) {
-                    for(Player player : Bukkit.getOnlinePlayers()) {
+                if (seconds == 600) {
+                    for (Player player : Bukkit.getOnlinePlayers()) {
                         player.sendMessage(Main.get().getConfig().getString("prefix.alertPrefix") + "The server will reboot in " + seconds / 60 + " minutes because: " + reason.replaceAll("&", "§"));
-                        player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1.0F,.5F);
+                        player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1.0F, .5F);
                     }
                 }
-                if(seconds == 60 || seconds == 10|| seconds == 3|| seconds == 2|| seconds == 1) {
-                    for(Player player : Bukkit.getOnlinePlayers()) {
+                if (seconds == 60 || seconds == 10 || seconds == 3 || seconds == 2 || seconds == 1) {
+                    for (Player player : Bukkit.getOnlinePlayers()) {
                         player.sendMessage(Main.get().getConfig().getString("prefix.alertPrefix") + "The server will reboot in " + seconds + " seconds because: " + reason.replaceAll("&", "§"));
-                        player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1.0F,.5F);
+                        player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1.0F, .5F);
                     }
                 }
-                if(seconds == 0) {
-                    for(Player player : Bukkit.getOnlinePlayers()) {
+                if (seconds == 0) {
+                    for (Player player : Bukkit.getOnlinePlayers()) {
                         player.kickPlayer("The server is rebooting because:\n" + reason.replaceAll("&", "§"));
                     }
                     cancel();

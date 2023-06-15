@@ -39,8 +39,8 @@ public class MaintenanceCommand {
     private static String[] maintenanceList() {
         List<String> inMainenanceList = new ArrayList<>();
 
-        for(Player player : Bukkit.getOnlinePlayers()) {
-            if(Main.get().getDataConfig().getBoolean("players." + player.getUniqueId() + ".maintenanceAllowed")) {
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            if (Main.get().getDataConfig().getBoolean("players." + player.getUniqueId() + ".maintenanceAllowed")) {
                 inMainenanceList.add(player.getName());
             }
         }
@@ -51,8 +51,8 @@ public class MaintenanceCommand {
     private static String[] notMaintenanceList() {
         List<String> notInMainenanceList = new ArrayList<>();
 
-        for(Player player : Bukkit.getOnlinePlayers()) {
-            if(!Main.get().getDataConfig().getBoolean("players." + player.getUniqueId() + ".maintenanceAllowed")) {
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            if (!Main.get().getDataConfig().getBoolean("players." + player.getUniqueId() + ".maintenanceAllowed")) {
                 notInMainenanceList.add(player.getName());
             }
         }
@@ -68,11 +68,11 @@ public class MaintenanceCommand {
         Main.get().getDataConfig().set("maintenance.enabled", maintenanceMode);
         Main.get().getDataConfig().save();
 
-        if(maintenanceMode) {
+        if (maintenanceMode) {
             sender.sendMessage(Main.get().getPrefix() + "Maintenance mode enabled.");
             PlayerUtils.sendToTeam(sender.getName(), null, "Enabled maintenance mode");
-            for(Player player : Bukkit.getOnlinePlayers()) {
-                if(!isAllowed(player)) {
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                if (!isAllowed(player)) {
                     player.kickPlayer(maintenanceKickMessage);
                 }
             }
@@ -98,7 +98,7 @@ public class MaintenanceCommand {
 
     private static int maintenanceAddManager(CommandSender sender, CommandArguments args) {
         OfflinePlayer target = (OfflinePlayer) args.get("target");
-        if(isAllowed(target)) {
+        if (isAllowed(target)) {
             sender.sendMessage(Main.get().getPrefix() + target.getName() + " is already on the maintenance list");
             return 1;
         }
@@ -112,7 +112,7 @@ public class MaintenanceCommand {
 
     private static int maintenanceRemoveManager(CommandSender sender, CommandArguments args) {
         OfflinePlayer target = (OfflinePlayer) args.get("target");
-        if(!isAllowed(target)) {
+        if (!isAllowed(target)) {
             sender.sendMessage(Main.get().getPrefix() + target.getName() + " isn't on the maintenance list");
             return 1;
         }

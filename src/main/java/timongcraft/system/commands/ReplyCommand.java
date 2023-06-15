@@ -39,7 +39,7 @@ public class ReplyCommand {
             return 1;
         }
 
-        if(sender.hasPermission("tgc-system.team")) {
+        if (sender.hasPermission("tgc-system.team")) {
             message = message.replaceAll("&", "§");
         }
 
@@ -50,7 +50,7 @@ public class ReplyCommand {
 
     public static void setLastReply(UUID senderUuid, UUID targetUuid) {
         lastRepliedTo.put(senderUuid, targetUuid);
-        if(!lastRepliedTo.containsKey(targetUuid) || Bukkit.getPlayer(lastRepliedTo.get(targetUuid)) == null) {
+        if (!lastRepliedTo.containsKey(targetUuid) || Bukkit.getPlayer(lastRepliedTo.get(targetUuid)) == null) {
             lastRepliedTo.put(targetUuid, senderUuid);
         }
     }

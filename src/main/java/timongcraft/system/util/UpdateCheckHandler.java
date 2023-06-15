@@ -34,7 +34,7 @@ public class UpdateCheckHandler {
             int endIndex = jsonString.indexOf('"', startIndex);
             double latestVersion = Double.parseDouble(jsonString.substring(startIndex, endIndex));
 
-            if(latestVersion != currentVersion) {
+            if (latestVersion != currentVersion) {
                 Main.get().getLogger().warning("You're not using the latest version!");
                 Main.get().getLogger().warning("Get the latest version here: https://modrinth.com/plugin/tgc-system");
             }

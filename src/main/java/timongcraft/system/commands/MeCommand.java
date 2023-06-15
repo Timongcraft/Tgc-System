@@ -25,7 +25,7 @@ public class MeCommand {
     private static int meManager(CommandSender sender, CommandArguments args) {
         String msg = (String) args.get("message");
 
-        for(Player player : Bukkit.getOnlinePlayers()) {
+        for (Player player : Bukkit.getOnlinePlayers()) {
             player.sendMessage("* " + sender.getName() + " " + msg);
         }
         return 1;

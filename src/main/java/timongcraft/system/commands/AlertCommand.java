@@ -24,9 +24,9 @@ public class AlertCommand {
     private static int alertManager(CommandSender sender, CommandArguments args) {
         String message = (String) args.get("message");
 
-        for(Player player : Bukkit.getOnlinePlayers()) {
+        for (Player player : Bukkit.getOnlinePlayers()) {
             player.sendMessage(Main.get().getConfig().getString("prefix.alertPrefix") + message.replaceAll("&", "§"));
-            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1.0F,.5F);
+            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1.0F, .5F);
         }
         return 1;
     }

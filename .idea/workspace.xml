@@ -4,12 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c085279f-3fca-4b5c-a6cc-39ec7ca0c6a2" name="Changes" comment="Made the commands not use inner classes&#10;Added compatibility to 1.19-1.19.4 (not tested)&#10;Updated ResourcePackCommand&#10;Optimized RebootCommand&#10;Some other small tweaks&#10;Fixed SpeedCommand having alias of WalkSpeedCommand&#10;Added usages to all commands">
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+    <list default="true" id="c085279f-3fca-4b5c-a6cc-39ec7ca0c6a2" name="Changes" comment="Now compatible with 1.20.1 (not tested)&#10;Reformatted the whole code correctly">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/AlertCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/AlertCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/ColorCodesCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/ColorCodesCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/FlySpeedCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/FlySpeedCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/MaintenanceCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/MaintenanceCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/MeCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/MeCommand.java" afterDir="false" />
@@ -17,7 +16,6 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/PermissionManagerCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/PermissionManagerCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/PluginCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/PluginCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/RebootCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/RebootCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/ReloadConfigsCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/ReloadConfigsCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/ReplyCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/ReplyCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/ResourcePackCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/ResourcePackCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/SayCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/SayCommand.java" afterDir="false" />
@@ -25,7 +23,16 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/StatusCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/StatusCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/TeamMsgCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/TeamMsgCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/WalkSpeedCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/WalkSpeedCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/listeners/BlockCommandsListeners.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/listeners/BlockCommandsListeners.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/listeners/ConnectionListeners.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/listeners/ConnectionListeners.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/listeners/OtherListeners.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/listeners/OtherListeners.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/listeners/SpawnElytraListeners.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/listeners/SpawnElytraListeners.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/util/AutoSaveHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/util/AutoSaveHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/util/CropDrops.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/util/CropDrops.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/util/DataConfigHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/util/DataConfigHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/util/PlayerUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/util/PlayerUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/util/StatusHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/util/StatusHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/util/UpdateCheckHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/util/UpdateCheckHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -194,6 +201,10 @@
       <workItem from="1686392618588" duration="5402000" />
       <workItem from="1686402299440" duration="1518000" />
       <workItem from="1686404040866" duration="582000" />
+      <workItem from="1686515485728" duration="190000" />
+      <workItem from="1686547723425" duration="45000" />
+      <workItem from="1686685499138" duration="52000" />
+      <workItem from="1686759285354" duration="58000" />
     </task>
     <task id="LOCAL-00001" summary="Because with this the entire plugin was rewritten there may be some bugs I have overlooked please report them to me &#10;- Rewrote the entire plugin&#10;- Now uses the [CommandAPI](https://commandapi.jorel.dev)&#10;- Made the src available&#10;- Added a permission system&#10;- Added a reply command&#10;- Added highlighting for chat messages with your name&#10;- Added a fly speed command&#10;- Some other small changes and fixes">
       <created>1683395873207</created>
@@ -279,7 +290,14 @@
       <option name="project" value="LOCAL" />
       <updated>1686334705625</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Made the commands not use inner classes&#10;Now compatible with 1.19-1.20 (not tested)&#10;Updated ResourcePackCommand&#10;Optimized RebootCommand&#10;Some other small tweaks&#10;Fixed SpeedCommand having alias of WalkSpeedCommand&#10;Added usages to all commands">
+      <created>1686515664928</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1686515664928</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -310,6 +328,7 @@
     <MESSAGE value="Added a simple TeamChat&#10;Added a walk speed command&#10;Added a speed command&#10;Added the say command because chat reporting also applies there&#10;Updated CommandAPI to version 9.0.1 -&gt; RebootCommands max minutes can now be as high as the int limit&#10;Reworked the StatusHandler so it no longer relies on minecrafts teams" />
     <MESSAGE value="Fixed the permission for the SayCommand&#10;Changed the readme text" />
     <MESSAGE value="Fixed the permission for the SayCommand&#10;Fixed status showing up incorrectly&#10;Added an override for the teammsg and me command because chat reporting also applies there&#10;Changed the readme text&#10;Changed how the color of the player name is handled in tab to match the vanilla behavior&#10;Made it possible to add/remove players to the maintenance list that are currently not online&#10;Updated CommandAPI&#10;Changed the namespace" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed the permission for the SayCommand&#10;Fixed status showing up incorrectly&#10;Added an override for the teammsg and me command because chat reporting also applies there&#10;Changed the readme text&#10;Changed how the color of the player name is handled in tab to match the vanilla behavior&#10;Made it possible to add/remove players to the maintenance list that are currently not online&#10;Updated CommandAPI&#10;Changed the namespace" />
+    <MESSAGE value="Made the commands not use inner classes&#10;Now compatible with 1.19-1.20 (not tested)&#10;Updated ResourcePackCommand&#10;Optimized RebootCommand&#10;Some other small tweaks&#10;Fixed SpeedCommand having alias of WalkSpeedCommand&#10;Added usages to all commands" />
+    <option name="LAST_COMMIT_MESSAGE" value="Made the commands not use inner classes&#10;Now compatible with 1.19-1.20 (not tested)&#10;Updated ResourcePackCommand&#10;Optimized RebootCommand&#10;Some other small tweaks&#10;Fixed SpeedCommand having alias of WalkSpeedCommand&#10;Added usages to all commands" />
   </component>
 </project>

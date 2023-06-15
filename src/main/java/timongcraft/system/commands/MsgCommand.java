@@ -34,7 +34,7 @@ public class MsgCommand {
         Player target = (Player) args.get("target");
         String message = (String) args.get("message");
 
-        if(sender.hasPermission("tgc-system.team")) {
+        if (sender.hasPermission("tgc-system.team")) {
             message = message.replaceAll("&", "§");
         }
 

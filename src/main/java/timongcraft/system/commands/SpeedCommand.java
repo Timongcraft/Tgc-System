@@ -25,8 +25,8 @@ public class SpeedCommand {
     }
 
     private static int speedManager(CommandSender sender, CommandArguments args) {
-        if(args.args().length == 0) {
-            if(!(sender instanceof Player player)) {
+        if (args.args().length == 0) {
+            if (!(sender instanceof Player player)) {
                 sender.sendMessage(Main.get().getPrefix() + "§cUsage: /speed [<speed>] [<player>]");
                 return 1;
             }
@@ -35,21 +35,21 @@ public class SpeedCommand {
             player.setFlySpeed(0.1f);
             player.sendMessage(Main.get().getPrefix() + "Speed has been reset");
             PlayerUtils.sendToTeam(player.getName(), null, "Reset his speed");
-        } else if(args.args().length == 1 || (args.args().length == 2 && sender == args.get("target"))) {
-            if(!(sender instanceof Player player)) {
+        } else if (args.args().length == 1 || (args.args().length == 2 && sender == args.get("target"))) {
+            if (!(sender instanceof Player player)) {
                 sender.sendMessage(Main.get().getPrefix() + "§cUsage: /speed [<speed>] [<player>]");
                 return 1;
             }
 
             float speed = 0.1f;
 
-            if((int) args.get("speed") <= 9) {
+            if ((int) args.get("speed") <= 9) {
                 speed = Float.parseFloat("0." + args.get("speed"));
-            } else if((int) args.get("speed") == 10) speed = 1f;
+            } else if ((int) args.get("speed") == 10) speed = 1f;
 
             player.setWalkSpeed(speed);
             player.setFlySpeed(speed);
-            if((int) args.get("speed") == 1) {
+            if ((int) args.get("speed") == 1) {
                 player.sendMessage(Main.get().getPrefix() + "Speed has been reset");
                 PlayerUtils.sendToTeam(player.getName(), null, "Reset his speed");
             } else {
@@ -57,17 +57,17 @@ public class SpeedCommand {
                 PlayerUtils.sendToTeam(player.getName(), null, "Set his speed to " + args.get("speed"));
             }
             return 1;
-        } else if(args.args().length == 2) {
+        } else if (args.args().length == 2) {
             float speed = 0.1f;
 
-            if((int) args.get("speed") <= 9) {
+            if ((int) args.get("speed") <= 9) {
                 speed = Float.parseFloat("0." + args.get("speed"));
-            } else if((int) args.get("speed") == 10) speed = 1f;
+            } else if ((int) args.get("speed") == 10) speed = 1f;
 
             Player target = (Player) args.get("target");
             target.setWalkSpeed(speed);
             target.setFlySpeed(speed);
-            if((int) args.get("speed") == 1) {
+            if ((int) args.get("speed") == 1) {
                 target.sendMessage(Main.get().getPrefix() + "Speed has been reset by " + sender.getName());
                 sender.sendMessage(Main.get().getPrefix() + "Reset speed of " + target.getName());
                 PlayerUtils.sendToTeam(sender.getName(), target.getName(), "Reset the speed of " + target.getName());

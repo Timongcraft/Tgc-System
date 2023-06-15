@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 public class CropDrops {
     private final List<CropDrop> drops;
+
     public CropDrops(CropDrop... drops) {
         this.drops = Arrays.asList(drops);
     }

@@ -24,7 +24,7 @@ public class Main extends JavaPlugin {
     @Override
     public void onLoad() {
         noLoad = !new File(getDataFolder(), "config.yml").exists();
-        if(noLoad) return;
+        if (noLoad) return;
 
         CommandAPI.onLoad(new CommandAPIBukkitConfig(this).silentLogs(true).missingExecutorImplementationMessage("This command can't be executed with the %s"));
     }
@@ -32,16 +32,16 @@ public class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         loadConfigs();
-        if(noLoad) return;
+        if (noLoad) return;
 
         instance = this;
 
         configVersionCheck();
-        if(noLoad) return;
+        if (noLoad) return;
 
         PluginCommand.disablePluginsOnBoot();
 
-        if(getConfig().getBoolean("newUpdateNotifications.console")) {
+        if (getConfig().getBoolean("newUpdateNotifications.console")) {
             UpdateCheckHandler.checkForUpdate(Double.parseDouble(getDescription().getVersion()));
         }
 
@@ -56,14 +56,14 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        if(noLoad) return;
+        if (noLoad) return;
 
-        if(getConfig().getBoolean("autoSave.enabled")) autoSaveHandler.cancel();
+        if (getConfig().getBoolean("autoSave.enabled")) autoSaveHandler.cancel();
     }
 
     private void configVersionCheck() {
         double configVersion = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "config.yml")).getDouble("configVersion");
-        if(configVersion != 1.6) {
+        if (configVersion != 1.6) {
             getLogger().info("§cThe version of the config.yml does not match with the current plugin version!");
             getLogger().info("§cUnless you delete the config and restart the server the plugin will be stopped!");
             getLogger().info("§cDo not edit the version in the config.yml or things will break!");
@@ -76,14 +76,14 @@ public class Main extends JavaPlugin {
         AlertCommand.register();
         ColorCodesCommand.register();
         FlySpeedCommand.register();
-        if(Main.get().getConfig().getBoolean("chatSystem.enabled")) {
+        if (Main.get().getConfig().getBoolean("chatSystem.enabled")) {
             MsgCommand.register();
             ReplyCommand.register();
             MeCommand.register();
             SayCommand.register();
         }
         MaintenanceCommand.register();
-        if(Main.get().getConfig().getBoolean("permissionSystem.enabled")) {
+        if (Main.get().getConfig().getBoolean("permissionSystem.enabled")) {
             PermissionManagerCommand.register();
         }
         PluginCommand.register();
@@ -91,7 +91,7 @@ public class Main extends JavaPlugin {
         ReloadConfigsCommand.register();
         ResourcePackCommand.register();
         SpeedCommand.register();
-        if(Main.get().getConfig().getBoolean("statuses.enabled")) {
+        if (Main.get().getConfig().getBoolean("statuses.enabled")) {
             StatusCommand.register();
         }
         TeamMsgCommand.register();
@@ -103,10 +103,10 @@ public class Main extends JavaPlugin {
         pluginManager.registerEvents(new BlockCommandsListeners(), this);
         pluginManager.registerEvents(new ConnectionListeners(), this);
         pluginManager.registerEvents(new OtherListeners(), this);
-        if(!getConfig().getStringList("blockedCommands").isEmpty() || !getConfig().getStringList("blockedPrefix").isEmpty()) {
+        if (!getConfig().getStringList("blockedCommands").isEmpty() || !getConfig().getStringList("blockedPrefix").isEmpty()) {
             pluginManager.registerEvents(new BlockCommandsListeners(), this);
         }
-        if(getConfig().getBoolean("spawnElytra.enabled")) {
+        if (getConfig().getBoolean("spawnElytra.enabled")) {
             pluginManager.registerEvents(new SpawnElytraListeners(), this);
         }
 
@@ -114,11 +114,12 @@ public class Main extends JavaPlugin {
 
     private void enableAutoSave() {
         autoSaveHandler = new AutoSaveHandler();
-        if(getConfig().getBoolean("autoSave.enabled")) autoSaveHandler.runTaskTimer(this, autoSaveHandler.parseInterval(Main.get().getConfig().getString("autoSave.time")), autoSaveHandler.parseInterval(Main.get().getConfig().getString("autoSave.time")));
+        if (getConfig().getBoolean("autoSave.enabled"))
+            autoSaveHandler.runTaskTimer(this, autoSaveHandler.parseInterval(Main.get().getConfig().getString("autoSave.time")), autoSaveHandler.parseInterval(Main.get().getConfig().getString("autoSave.time")));
     }
 
     private void loadConfigs() {
-        if(!new File(getDataFolder(), "config.yml").exists()) {
+        if (!new File(getDataFolder(), "config.yml").exists()) {
             saveDefaultConfig();
             new DataConfigHandler(new File(getDataFolder(), "data.yml")).save();
             getLogger().warning("Loaded for the first time, please set the config values!");
@@ -138,5 +139,7 @@ public class Main extends JavaPlugin {
         return prefix;
     }
 
-    public DataConfigHandler getDataConfig() { return dataConfigHandler; }
+    public DataConfigHandler getDataConfig() {
+        return dataConfigHandler;
+    }
 }

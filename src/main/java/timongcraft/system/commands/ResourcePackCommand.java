@@ -19,11 +19,11 @@ public class ResourcePackCommand {
     }
 
     private static int resourcePackManager(Player sender, CommandArguments args) {
-        if(!Main.get().getDataConfig().isSet("players." + sender.getUniqueId() + ".resourcepack")) {
+        if (!Main.get().getDataConfig().isSet("players." + sender.getUniqueId() + ".resourcepack")) {
             Main.get().getDataConfig().set("players." + sender.getUniqueId() + ".resourcepack", false);
         }
 
-        if(Main.get().getDataConfig().getBoolean("players." + sender.getUniqueId() + ".resourcepack")) {
+        if (Main.get().getDataConfig().getBoolean("players." + sender.getUniqueId() + ".resourcepack")) {
             Main.get().getDataConfig().set("players." + sender.getUniqueId() + ".resourcepack", false);
             sender.sendMessage(Main.get().getPrefix() + "Disabled resource pack request");
         } else {
