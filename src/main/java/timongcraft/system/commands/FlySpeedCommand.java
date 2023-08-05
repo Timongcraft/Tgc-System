@@ -16,7 +16,7 @@ public class FlySpeedCommand {
                 .withUsage("/flyspeed [<speed>] [<target>]")
                 .withAliases("fs")
                 .withPermission("tgc-system.team")
-                .then(new IntegerArgument("flyspeed", 1, 10)
+                .then(new IntegerArgument("speed", 1, 10)
                         .setOptional(true)
                         .executes(FlySpeedCommand::flySpeedManager)
                         .then(new PlayerOnlyArgument("target")
@@ -49,12 +49,12 @@ public class FlySpeedCommand {
             } else if ((int) args.get("speed") == 10) flySpeed = 1f;
 
             player.setFlySpeed(flySpeed);
-            if ((int) args.get("flyspeed") == 1) {
+            if ((int) args.get("speed") == 1) {
                 player.sendMessage(Main.get().getPrefix() + "Fly speed has been reset");
                 PlayerUtils.sendToTeam(player.getName(), null, "Reset his fly speed");
             } else {
-                player.sendMessage(Main.get().getPrefix() + "Set fly speed to " + args.get("flyspeed"));
-                PlayerUtils.sendToTeam(player.getName(), null, "Set his fly speed to " + args.get("flyspeed"));
+                player.sendMessage(Main.get().getPrefix() + "Set fly speed to " + args.get("speed"));
+                PlayerUtils.sendToTeam(player.getName(), null, "Set his fly speed to " + args.get("speed"));
             }
             return 1;
         } else if (args.args().length == 2) {
@@ -66,14 +66,14 @@ public class FlySpeedCommand {
 
             Player target = (Player) args.get("target");
             target.setFlySpeed(flySpeed);
-            if ((int) args.get("flyspeed") == 1) {
+            if ((int) args.get("speed") == 1) {
                 target.sendMessage(Main.get().getPrefix() + "Fly speed has been reset by " + sender.getName());
                 sender.sendMessage(Main.get().getPrefix() + "Reset fly speed of " + target.getName());
                 PlayerUtils.sendToTeam(sender.getName(), target.getName(), "Reset the fly speed of " + target.getName());
             } else {
-                target.sendMessage(Main.get().getPrefix() + "Fly speed has been set to " + args.get("flyspeed") + " by " + sender.getName());
-                sender.sendMessage(Main.get().getPrefix() + "Set fly speed of " + target.getName() + " to " + args.get("flyspeed"));
-                PlayerUtils.sendToTeam(sender.getName(), target.getName(), "Set the fly speed of " + target.getName() + " to " + args.get("flyspeed"));
+                target.sendMessage(Main.get().getPrefix() + "Fly speed has been set to " + args.get("speed") + " by " + sender.getName());
+                sender.sendMessage(Main.get().getPrefix() + "Set fly speed of " + target.getName() + " to " + args.get("speed"));
+                PlayerUtils.sendToTeam(sender.getName(), target.getName(), "Set the fly speed of " + target.getName() + " to " + args.get("speed"));
             }
             return 1;
         }

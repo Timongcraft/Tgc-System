@@ -6,3 +6,5 @@ load: STARTUP
 author: Timongcraft
 description: A system plugin
 website: modrinth.com/plugin/Tgc-System
+softdepend:
+  - CommandAPI

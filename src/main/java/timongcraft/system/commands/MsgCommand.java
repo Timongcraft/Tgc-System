@@ -3,10 +3,13 @@ package timongcraft.system.commands;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandTree;
 import dev.jorel.commandapi.arguments.GreedyStringArgument;
-import dev.jorel.commandapi.executors.*;
+import dev.jorel.commandapi.executors.CommandArguments;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
+import timongcraft.system.Main;
+import timongcraft.system.util.CoordsMessageUtils;
 import timongcraft.system.util.PlayerOnlyArgument;
 
 public class MsgCommand {
@@ -32,10 +35,26 @@ public class MsgCommand {
 
     private static int playerMsgManager(Player sender, CommandArguments args) {
         Player target = (Player) args.get("target");
-        String message = (String) args.get("message");
+        String rawMessage = (String) args.get("message");
 
         if (sender.hasPermission("tgc-system.team")) {
-            message = message.replaceAll("&", "§");
+            rawMessage = rawMessage.replaceAll("&", "§");
+        }
+
+        TextComponent message = new TextComponent(rawMessage);
+
+        if (Main.get().getConfig().getBoolean("coordsSaver.enabled")) {
+            if (Main.get().getConfig().getBoolean("coordsSaver.xaerosWaypointCompatability")) {
+                TextComponent xaerosWaypoint = CoordsMessageUtils.getXaerosWaypointAsClickableCoordinatesMessage(rawMessage);
+
+                if (xaerosWaypoint != null) {
+                    message = xaerosWaypoint;
+                } else {
+                    message = CoordsMessageUtils.getAsClickableCoordinatesMessage(sender, rawMessage, true);
+                }
+            } else {
+                message = CoordsMessageUtils.getAsClickableCoordinatesMessage(sender, rawMessage, false);
+            }
         }
 
         sender.sendMessage("§7§oYou whisper to " + target.getName() + ": " + message);

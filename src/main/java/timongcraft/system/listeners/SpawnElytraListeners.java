@@ -26,7 +26,8 @@ public class SpawnElytraListeners implements Listener {
     public SpawnElytraListeners() {
         Bukkit.getScheduler().runTaskTimer(Main.get(), () -> {
             for (Player playerInWorld : Bukkit.getWorld(String.valueOf(Main.get().getConfig().getString("spawnElytra.worldName"))).getPlayers()) {
-                if (playerInWorld.getGameMode() == GameMode.SPECTATOR || playerInWorld.getGameMode() == GameMode.CREATIVE) return;
+                if (playerInWorld.getGameMode() == GameMode.SPECTATOR || playerInWorld.getGameMode() == GameMode.CREATIVE)
+                    return;
                 playerInWorld.setAllowFlight(isInSpawnRadius(playerInWorld));
                 if (flying.contains(playerInWorld) && !playerInWorld.getLocation().getBlock().getRelative(BlockFace.DOWN).getType().isAir()) {
                     playerInWorld.setAllowFlight(false);
@@ -84,7 +85,8 @@ public class SpawnElytraListeners implements Listener {
     }
 
     private Boolean isInSpawnRadius(Player player) {
-        if (!player.getWorld().getName().equals(Main.get().getConfig().getString("spawnElytra.worldName"))) return false;
+        if (!player.getWorld().getName().equals(Main.get().getConfig().getString("spawnElytra.worldName")))
+            return false;
 
         return player.getWorld().getSpawnLocation().distance(player.getLocation()) < Main.get().getConfig().getInt("spawnElytra.spawnRadius");
     }

@@ -49,13 +49,8 @@ public class SpeedCommand {
 
             player.setWalkSpeed(speed);
             player.setFlySpeed(speed);
-            if ((int) args.get("speed") == 1) {
-                player.sendMessage(Main.get().getPrefix() + "Speed has been reset");
-                PlayerUtils.sendToTeam(player.getName(), null, "Reset his speed");
-            } else {
-                player.sendMessage(Main.get().getPrefix() + "Set speed to " + args.get("speed"));
-                PlayerUtils.sendToTeam(player.getName(), null, "Set his speed to " + args.get("speed"));
-            }
+            player.sendMessage(Main.get().getPrefix() + "Set speed to " + args.get("speed"));
+            PlayerUtils.sendToTeam(player.getName(), null, "Set his speed to " + args.get("speed"));
             return 1;
         } else if (args.args().length == 2) {
             float speed = 0.1f;
@@ -67,15 +62,9 @@ public class SpeedCommand {
             Player target = (Player) args.get("target");
             target.setWalkSpeed(speed);
             target.setFlySpeed(speed);
-            if ((int) args.get("speed") == 1) {
-                target.sendMessage(Main.get().getPrefix() + "Speed has been reset by " + sender.getName());
-                sender.sendMessage(Main.get().getPrefix() + "Reset speed of " + target.getName());
-                PlayerUtils.sendToTeam(sender.getName(), target.getName(), "Reset the speed of " + target.getName());
-            } else {
-                target.sendMessage(Main.get().getPrefix() + "Speed has been set to " + args.get("speed") + " by " + sender.getName());
-                sender.sendMessage(Main.get().getPrefix() + "Set speed of " + target.getName() + " to " + args.get("speed"));
-                PlayerUtils.sendToTeam(sender.getName(), target.getName(), "Set the speed of " + target.getName() + " to " + args.get("speed"));
-            }
+            target.sendMessage(Main.get().getPrefix() + "Speed has been set to " + args.get("speed") + " by " + sender.getName());
+            sender.sendMessage(Main.get().getPrefix() + "Set speed of " + target.getName() + " to " + args.get("speed"));
+            PlayerUtils.sendToTeam(sender.getName(), target.getName(), "Set the speed of " + target.getName() + " to " + args.get("speed"));
             return 1;
         }
         return 0;

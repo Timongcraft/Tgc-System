@@ -19,7 +19,9 @@ public class ReloadConfigsCommand {
     private static int reloadConfigsManager(CommandSender sender, CommandArguments args) {
         Main.get().reloadConfig();
         Main.get().getDataConfig().load();
+
         sender.sendMessage(Main.get().getPrefix() + "The Configs have been reloaded!");
+        sender.sendMessage("§eNot all modules are compatible with config reloading!");
         PlayerUtils.sendToTeam(sender.getName(), null, "Reloaded the plugins's configs");
         return 1;
     }

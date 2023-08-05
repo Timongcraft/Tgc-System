@@ -16,7 +16,7 @@ public class WalkSpeedCommand {
                 .withUsage("/walkspeed [<speed>] [<target>]")
                 .withAliases("ws")
                 .withPermission("tgc-system.team")
-                .then(new IntegerArgument("walkspeed", 1, 10)
+                .then(new IntegerArgument("speed", 1, 10)
                         .setOptional(true)
                         .executes(WalkSpeedCommand::walkSpeedManager)
                         .then(new PlayerOnlyArgument("target")
@@ -48,12 +48,12 @@ public class WalkSpeedCommand {
             } else if ((int) args.get("speed") == 10) walkSpeed = 1f;
 
             player.setWalkSpeed(walkSpeed);
-            if ((int) args.get("walkspeed") == 1) {
+            if ((int) args.get("speed") == 2) {
                 player.sendMessage(Main.get().getPrefix() + "Walk speed has been reset");
                 PlayerUtils.sendToTeam(player.getName(), null, "Reset his walk speed");
             } else {
-                player.sendMessage(Main.get().getPrefix() + "Set walk speed to " + args.get("walkspeed"));
-                PlayerUtils.sendToTeam(player.getName(), null, "Set his walk speed to " + args.get("walkspeed"));
+                player.sendMessage(Main.get().getPrefix() + "Set walk speed to " + args.get("speed"));
+                PlayerUtils.sendToTeam(player.getName(), null, "Set his walk speed to " + args.get("speed"));
             }
             return 1;
         } else if (args.args().length == 2) {
@@ -65,14 +65,14 @@ public class WalkSpeedCommand {
 
             Player target = (Player) args.get("target");
             target.setWalkSpeed(walkSpeed);
-            if ((int) args.get("walkspeed") == 1) {
+            if ((int) args.get("speed") == 1) {
                 target.sendMessage(Main.get().getPrefix() + "Walk speed has been reset by " + sender.getName());
                 sender.sendMessage(Main.get().getPrefix() + "Reset walk speed of " + target.getName());
                 PlayerUtils.sendToTeam(sender.getName(), target.getName(), "Reset the walk speed of " + target.getName());
             } else {
-                target.sendMessage(Main.get().getPrefix() + "Walk speed has been set to " + args.get("walkspeed") + " by " + sender.getName());
-                sender.sendMessage(Main.get().getPrefix() + "Set walk speed of " + target.getName() + " to " + args.get("walkspeed"));
-                PlayerUtils.sendToTeam(sender.getName(), target.getName(), "Set the walk speed of " + target.getName() + " to " + args.get("walkspeed"));
+                target.sendMessage(Main.get().getPrefix() + "Walk speed has been set to " + args.get("speed") + " by " + sender.getName());
+                sender.sendMessage(Main.get().getPrefix() + "Set walk speed of " + target.getName() + " to " + args.get("speed"));
+                PlayerUtils.sendToTeam(sender.getName(), target.getName(), "Set the walk speed of " + target.getName() + " to " + args.get("speed"));
             }
             return 1;
         }

@@ -21,6 +21,8 @@
 - Sound/Highlight your player name in chat
 - A permission system
 - A maintenance system
+- A hopper sorting system
+- A coordinate save system
 - A auto save system
 - A team chat
 - A resource pack system

@@ -1,16 +1,12 @@
 package timongcraft.system;
 
-import dev.jorel.commandapi.CommandAPI;
-import dev.jorel.commandapi.CommandAPIBukkitConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import timongcraft.system.commands.*;
 import timongcraft.system.listeners.*;
-import timongcraft.system.util.AutoSaveHandler;
-import timongcraft.system.util.DataConfigHandler;
-import timongcraft.system.util.UpdateCheckHandler;
+import timongcraft.system.util.*;
 
 import java.io.File;
 
@@ -23,18 +19,27 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onLoad() {
+        instance = this;
+
         noLoad = !new File(getDataFolder(), "config.yml").exists();
+
+        if (noLoad || Main.get().getConfig().getBoolean("CommandAPI.autoDownload")) {
+            try {
+                CommandAPILoader.load("9.0.3", noLoad);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+
         if (noLoad) return;
 
-        CommandAPI.onLoad(new CommandAPIBukkitConfig(this).silentLogs(true).missingExecutorImplementationMessage("This command can't be executed with the %s"));
+        //CommandAPI.onLoad(new CommandAPIBukkitConfig(this).silentLogs(true).missingExecutorImplementationMessage("This command can't be executed with the %s"));
     }
 
     @Override
     public void onEnable() {
         loadConfigs();
         if (noLoad) return;
-
-        instance = this;
 
         configVersionCheck();
         if (noLoad) return;
@@ -45,7 +50,7 @@ public class Main extends JavaPlugin {
             UpdateCheckHandler.checkForUpdate(Double.parseDouble(getDescription().getVersion()));
         }
 
-        CommandAPI.onEnable();
+        //CommandAPI.onEnable();
 
         registerCommandsInOnEnable();
 
@@ -63,7 +68,7 @@ public class Main extends JavaPlugin {
 
     private void configVersionCheck() {
         double configVersion = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "config.yml")).getDouble("configVersion");
-        if (configVersion != 1.6) {
+        if (configVersion != 1.8) {
             getLogger().info("§cThe version of the config.yml does not match with the current plugin version!");
             getLogger().info("§cUnless you delete the config and restart the server the plugin will be stopped!");
             getLogger().info("§cDo not edit the version in the config.yml or things will break!");
@@ -75,7 +80,13 @@ public class Main extends JavaPlugin {
     private void registerCommandsInOnEnable() {
         AlertCommand.register();
         ColorCodesCommand.register();
+        if (Main.get().getConfig().getBoolean("coordsSaver.enabled")) {
+            CoordinatesCommand.register();
+        }
         FlySpeedCommand.register();
+        if (getConfig().getBoolean("hopperFilters.enabled")) {
+            HopperFiltersCommand.register();
+        }
         if (Main.get().getConfig().getBoolean("chatSystem.enabled")) {
             MsgCommand.register();
             ReplyCommand.register();
@@ -103,13 +114,16 @@ public class Main extends JavaPlugin {
         pluginManager.registerEvents(new BlockCommandsListeners(), this);
         pluginManager.registerEvents(new ConnectionListeners(), this);
         pluginManager.registerEvents(new OtherListeners(), this);
+        pluginManager.registerEvents(new HopperFilterHandler(), this);
         if (!getConfig().getStringList("blockedCommands").isEmpty() || !getConfig().getStringList("blockedPrefix").isEmpty()) {
             pluginManager.registerEvents(new BlockCommandsListeners(), this);
         }
         if (getConfig().getBoolean("spawnElytra.enabled")) {
             pluginManager.registerEvents(new SpawnElytraListeners(), this);
         }
-
+        if (getConfig().getBoolean("hopperFilters.enabled")) {
+            pluginManager.registerEvents(new HopperFilterHandler(), this);
+        }
     }
 
     private void enableAutoSave() {

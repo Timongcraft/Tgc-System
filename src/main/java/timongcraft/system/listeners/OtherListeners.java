@@ -1,5 +1,6 @@
 package timongcraft.system.listeners;
 
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -11,13 +12,12 @@ import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockFormEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerResourcePackStatusEvent;
 import timongcraft.system.Main;
-import timongcraft.system.util.CropDrop;
-import timongcraft.system.util.CropDrops;
-import timongcraft.system.util.PlayerUtils;
+import timongcraft.system.util.*;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -27,6 +27,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class OtherListeners implements Listener {
+    private static final Pattern urlPattern = Pattern.compile("^(http:\\/\\/www\\.|https:\\/\\/www\\.|http:\\/\\/|https:\\/\\/)?[a-z0-9]+([\\-\\.]{1}[a-z0-9]+)*\\.[a-z]{2,5}(:[0-9]{1,5})?(\\/.*)?$");
 
     @EventHandler
     public void onPlayerChat(AsyncPlayerChatEvent event) {
@@ -34,38 +35,12 @@ public class OtherListeners implements Listener {
         if (!Main.get().getConfig().getBoolean("chatSystem.enabled")) return;
 
         Player player = event.getPlayer();
-        String playerChatName;
-        String message = event.getMessage();
+        TextComponent playerChatName;
+        String rawMessage = event.getMessage();
+        TextComponent message = new TextComponent();
 
-        if (Main.get().getConfig().getBoolean("statuses.enabled")) {
-            if (player.hasPermission("tgc-system.team")) {
-                playerChatName = "§4<§c" + new PlayerUtils().getPlayerNameWithStatus(player, true) + "§4>§f";
-            } else playerChatName = "§8<§7" + new PlayerUtils().getPlayerNameWithStatus(player, true) + "§8>§7";
-        } else {
-            if (player.hasPermission("tgc-system.team")) {
-                playerChatName = "§4<§c" + new PlayerUtils().getPlayerNameWithStatus(player, false) + "§4>§f";
-            } else playerChatName = "§f<" + new PlayerUtils().getPlayerNameWithStatus(player, false) + "§f>";
-        }
-
-        if (player.hasPermission("tgc-system.team")) {
-            message = message.replaceAll("&", "§");
-
-            if (message.startsWith(Main.get().getConfig().getString("prefix.teamChatPrefixInChat"))) {
-                for (Player teamPlayer : Bukkit.getOnlinePlayers()) {
-                    if (teamPlayer.hasPermission("tgc-system.team")) {
-                        teamPlayer.sendMessage(Main.get().getConfig().getString("prefix.teamChatPrefix") + message);
-
-                    }
-                }
-                event.setCancelled(true);
-                return;
-            }
-        }
-
-
-        if (Main.get().getConfig().getBoolean("chatSystem.noLinks") && !player.hasPermission("tgc-system.team")) {
-            Pattern urlPattern = Pattern.compile("^(http:\\/\\/www\\.|https:\\/\\/www\\.|http:\\/\\/|https:\\/\\/)?[a-z0-9]+([\\-\\.]{1}[a-z0-9]+)*\\.[a-z]{2,5}(:[0-9]{1,5})?(\\/.*)?$");
-            for (String messagePart : message.split("\\s+")) {
+        if (!player.hasPermission("tgc-system.team") && Main.get().getConfig().getBoolean("chatSystem.noLinks")) {
+            for (String messagePart : rawMessage.split("\\s+")) {
                 Matcher matcher = urlPattern.matcher(messagePart);
                 if (matcher.matches()) {
                     player.sendMessage(Main.get().getPrefix() + "§cYou don't have the permission to send links!");
@@ -75,20 +50,71 @@ public class OtherListeners implements Listener {
             }
         }
 
-        final String[] highlightedMessage = {message};
+        if (Main.get().getConfig().getBoolean("statuses.enabled")) {
+            if (player.hasPermission("tgc-system.team")) {
+                playerChatName = new TextComponent("§4<§c" + new PlayerUtils().getPlayerNameWithStatus(player, true) + "§4>§f ");
+            } else
+                playerChatName = new TextComponent("§8<§7" + new PlayerUtils().getPlayerNameWithStatus(player, true) + "§8>§7 ");
+        } else {
+            if (player.hasPermission("tgc-system.team")) {
+                playerChatName = new TextComponent("§4<§c" + new PlayerUtils().getPlayerNameWithStatus(player, false) + "§4>§f ");
+            } else
+                playerChatName = new TextComponent("§f<" + new PlayerUtils().getPlayerNameWithStatus(player, false) + "§f> ");
+        }
+
+        if (player.hasPermission("tgc-system.team")) {
+            rawMessage = rawMessage.replaceAll("&", "§");
+        }
+
+        if (Main.get().getConfig().getBoolean("coordsSaver.enabled")) {
+            if (Main.get().getConfig().getBoolean("coordsSaver.xaerosWaypointCompatability")) {
+                TextComponent xaerosWaypoint = CoordsMessageUtils.getXaerosWaypointAsClickableCoordinatesMessage(rawMessage);
+
+                if (xaerosWaypoint != null) {
+                    message.addExtra(xaerosWaypoint);
+                } else {
+                    message.addExtra(CoordsMessageUtils.getAsClickableCoordinatesMessage(event.getPlayer(), rawMessage, true));
+                }
+            } else {
+                message.addExtra(CoordsMessageUtils.getAsClickableCoordinatesMessage(event.getPlayer(), rawMessage, false));
+            }
+        }
+
+        if (player.hasPermission("tgc-system.team") && rawMessage.startsWith(Main.get().getConfig().getString("prefix.teamChatPrefixInChat"))) {
+            for (Player teamPlayer : Bukkit.getOnlinePlayers()) {
+                if (teamPlayer.hasPermission("tgc-system.team")) {
+                    teamPlayer.spigot().sendMessage(new TextComponent(Main.get().getConfig().getString("prefix.teamChatPrefix")), message);
+                }
+            }
+            event.setCancelled(true);
+            return;
+        }
+
+        String legacyMessage = message.toLegacyText();
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-            if (highlightedMessage[0].contains(onlinePlayer.getName())) {
-                ChatColor highlightColor = (onlinePlayer.hasPermission("tgc-system.team") && (player.hasPermission("tgc-system.team"))) ? ChatColor.YELLOW : ChatColor.GRAY;
-                highlightedMessage[0] = highlightedMessage[0].replaceAll(onlinePlayer.getName(), highlightColor + onlinePlayer.getName() + ChatColor.RESET);
+            TextComponent modifiedMessage = message.duplicate();
+
+            if (legacyMessage.contains(onlinePlayer.getName())) {
+                ChatColor highlightColor = (onlinePlayer.hasPermission("tgc-system.team") && (player.hasPermission("tgc-system.team"))) ? ChatColor.YELLOW : ChatColor.WHITE;
+                ComponentUtils.findAllTextComponents(modifiedMessage, textComponent -> {
+                    textComponent.setText(textComponent.getText().replaceAll(onlinePlayer.getName(), highlightColor + onlinePlayer.getName() + ChatColor.RESET));
+                });
 
                 if (highlightColor == ChatColor.YELLOW) {
                     onlinePlayer.playSound(onlinePlayer.getLocation(), Sound.BLOCK_NOTE_BLOCK_BIT, 1.0F, 2.0F);
                 }
             }
 
-            onlinePlayer.sendMessage(null, (Main.get().getConfig().getBoolean("chatSystem.timeStampInChat.enabled") ? "§7[" + DateTimeFormatter.ofPattern(Main.get().getConfig().getString("chatSystem.timeStampInChat.format")).format(ZonedDateTime.now(ZoneId.of(Main.get().getConfig().getString("chatSystem.timeStampInChat.timeZone")))) + "] §f" : "") + playerChatName + " " + highlightedMessage[0]);
-            Bukkit.getLogger().info("Chat: " + playerChatName + " " + highlightedMessage[0]);
+            if (Main.get().getConfig().getBoolean("chatSystem.timeStampInChat.enabled")) {
+                TextComponent timeStamp = new TextComponent("§7[" + DateTimeFormatter.ofPattern(Main.get().getConfig().getString("chatSystem.timeStampInChat.format")).format(ZonedDateTime.now(ZoneId.of(Main.get().getConfig().getString("chatSystem.timeStampInChat.timeZone")))) + "] §f");
+
+                onlinePlayer.spigot().sendMessage(timeStamp, playerChatName, modifiedMessage);
+            } else {
+                onlinePlayer.spigot().sendMessage(playerChatName, modifiedMessage);
+            }
         }
+
+        Bukkit.getLogger().info("Chat: " + ChatColor.stripColor("<" + player.getName() + "> " + legacyMessage));
 
         event.setCancelled(true);
     }
@@ -127,6 +153,21 @@ public class OtherListeners implements Listener {
         }
         player.playSound(player.getLocation(), Sound.BLOCK_CROP_BREAK, 1.0f, 1.0f);
         event.setUseItemInHand(Event.Result.DENY);
+    }
+
+    @EventHandler
+    public void onBlockForm(BlockFormEvent event) {
+        if (event.getBlock().getLocation().getBlockY() < 0) {
+            if (!Main.get().getConfig().getBoolean("deepslateGenerator.enabled")) return;
+            Material newMaterial = switch (event.getNewState().getType()) {
+                case COBBLESTONE -> Material.COBBLED_DEEPSLATE;
+                case STONE -> Material.DEEPSLATE;
+                default -> null;
+            };
+
+            if (newMaterial == null) return;
+            event.getNewState().setType(newMaterial);
+        }
     }
 
     @EventHandler
