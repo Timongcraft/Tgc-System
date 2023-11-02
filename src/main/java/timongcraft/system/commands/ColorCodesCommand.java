@@ -6,6 +6,7 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.CommandSender;
 
 public class ColorCodesCommand {
+
     public static void register() {
         new CommandTree("colorcodes")
                 .withShortDescription("Get all color codes as well as the format codes")
@@ -15,7 +16,7 @@ public class ColorCodesCommand {
                 .register();
     }
 
-    private static int colorCodesManager(CommandSender sender, CommandArguments args) {
+    private static void colorCodesManager(CommandSender sender, CommandArguments args) {
         sender.sendMessage(ChatColor.GOLD + "======== Color Codes ========");
         sender.sendMessage("&0 = " + ChatColor.BLACK + "Black" + "             " + ChatColor.WHITE + "&1 = " + ChatColor.DARK_BLUE + "Dark Blue");
         sender.sendMessage("&2 = " + ChatColor.DARK_GREEN + "Dark Green" + "     " + ChatColor.WHITE + "&3 = " + ChatColor.DARK_AQUA + "Dark Aqua");
@@ -30,6 +31,6 @@ public class ColorCodesCommand {
         sender.sendMessage("&k = " + ChatColor.MAGIC + "Magic" + ChatColor.WHITE + "             " + "&l = " + ChatColor.BOLD + "Bold");
         sender.sendMessage("&m = " + ChatColor.STRIKETHROUGH + "Strikethrough" + ChatColor.WHITE + "  " + "&n = " + ChatColor.UNDERLINE + "Underline");
         sender.sendMessage("&o = " + ChatColor.ITALIC + "Italic" + ChatColor.WHITE + "             " + "&r = " + ChatColor.RESET + "Reset");
-        return 1;
     }
+
 }

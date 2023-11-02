@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.regex.Pattern;
 
 public class HopperFilterHandler implements Listener {
+
     HashMap<String, Pattern> patternCache;
 
     public HopperFilterHandler() {
@@ -56,4 +57,5 @@ public class HopperFilterHandler implements Listener {
 
         return matchesPositive && !matchesNegative;
     }
+
 }

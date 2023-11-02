@@ -5,6 +5,7 @@ import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.LiteralArgument;
 import dev.jorel.commandapi.arguments.StringArgument;
 import dev.jorel.commandapi.executors.CommandArguments;
+import jdk.jfr.Description;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
@@ -14,7 +15,10 @@ import timongcraft.system.Main;
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated(forRemoval = true)
+@Description("Plugin loading and unloading can cause unexpected failures for unfamiliar users")
 public class PluginCommand {
+
     public static void register() {
         new CommandTree("plugin")
                 .withShortDescription("Toggle plugins")
@@ -35,11 +39,9 @@ public class PluginCommand {
         List<String> plugins = new ArrayList<>();
         List<String> disabledPlugins = Main.get().getDataConfig().getStringList("disabledPlugins");
         for (Plugin plugin : Bukkit.getPluginManager().getPlugins()) {
-            if (!plugin.getName().equalsIgnoreCase(Main.get().getName())) {
-                if ((disabledPlugins.contains(plugin.getName()))) {
-                    plugins.add(plugin.getName());
-                }
-            }
+            if (plugin.getName().equalsIgnoreCase(Main.get().getName())) continue;
+            if (!(disabledPlugins.contains(plugin.getName()))) continue;
+            plugins.add(plugin.getName());
         }
         return plugins.toArray(new String[0]);
     }
@@ -47,11 +49,9 @@ public class PluginCommand {
     private static String[] getEnabledPlugins() {
         List<String> plugins = new ArrayList<>();
         for (Plugin plugin : Bukkit.getPluginManager().getPlugins()) {
-            if (!plugin.getName().equalsIgnoreCase(Main.get().getName())) {
-                if (plugin.isEnabled()) {
-                    plugins.add(plugin.getName());
-                }
-            }
+            if (plugin.getName().equalsIgnoreCase(Main.get().getName())) continue;
+            if (!plugin.isEnabled()) continue;
+            plugins.add(plugin.getName());
         }
         return plugins.toArray(new String[0]);
     }
@@ -62,12 +62,12 @@ public class PluginCommand {
         Plugin targetPlugin = Main.get().getServer().getPluginManager().getPlugin(pluginName);
         if (targetPlugin == null) {
             sender.sendMessage(Main.get().getPrefix() + "§c" + pluginName + " not found.");
-            return 1;
+            return 0;
         }
 
         if (!Main.get().getDataConfig().isSet("disabledPlugins") || Main.get().getDataConfig().getStringList("disabledPlugins").isEmpty()) {
             sender.sendMessage(Main.get().getPrefix() + "§c" + pluginName + " can't be enabled.");
-            return 1;
+            return 0;
         }
 
         List<String> disabledPlugins = Main.get().getDataConfig().getStringList("disabledPlugins");
@@ -89,18 +89,17 @@ public class PluginCommand {
         Plugin targetPlugin = Main.get().getServer().getPluginManager().getPlugin(pluginName);
         if (targetPlugin == null) {
             sender.sendMessage(Main.get().getPrefix() + "§c" + pluginName + " not found.");
-            return 1;
+            return 0;
         }
 
         if (targetPlugin.getName().equals(Main.get().getName())) {
             sender.sendMessage(Main.get().getPrefix() + "§cThis plugin can't be disabled.");
-            return 1;
+            return 0;
         }
 
         Main.get().getServer().getPluginManager().disablePlugin(targetPlugin);
-        if (!Main.get().getDataConfig().isSet("disabledPlugins")) {
+        if (!Main.get().getDataConfig().isSet("disabledPlugins"))
             Main.get().getDataConfig().set("disabledPlugins", new ArrayList<>());
-        }
         List<String> disabledPlugins = Main.get().getDataConfig().getStringList("disabledPlugins");
         disabledPlugins.add(pluginName);
         Main.get().getDataConfig().set("disabledPlugins", disabledPlugins);
@@ -116,12 +115,13 @@ public class PluginCommand {
         PluginManager pluginManager = Main.get().getServer().getPluginManager();
         for (String pluginName : disabledPlugins) {
             Plugin targetPlugin = pluginManager.getPlugin(pluginName);
-            if (targetPlugin != null) {
-                Bukkit.getScheduler().runTaskLater(Main.get(), () -> {
-                    Main.get().getLogger().info("Disabling " + targetPlugin.getName());
-                    pluginManager.disablePlugin(targetPlugin);
-                }, 200);
-            }
+            if (targetPlugin == null) continue;
+
+            Bukkit.getScheduler().runTaskLater(Main.get(), () -> {
+                Main.get().getLogger().info("Disabling " + targetPlugin.getName());
+                pluginManager.disablePlugin(targetPlugin);
+            }, 200);
         }
     }
+
 }

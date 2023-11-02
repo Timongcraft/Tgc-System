@@ -1,17 +1,18 @@
 package timongcraft.system.commands;
 
-import dev.jorel.commandapi.CommandAPI;
+import dev.jorel.commandapi.CommandAPIBukkit;
 import dev.jorel.commandapi.CommandPermission;
 import dev.jorel.commandapi.CommandTree;
 import dev.jorel.commandapi.arguments.GreedyStringArgument;
 import dev.jorel.commandapi.executors.CommandArguments;
+import net.md_5.bungee.api.chat.TranslatableComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 public class SayCommand {
+
     public static void register() {
-        CommandAPI.unregister("say", true);
+        CommandAPIBukkit.unregister("say", true, false);
 
         new CommandTree("say")
                 .withShortDescription("Send a message from that sender")
@@ -22,12 +23,10 @@ public class SayCommand {
                 .register();
     }
 
-    private static int sayManager(CommandSender sender, CommandArguments args) {
-        String msg = (String) args.get("message");
+    private static void sayManager(CommandSender sender, CommandArguments args) {
+        TranslatableComponent message = new TranslatableComponent("chat.type.announcement", sender.getName(), args.get("message"));
 
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            player.sendMessage("[" + sender.getName() + "] " + msg);
-        }
-        return 1;
+        Bukkit.spigot().broadcast(message);
     }
+
 }

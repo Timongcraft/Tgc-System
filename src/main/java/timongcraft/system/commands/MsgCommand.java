@@ -1,25 +1,25 @@
 package timongcraft.system.commands;
 
-import dev.jorel.commandapi.CommandAPI;
+import dev.jorel.commandapi.CommandAPIBukkit;
 import dev.jorel.commandapi.CommandTree;
 import dev.jorel.commandapi.arguments.GreedyStringArgument;
 import dev.jorel.commandapi.executors.CommandArguments;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.command.BlockCommandSender;
-import org.bukkit.command.ConsoleCommandSender;
+import net.md_5.bungee.api.chat.TranslatableComponent;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import timongcraft.system.Main;
 import timongcraft.system.util.CoordsMessageUtils;
 import timongcraft.system.util.PlayerOnlyArgument;
 
 public class MsgCommand {
+
     public static void register() {
-        CommandAPI.unregister("msg", true);
-        CommandAPI.unregister("minecraft:msg", true);
-        CommandAPI.unregister("tell", true);
-        CommandAPI.unregister("minecraft:tell", true);
-        CommandAPI.unregister("w", true);
-        CommandAPI.unregister("minecraft:w", true);
+        CommandAPIBukkit.unregister("msg", true, false);
+        CommandAPIBukkit.unregister("tell", true, false);
+        CommandAPIBukkit.unregister("w", true, false);
 
         new CommandTree("msg")
                 .withShortDescription("Send a private message to a player")
@@ -27,59 +27,36 @@ public class MsgCommand {
                 .withAliases("tell", "w")
                 .then(new PlayerOnlyArgument("target")
                         .then(new GreedyStringArgument("message")
-                                .executesPlayer(MsgCommand::playerMsgManager)
-                                .executesCommandBlock(MsgCommand::commandBlockManager)
-                                .executesConsole(MsgCommand::consoleMsgManager)))
+                                .executes(MsgCommand::msgManager)))
                 .register();
     }
 
-    private static int playerMsgManager(Player sender, CommandArguments args) {
+    private static void msgManager(CommandSender sender, CommandArguments args) {
         Player target = (Player) args.get("target");
         String rawMessage = (String) args.get("message");
 
-        if (sender.hasPermission("tgc-system.team")) {
+        if (sender.hasPermission("tgc-system.team"))
             rawMessage = rawMessage.replaceAll("&", "§");
-        }
 
         TextComponent message = new TextComponent(rawMessage);
 
-        if (Main.get().getConfig().getBoolean("coordsSaver.enabled")) {
+        if (sender instanceof Player player && Main.get().getConfig().getBoolean("coordsSaver.enabled"))
             if (Main.get().getConfig().getBoolean("coordsSaver.xaerosWaypointCompatability")) {
                 TextComponent xaerosWaypoint = CoordsMessageUtils.getXaerosWaypointAsClickableCoordinatesMessage(rawMessage);
 
                 if (xaerosWaypoint != null) {
                     message = xaerosWaypoint;
                 } else {
-                    message = CoordsMessageUtils.getAsClickableCoordinatesMessage(sender, rawMessage, true);
+                    message = CoordsMessageUtils.getAsClickableCoordinatesMessage(player, rawMessage, true);
                 }
             } else {
-                message = CoordsMessageUtils.getAsClickableCoordinatesMessage(sender, rawMessage, false);
+                message = CoordsMessageUtils.getAsClickableCoordinatesMessage(player, rawMessage, false);
             }
-        }
 
-        sender.sendMessage("§7§oYou whisper to " + target.getName() + ": " + message);
-        target.sendMessage("§7§o" + sender.getName() + " whispers to you: " + message);
-        ReplyCommand.setLastReply(sender.getUniqueId(), target.getUniqueId());
-        return 1;
+        sender.spigot().sendMessage(new ComponentBuilder(new TranslatableComponent("commands.message.display.outgoing", target.getName(), message)).color(ChatColor.GRAY).italic(true).create());
+        target.spigot().sendMessage(new ComponentBuilder(new TranslatableComponent("commands.message.display.incoming", sender.getName(), message)).color(ChatColor.GRAY).italic(true).create());
+        if (sender instanceof Player player)
+            ReplyCommand.setLastReply(player.getUniqueId(), target.getUniqueId());
     }
 
-    private static int consoleMsgManager(ConsoleCommandSender sender, CommandArguments args) {
-        Player target = (Player) args.get("target");
-        String message = (String) args.get("message");
-        message = message.replaceAll("&", "§");
-
-        sender.sendMessage("§7§oYou whisper to " + target.getName() + ": " + message);
-        target.sendMessage("§7§oServer whispers to you: " + message);
-        return 1;
-    }
-
-    private static int commandBlockManager(BlockCommandSender sender, CommandArguments args) {
-        Player target = (Player) args.get("target");
-        String message = (String) args.get("message");
-        message = message.replaceAll("&", "§");
-
-        sender.sendMessage("§7§oYou whisper to " + target.getName() + message);
-        target.sendMessage("§7§o@ whispers to you: " + message);
-        return 1;
-    }
 }

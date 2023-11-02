@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 
 public class DataConfigHandler extends YamlConfiguration {
+
     private final File file;
 
     public DataConfigHandler(File file) {
@@ -40,4 +41,5 @@ public class DataConfigHandler extends YamlConfiguration {
             file.createNewFile();
         }
     }
+
 }

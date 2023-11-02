@@ -15,11 +15,11 @@ import java.util.stream.Stream;
 public class CommandAPILoader {
     public static void load(String version, boolean noConfig) throws IOException, InvalidPluginException, InvalidDescriptionException {
         try (Stream<Path> pathStream = Files.list(Path.of("plugins"))) {
-            if (pathStream.anyMatch(a -> {
-                if (!((a.getFileName().toString().contains("CommandAPI") || a.getFileName().toString().contains("commandapi")) && a.getFileName().toString().endsWith(".jar")))
+            if (pathStream.anyMatch(file -> {
+                if (!(file.getFileName().toString().toLowerCase().contains("commandapi") && file.getFileName().toString().endsWith(".jar")))
                     return false;
 
-                if (!a.getFileName().toString().equals("CommandAPI-" + version + ".jar")) {
+                if (!file.getFileName().toString().toLowerCase().equals("commandapi-" + version + ".jar")) {
                     if (noConfig || Main.get().getConfig().getBoolean("CommandAPI.warnings")) {
                         Main.get().getLogger().warning("You may have loaded an incompatible version of CommandAPI. For best compatibility, use version " + version + ".");
                     }

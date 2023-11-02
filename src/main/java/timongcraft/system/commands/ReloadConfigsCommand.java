@@ -2,11 +2,13 @@ package timongcraft.system.commands;
 
 import dev.jorel.commandapi.CommandTree;
 import dev.jorel.commandapi.executors.CommandArguments;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.command.CommandSender;
 import timongcraft.system.Main;
-import timongcraft.system.util.PlayerUtils;
+import timongcraft.system.util.MessageUtils;
 
 public class ReloadConfigsCommand {
+
     public static void register() {
         new CommandTree("tgcreload-configs")
                 .withShortDescription("Reloads the plugin configs")
@@ -20,9 +22,9 @@ public class ReloadConfigsCommand {
         Main.get().reloadConfig();
         Main.get().getDataConfig().load();
 
-        sender.sendMessage(Main.get().getPrefix() + "The Configs have been reloaded!");
+        MessageUtils.sendAdminMessage(sender, new TextComponent("Reloaded the plugins's configs"));
         sender.sendMessage("§eNot all modules are compatible with config reloading!");
-        PlayerUtils.sendToTeam(sender.getName(), null, "Reloaded the plugins's configs");
         return 1;
     }
+
 }

@@ -8,6 +8,7 @@ import timongcraft.system.Main;
 import java.util.HexFormat;
 
 public class ResourcePackCommand {
+
     public static void register() {
         new CommandTree("resourcepack")
                 .withShortDescription("Toggle the server resource pack")
@@ -18,10 +19,9 @@ public class ResourcePackCommand {
                 .register();
     }
 
-    private static int resourcePackManager(Player sender, CommandArguments args) {
-        if (!Main.get().getDataConfig().isSet("players." + sender.getUniqueId() + ".resourcepack")) {
+    private static void resourcePackManager(Player sender, CommandArguments args) {
+        if (!Main.get().getDataConfig().isSet("players." + sender.getUniqueId() + ".resourcepack"))
             Main.get().getDataConfig().set("players." + sender.getUniqueId() + ".resourcepack", false);
-        }
 
         if (Main.get().getDataConfig().getBoolean("players." + sender.getUniqueId() + ".resourcepack")) {
             Main.get().getDataConfig().set("players." + sender.getUniqueId() + ".resourcepack", false);
@@ -33,11 +33,10 @@ public class ResourcePackCommand {
             final String url = Main.get().getConfig().getString("resourcePack.url");
             final byte[] hash = HexFormat.of().parseHex(Main.get().getConfig().getString("resourcePack.hash"));
 
-            if (url != null && hash != null && sender.hasPermission("tgc-system.team") && Main.get().getDataConfig().getBoolean("players." + sender.getUniqueId() + ".resourcepack")) {
+            if (url != null && hash != null && sender.hasPermission("tgc-system.team") && Main.get().getDataConfig().getBoolean("players." + sender.getUniqueId() + ".resourcepack"))
                 sender.setResourcePack(url, hash, false);
-            }
         }
         Main.get().getDataConfig().save();
-        return 1;
     }
+
 }

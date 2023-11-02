@@ -1,5 +1,6 @@
 package timongcraft.system.listeners;
 
+import dev.jorel.commandapi.CommandAPIBukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -8,8 +9,16 @@ import org.bukkit.event.player.PlayerCommandSendEvent;
 import timongcraft.system.Main;
 
 import java.util.Iterator;
+import java.util.List;
 
 public class BlockCommandsListeners implements Listener {
+
+    public BlockCommandsListeners() {
+        List<String> blockedCommands = Main.get().getConfig().getStringList("blockedCommands");
+
+        for (String command : blockedCommands)
+            CommandAPIBukkit.unregister(command, true, true);
+    }
 
     @EventHandler
     public void blockPrefixes(PlayerCommandPreprocessEvent event) {
@@ -42,22 +51,4 @@ public class BlockCommandsListeners implements Listener {
         }
     }
 
-    @EventHandler
-    public void blockCommands(PlayerCommandPreprocessEvent event) {
-        Player player = event.getPlayer();
-
-        if (player.hasPermission("tgc-system.team") || Main.get().getConfig().getStringList("blockedCommands").isEmpty())
-            return;
-        String command = event.getMessage().substring(1).toLowerCase().split("\\s+")[0];
-        if (!Main.get().getConfig().getStringList("blockedCommands").contains(command)) return;
-        player.sendMessage(Main.get().getPrefix() + "§cThe '" + command + "' command is blocked!");
-        event.setCancelled(true);
-    }
-
-    @EventHandler
-    public void hideCommands(PlayerCommandSendEvent event) {
-        if (event.getPlayer().hasPermission("tgc-system.team") || Main.get().getConfig().getStringList("blockedCommands").isEmpty())
-            return;
-        event.getCommands().removeIf(command -> Main.get().getConfig().getStringList("blockedCommands").contains(command));
-    }
 }

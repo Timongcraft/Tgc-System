@@ -1,55 +1,51 @@
 package timongcraft.system.commands;
 
-import dev.jorel.commandapi.CommandAPI;
+import dev.jorel.commandapi.CommandAPIBukkit;
 import dev.jorel.commandapi.CommandTree;
 import dev.jorel.commandapi.arguments.GreedyStringArgument;
 import dev.jorel.commandapi.executors.CommandArguments;
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Team;
 import timongcraft.system.Main;
-import timongcraft.system.util.PlayerUtils;
+import timongcraft.system.util.MessageUtils;
 
 public class TeamMsgCommand {
+
     public static void register() {
-        CommandAPI.unregister("teammsg", true);
-        CommandAPI.unregister("tm", true);
+        CommandAPIBukkit.unregister("teammsg", true, false);
+        CommandAPIBukkit.unregister("tm", true, false);
 
         new CommandTree("teammsg")
                 .withShortDescription("Send a private message to your team")
                 .withUsage("/teammsg <message>")
+                .withAliases("tm")
                 .then(new GreedyStringArgument("message")
-                        .executes(TeamMsgCommand::teamMsgManager))
+                        .executesPlayer(TeamMsgCommand::teamMsgManager))
                 .register();
     }
 
-    private static int teamMsgManager(CommandSender sender, CommandArguments args) {
+    private static int teamMsgManager(Player sender, CommandArguments args) {
         String message = (String) args.get("message");
 
-        if (!(sender instanceof Player target)) {
-            sender.sendMessage(Main.get().getPrefix() + "§cAn entity is required to run this command here");
-            return 1;
-        }
-
-        if (target.hasPermission("tgc-system.team")) {
+        if (sender.hasPermission("tgc-system.team"))
             message = message.replaceAll("&", "§");
-        }
 
-        Team targetTeam = Bukkit.getScoreboardManager().getMainScoreboard().getEntryTeam(target.getName());
+        Team targetTeam = Bukkit.getScoreboardManager().getMainScoreboard().getEntryTeam(sender.getName());
 
         if (targetTeam == null) {
-            target.sendMessage(Main.get().getPrefix() + "§cYou must be on a team to message your team");
-            return 1;
+            sender.sendMessage(Main.get().getPrefix() + "§cYou must be on a team to message your team");
+            return 0;
         }
 
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
             for (Team onlinePlayersTeam : onlinePlayer.getScoreboard().getTeams()) {
-                if (onlinePlayersTeam.hasEntry(onlinePlayer.getName()) && targetTeam.equals(onlinePlayersTeam)) {
-                    onlinePlayer.sendMessage("-> " + targetTeam.getColor() + "[" + targetTeam.getDisplayName() + "] §r<" + new PlayerUtils().getPlayerNameWithStatus(target, true) + "§r" + "> " + message);
-                }
+                if (!onlinePlayersTeam.hasEntry(onlinePlayer.getName()) || !targetTeam.equals(onlinePlayersTeam))
+                    continue;
+                onlinePlayer.sendMessage("-> " + targetTeam.getColor() + "[" + targetTeam.getDisplayName() + "] §r<" + MessageUtils.getPlayerNameWithStatus(sender, true) + "§r" + "> " + message);
             }
         }
         return 1;
     }
+
 }

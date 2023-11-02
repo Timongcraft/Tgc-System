@@ -12,6 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import timongcraft.system.Main;
 
 public class HopperFiltersCommand {
+
     public static String HOPPER_SORTER_PREFIX = "§6Sorter: ";
 
     public static void register() {
@@ -24,15 +25,13 @@ public class HopperFiltersCommand {
                 .register();
     }
 
-    private static int hopperFiltersManager(CommandSender sender, CommandArguments args) {
+    private static void hopperFiltersManager(CommandSender sender, CommandArguments args) {
         sender.sendMessage(Main.get().getPrefix() + "Hopper Sorting System Usage:");
         sender.sendMessage("To use hopper filters you need to rename a hopper, the following features will help you");
         sender.sendMessage("1. Separate items with commas.");
         sender.sendMessage("2. Use wildcards like * (infinite chars) and ? (as many chars as question marks).");
         sender.sendMessage("3. Use exclamation marks as inverters.");
         sender.sendMessage("Example: '*spruce*,!*boat' will let every spruce item except boats trough");
-
-        return 1;
     }
 
     private static int hopperFiltersRenamer(Player sender, CommandArguments args) {
@@ -47,7 +46,7 @@ public class HopperFiltersCommand {
         ItemMeta itemMeta = item.getItemMeta();
 
         if (itemMeta == null) {
-            sender.sendMessage(Main.get().getPrefix() + "§cInternal bukkit error!");
+            sender.sendMessage(Main.get().getPrefix() + "§cNo item meta present!");
             return 0;
         }
 
@@ -57,4 +56,5 @@ public class HopperFiltersCommand {
         sender.sendMessage(Main.get().getPrefix() + "Renamed hopper");
         return 1;
     }
+
 }

@@ -15,11 +15,12 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import timongcraft.system.Main;
-import timongcraft.system.util.PlayerUtils;
+import timongcraft.system.util.MessageUtils;
 
 import java.util.List;
 
 public class CoordinatesCommand {
+
     public static void register() {
         new CommandTree("coordinates")
                 .withShortDescription("A more vanilla like alternative to waypoints")
@@ -59,9 +60,8 @@ public class CoordinatesCommand {
         String[] coordinateNames = new String[coordinatesList.size()];
         int index = 0;
 
-        for (String coordinateNamesName : coordinatesList) {
+        for (String coordinateNamesName : coordinatesList)
             coordinateNames[index++] = (coordinateNamesName.split(":")[0]);
-        }
 
         return coordinateNames;
     }
@@ -71,7 +71,7 @@ public class CoordinatesCommand {
 
         if (coordinatesList.isEmpty()) {
             sender.sendMessage(Main.get().getPrefix() + "§cYou haven't any saved coordinates");
-            return 1;
+            return 0;
         }
 
         sender.sendMessage("Saved Coordinates:\n");
@@ -100,7 +100,7 @@ public class CoordinatesCommand {
 
         if (coordinatesList.isEmpty()) {
             sender.sendMessage(Main.get().getPrefix() + "§c" + target.getName() + " hasn't saved any coordinates");
-            return 1;
+            return 0;
         }
 
         sender.sendMessage(Main.get().getPrefix() + target.getName() + "s Saved Coordinates:\n");
@@ -133,7 +133,7 @@ public class CoordinatesCommand {
 
         if (coordinatesLimit != -1 && coordinatesList.size() >= coordinatesLimit) {
             sender.sendMessage(Main.get().getPrefix() + "§cYou succeeded the limit of " + coordinatesLimit + " coordinates");
-            return 1;
+            return 0;
         }
 
         coordinatesList.removeIf(searchedCoordinate -> searchedCoordinate.startsWith(coordinateName + ":"));
@@ -151,8 +151,7 @@ public class CoordinatesCommand {
         coordinateCoordinatesComponent.setClickEvent(new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, coordinateClean));
         coordinateCoordinatesComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("§6Click to copy coordinates.")));
 
-        sender.spigot().sendMessage(new TextComponent(Main.get().getPrefix() + "Added coordinate: "), coordinateNameComponent, coordinateCoordinatesComponent);
-        PlayerUtils.sendToTeam(sender.getName(), null, "Added coordinate: " + coordinateName + " (" + coordinateClean + ")");
+        MessageUtils.sendAdminMessage(sender, new TextComponent("Added coordinate: " + coordinateName + " (" + coordinateClean + ")"));
         return 1;
     }
 
@@ -162,7 +161,7 @@ public class CoordinatesCommand {
 
         if (coordinatesList.isEmpty()) {
             sender.sendMessage(Main.get().getPrefix() + "§cThere aren't any saved coordinates");
-            return 1;
+            return 0;
         }
 
         for (String coordinate : coordinatesList) {
@@ -171,14 +170,13 @@ public class CoordinatesCommand {
                 Main.get().getDataConfig().set("players." + sender.getUniqueId() + ".coords", coordinatesList);
                 Main.get().getDataConfig().save();
 
-                sender.sendMessage(Main.get().getPrefix() + "Removed coordinate: " + coordinateName);
-                PlayerUtils.sendToTeam(sender.getName(), null, "Removed coordinate: " + coordinateName);
+                MessageUtils.sendAdminMessage(sender, new TextComponent("Removed coordinate: " + coordinateName));
                 return 1;
             }
         }
 
         sender.sendMessage(Main.get().getPrefix() + "§cNo coordinate with the name: " + coordinateName + "could be found");
-        return 1;
+        return 0;
     }
 
     private static int coordsGrabber(Player sender, CommandArguments args) {
@@ -187,7 +185,7 @@ public class CoordinatesCommand {
 
         if (coordinatesList.isEmpty()) {
             sender.sendMessage(Main.get().getPrefix() + "§cThere aren't any saved coordinates");
-            return 1;
+            return 0;
         }
 
         for (String coordinate : coordinatesList) {
@@ -209,10 +207,10 @@ public class CoordinatesCommand {
         }
 
         sender.sendMessage(Main.get().getPrefix() + "§cNo coordinate with the name: " + coordinateName + "could be found");
-        return 1;
+        return 0;
     }
 
-    private static int coordsSaver(Player sender, CommandArguments args) {
+    private static void coordsSaver(Player sender, CommandArguments args) {
         String coords = (String) args.get("coords");
         String coordsName = coords.split(":")[0];
         ChatColor color = getEnvironmentColor(coords.split(":")[2]);
@@ -224,7 +222,6 @@ public class CoordinatesCommand {
         Main.get().getDataConfig().save();
 
         sender.sendMessage(Main.get().getPrefix() + "Added " + color + coordsName + "§r to your coords list");
-        return 1;
     }
 
     public static ChatColor getEnvironmentColor(String environment) {
@@ -237,4 +234,5 @@ public class CoordinatesCommand {
         };
 
     }
+
 }

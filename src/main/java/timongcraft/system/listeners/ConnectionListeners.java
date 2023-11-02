@@ -16,6 +16,7 @@ import java.io.File;
 import java.util.*;
 
 public class ConnectionListeners implements Listener {
+
     public static final List<UUID> resourcePackLoaded = new ArrayList<>();
 
     @EventHandler
@@ -64,9 +65,8 @@ public class ConnectionListeners implements Listener {
             List<String> knownIpAddresses = new ArrayList<>();
 
             for (Player player : Bukkit.getOnlinePlayers()) {
-                if (Main.get().getDataConfig().isSet("players." + player.getUniqueId() + ".ipAddress")) {
-                    knownIpAddresses.add(Main.get().getDataConfig().getString("players." + player.getUniqueId() + ".ipAddress"));
-                }
+                if (!Main.get().getDataConfig().isSet("players." + player.getUniqueId() + ".ipAddress")) continue;
+                knownIpAddresses.add(Main.get().getDataConfig().getString("players." + player.getUniqueId() + ".ipAddress"));
             }
 
             if (!knownIpAddresses.contains(ipAddress)) {
@@ -84,32 +84,25 @@ public class ConnectionListeners implements Listener {
     }
 
     private void maintenanceServerPingHandler(ServerListPingEvent event) {
-        if (Main.get().getDataConfig().getBoolean("maintenance.enabled")) {
-            event.setMotd(Main.get().getConfig().getString("maintenance.motd"));
-            event.setMaxPlayers(0);
-            if (Main.get().getConfig().getBoolean("maintenance.icon")) {
-                File maintenanceIcon = new File(Main.get().getDataFolder(), "maintenance-icon.png");
-                if (maintenanceIcon.exists()) {
-                    try {
-                        event.setServerIcon(Bukkit.loadServerIcon(maintenanceIcon));
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
+        if (!Main.get().getDataConfig().getBoolean("maintenance.enabled")) return;
+        event.setMotd(Main.get().getConfig().getString("maintenance.motd"));
+        event.setMaxPlayers(0);
+        if (!Main.get().getConfig().getBoolean("maintenance.icon")) return;
+        File maintenanceIcon = new File(Main.get().getDataFolder(), "maintenance-icon.png");
+        if (!maintenanceIcon.exists()) return;
+        try {
+            event.setServerIcon(Bukkit.loadServerIcon(maintenanceIcon));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
     private void maintenanceJoinHandler(Player player, PlayerLoginEvent event) {
-        if (Main.get().getDataConfig().getBoolean("maintenance.enabled") && !MaintenanceCommand.isAllowed(player)) {
-            Main.get().getLogger().info(Main.get().getPrefix() + player.getName() + " tried to join while maintenance mode");
-            for (Player onlinePlayers : Bukkit.getOnlinePlayers()) {
-                if (onlinePlayers.hasPermission("tgc-system.team")) {
-                    onlinePlayers.sendMessage(Main.get().getPrefix() + player.getName() + " tried to join while maintenance mode");
-                }
-            }
-            event.disallow(PlayerLoginEvent.Result.KICK_OTHER, Main.get().getConfig().getString("maintenance.kickMessage"));
-        }
+        if (!Main.get().getDataConfig().getBoolean("maintenance.enabled") || MaintenanceCommand.isAllowed(player.getUniqueId()))
+            return;
+        Main.get().getLogger().info(Main.get().getPrefix() + player.getName() + " tried to join while maintenance mode");
+        Bukkit.broadcast(Main.get().getPrefix() + player.getName() + " tried to join while maintenance mode", "tgc-system.team");
+        event.disallow(PlayerLoginEvent.Result.KICK_OTHER, Main.get().getConfig().getString("maintenance.kickMessage"));
     }
 
     private void permissionJoinHandler(Player player) {
@@ -141,50 +134,41 @@ public class ConnectionListeners implements Listener {
             final String promt = Main.get().getConfig().getString("resourcePack.promt");
             final boolean force = Main.get().getConfig().getBoolean("resourcePack.force");
 
-            if (url != null && hash != null && !player.hasPermission("tgc-system.team")) {
+            if (url != null && hash != null && !player.hasPermission("tgc-system.team"))
                 player.setResourcePack(url, hash, promt, force);
-            }
 
-            if (url != null && hash != null && player.hasPermission("tgc-system.team") && Main.get().getDataConfig().getBoolean("players." + player.getUniqueId() + ".resourcepack")) {
+            if (url != null && hash != null && player.hasPermission("tgc-system.team") && Main.get().getDataConfig().getBoolean("players." + player.getUniqueId() + ".resourcepack"))
                 player.setResourcePack(url, hash, false);
-            }
 
-            if (Main.get().getConfig().getBoolean("resourcePack.force")) {
-                Bukkit.getScheduler().runTaskLater(Main.get(), () -> {
-                    if (!player.isOnline() || player.hasPermission("tgc-system.team")) return;
+            if (!Main.get().getConfig().getBoolean("resourcePack.force")) return;
 
-                    if (!resourcePackLoaded.contains(player.getUniqueId())) {
-                        player.kickPlayer("§cYou must use the server's resource pack.");
-                    }
-                    resourcePackLoaded.remove(player.getUniqueId());
-                }, Main.get().getConfig().isSet("resourcePack.maxLoadTime") ? Main.get().getConfig().getInt("resourcePack.maxLoadTime") * 20L : 300L);
-            }
+            Bukkit.getScheduler().runTaskLater(Main.get(), () -> {
+                if (!player.isOnline() || player.hasPermission("tgc-system.team")) return;
+
+                if (!resourcePackLoaded.contains(player.getUniqueId()))
+                    player.kickPlayer("§cYou must use the server's resource pack.");
+                resourcePackLoaded.remove(player.getUniqueId());
+            }, Main.get().getConfig().isSet("resourcePack.maxLoadTime") ? Main.get().getConfig().getInt("resourcePack.maxLoadTime") * 20L : 300L);
         }
     }
 
     private void playerJoinMessageJoinHandler(Player player, PlayerJoinEvent event) {
-        if (Main.get().getConfig().getBoolean("joinQuitMessage.enabled")) {
+        if (Main.get().getConfig().getBoolean("joinQuitMessage.enabled"))
             event.setJoinMessage(Main.get().getConfig().getString("joinQuitMessage.joinMessage").replaceAll("%Player%", player.getName()).replaceAll("&", "§"));
-        }
 
-        if (Main.get().getConfig().getBoolean("onJoin.enabled")) {
-            if (Main.get().getConfig().getString("onJoin.message") != null) {
+        if (Main.get().getConfig().getBoolean("onJoin.enabled"))
+            if (Main.get().getConfig().getString("onJoin.message") != null)
                 player.sendMessage(Main.get().getConfig().getString("onJoin.message").replaceAll("%prefix%", Main.get().getPrefix().replaceAll("%alertPrefix%", Main.get().getConfig().getString("prefix.alertPrefix")).replaceAll("&", "§")));
-            }
-        }
 
         String status = StatusHandler.getStatus(player);
-        if (Main.get().getConfig().getBoolean("onJoin.status")) {
-            if (status != null) {
+        if (Main.get().getConfig().getBoolean("onJoin.status"))
+            if (status != null)
                 player.sendMessage(Main.get().getPrefix() + "Your status is set to: " + status.replaceAll("&", "§"));
-            }
-        }
     }
 
     private void playerNameQuitHandler(Player player, PlayerQuitEvent event) {
-        if (Main.get().getConfig().getBoolean("joinQuitMessage.enabled")) {
+        if (Main.get().getConfig().getBoolean("joinQuitMessage.enabled"))
             event.setQuitMessage(Main.get().getConfig().getString("joinQuitMessage.quitMessage").replaceAll("%Player%", player.getName()).replaceAll("&", "§"));
-        }
     }
 
 }

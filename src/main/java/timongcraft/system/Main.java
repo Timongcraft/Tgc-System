@@ -5,12 +5,16 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import timongcraft.system.commands.*;
-import timongcraft.system.listeners.*;
+import timongcraft.system.listeners.BlockCommandsListeners;
+import timongcraft.system.listeners.ConnectionListeners;
+import timongcraft.system.listeners.OtherListeners;
+import timongcraft.system.listeners.SpawnElytraListeners;
 import timongcraft.system.util.*;
 
 import java.io.File;
 
 public class Main extends JavaPlugin {
+
     private static Main instance;
     private final String prefix = getConfig().getString("prefix.pluginPrefix");
     private DataConfigHandler dataConfigHandler;
@@ -25,15 +29,11 @@ public class Main extends JavaPlugin {
 
         if (noLoad || Main.get().getConfig().getBoolean("CommandAPI.autoDownload")) {
             try {
-                CommandAPILoader.load("9.0.3", noLoad);
+                CommandAPILoader.load("9.2.0", noLoad);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
-
-        if (noLoad) return;
-
-        //CommandAPI.onLoad(new CommandAPIBukkitConfig(this).silentLogs(true).missingExecutorImplementationMessage("This command can't be executed with the %s"));
     }
 
     @Override
@@ -46,11 +46,8 @@ public class Main extends JavaPlugin {
 
         PluginCommand.disablePluginsOnBoot();
 
-        if (getConfig().getBoolean("newUpdateNotifications.console")) {
+        if (getConfig().getBoolean("newUpdateNotifications.console"))
             UpdateCheckHandler.checkForUpdate(Double.parseDouble(getDescription().getVersion()));
-        }
-
-        //CommandAPI.onEnable();
 
         registerCommandsInOnEnable();
 
@@ -63,6 +60,7 @@ public class Main extends JavaPlugin {
     public void onDisable() {
         if (noLoad) return;
 
+        if (dataConfigHandler != null) dataConfigHandler.save();
         if (getConfig().getBoolean("autoSave.enabled")) autoSaveHandler.cancel();
     }
 
@@ -80,13 +78,11 @@ public class Main extends JavaPlugin {
     private void registerCommandsInOnEnable() {
         AlertCommand.register();
         ColorCodesCommand.register();
-        if (Main.get().getConfig().getBoolean("coordsSaver.enabled")) {
+        if (Main.get().getConfig().getBoolean("coordsSaver.enabled"))
             CoordinatesCommand.register();
-        }
         FlySpeedCommand.register();
-        if (getConfig().getBoolean("hopperFilters.enabled")) {
+        if (getConfig().getBoolean("hopperFilters.enabled"))
             HopperFiltersCommand.register();
-        }
         if (Main.get().getConfig().getBoolean("chatSystem.enabled")) {
             MsgCommand.register();
             ReplyCommand.register();
@@ -94,17 +90,14 @@ public class Main extends JavaPlugin {
             SayCommand.register();
         }
         MaintenanceCommand.register();
-        if (Main.get().getConfig().getBoolean("permissionSystem.enabled")) {
+        if (Main.get().getConfig().getBoolean("permissionSystem.enabled"))
             PermissionManagerCommand.register();
-        }
         PluginCommand.register();
         RebootCommand.register();
         ReloadConfigsCommand.register();
         ResourcePackCommand.register();
-        SpeedCommand.register();
-        if (Main.get().getConfig().getBoolean("statuses.enabled")) {
+        if (Main.get().getConfig().getBoolean("statuses.enabled"))
             StatusCommand.register();
-        }
         TeamMsgCommand.register();
         WalkSpeedCommand.register();
     }
@@ -115,15 +108,12 @@ public class Main extends JavaPlugin {
         pluginManager.registerEvents(new ConnectionListeners(), this);
         pluginManager.registerEvents(new OtherListeners(), this);
         pluginManager.registerEvents(new HopperFilterHandler(), this);
-        if (!getConfig().getStringList("blockedCommands").isEmpty() || !getConfig().getStringList("blockedPrefix").isEmpty()) {
+        if (!getConfig().getStringList("blockedCommands").isEmpty() || !getConfig().getStringList("blockedPrefix").isEmpty())
             pluginManager.registerEvents(new BlockCommandsListeners(), this);
-        }
-        if (getConfig().getBoolean("spawnElytra.enabled")) {
+        if (getConfig().getBoolean("spawnElytra.enabled"))
             pluginManager.registerEvents(new SpawnElytraListeners(), this);
-        }
-        if (getConfig().getBoolean("hopperFilters.enabled")) {
+        if (getConfig().getBoolean("hopperFilters.enabled"))
             pluginManager.registerEvents(new HopperFilterHandler(), this);
-        }
     }
 
     private void enableAutoSave() {
@@ -156,4 +146,5 @@ public class Main extends JavaPlugin {
     public DataConfigHandler getDataConfig() {
         return dataConfigHandler;
     }
+
 }

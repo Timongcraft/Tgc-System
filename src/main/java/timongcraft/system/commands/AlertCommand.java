@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import timongcraft.system.Main;
 
 public class AlertCommand {
+
     public static void register() {
         new CommandTree("alert")
                 .withShortDescription("Sends an alert to all players")
@@ -21,13 +22,13 @@ public class AlertCommand {
                 .register();
     }
 
-    private static int alertManager(CommandSender sender, CommandArguments args) {
+    private static void alertManager(CommandSender sender, CommandArguments args) {
         String message = (String) args.get("message");
 
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            player.sendMessage(Main.get().getConfig().getString("prefix.alertPrefix") + message.replaceAll("&", "§"));
+        Bukkit.broadcastMessage(Main.get().getConfig().getString("prefix.alertPrefix") + message.replaceAll("&", "§"));
+
+        for (Player player : Bukkit.getOnlinePlayers())
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1.0F, .5F);
-        }
-        return 1;
     }
+
 }

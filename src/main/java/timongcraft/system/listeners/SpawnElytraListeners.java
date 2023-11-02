@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SpawnElytraListeners implements Listener {
+
     private final List<Player> flying = new ArrayList<>();
     private final List<Player> boosted = new ArrayList<>();
 
@@ -34,9 +35,8 @@ public class SpawnElytraListeners implements Listener {
                     playerInWorld.setFlying(false);
                     playerInWorld.setGliding(false);
                     boosted.remove(playerInWorld);
-                    Bukkit.getScheduler().runTaskLater(Main.get(), () -> {
-                        flying.remove(playerInWorld);
-                    }, 5);
+                    Bukkit.getScheduler().runTaskLater(Main.get(), () ->
+                            flying.remove(playerInWorld), 5);
                 }
             }
         }, 0, 4);
@@ -51,19 +51,18 @@ public class SpawnElytraListeners implements Listener {
         player.setGliding(true);
         flying.add(player);
         if (Main.get().getConfig().getBoolean("spawnElytra.boost.enabled")) {
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("Press ")
-                    .append(new KeybindComponent("key.swapOffhand"))
-                    .append(" to boost")
-                    .create());
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("Press ").append(new KeybindComponent("key.swapOffhand")).append(" to boost").create());
         }
     }
 
     @EventHandler
     public void onDamage(EntityDamageEvent event) {
-        if (event.getEntityType() == EntityType.PLAYER
-                && (event.getCause() == EntityDamageEvent.DamageCause.FALL
-                || event.getCause() == EntityDamageEvent.DamageCause.FLY_INTO_WALL)
-                && flying.contains(event.getEntity())) event.setCancelled(true);
+        if (event.getEntityType() != EntityType.PLAYER) return;
+        if (event.getCause() != EntityDamageEvent.DamageCause.FALL || event.getCause() != EntityDamageEvent.DamageCause.FLY_INTO_WALL)
+            return;
+        if (!flying.contains((Player) event.getEntity())) return;
+
+        event.setCancelled(true);
     }
 
     @EventHandler
@@ -73,15 +72,17 @@ public class SpawnElytraListeners implements Listener {
         event.setCancelled(true);
         boosted.add(player);
 
-        for (Player playerInWorld : Bukkit.getWorld(String.valueOf(Main.get().getConfig().getString("spawnElytra.worldName"))).getPlayers()) {
+        for (Player playerInWorld : Bukkit.getWorld(String.valueOf(Main.get().getConfig().getString("spawnElytra.worldName"))).getPlayers())
             if (flying.contains(playerInWorld) && playerInWorld.getLocation().getBlock().getRelative(BlockFace.DOWN).getType().isAir())
                 player.setVelocity(player.getLocation().getDirection().multiply(Main.get().getConfig().getInt("spawnElytra.boost.enabled.multiplyValue")));
-        }
     }
 
     @EventHandler
     public void onToggleGlide(EntityToggleGlideEvent event) {
-        if (event.getEntityType() == EntityType.PLAYER && flying.contains(event.getEntity())) event.setCancelled(true);
+        if (event.getEntityType() != EntityType.PLAYER) return;
+        if (!flying.contains((Player) event.getEntity())) return;
+
+        event.setCancelled(true);
     }
 
     private Boolean isInSpawnRadius(Player player) {
@@ -90,4 +91,5 @@ public class SpawnElytraListeners implements Listener {
 
         return player.getWorld().getSpawnLocation().distance(player.getLocation()) < Main.get().getConfig().getInt("spawnElytra.spawnRadius");
     }
+
 }

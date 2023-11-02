@@ -20,12 +20,12 @@ public class StatusHandler {
         Main.get().getDataConfig().set("players." + player.getUniqueId() + ".status", status);
         Main.get().getDataConfig().save();
 
-        player.setDisplayName(new PlayerUtils().getPlayerNameWithStatus(player, true));
-        player.setPlayerListName(new PlayerUtils().getPlayerNameWithStatus(player, true));
+        player.setDisplayName(MessageUtils.getPlayerNameWithStatus(player, true));
+        player.setPlayerListName(MessageUtils.getPlayerNameWithStatus(player, true));
     }
 
     public static void refreshStatus(Player player) {
-        player.setDisplayName(new PlayerUtils().getPlayerNameWithStatus(player, true));
-        player.setPlayerListName(new PlayerUtils().getPlayerNameWithStatus(player, true));
+        player.setDisplayName(MessageUtils.getPlayerNameWithStatus(player, true));
+        player.setPlayerListName(MessageUtils.getPlayerNameWithStatus(player, true));
     }
 }
