@@ -24,9 +24,7 @@ public class SayCommand {
     }
 
     private static void sayManager(CommandSender sender, CommandArguments args) {
-        TranslatableComponent message = new TranslatableComponent("chat.type.announcement", sender.getName(), args.get("message"));
-
-        Bukkit.spigot().broadcast(message);
+        Bukkit.spigot().broadcast(new TranslatableComponent("chat.type.announcement", sender.getName(), args.get("message")));
     }
 
 }

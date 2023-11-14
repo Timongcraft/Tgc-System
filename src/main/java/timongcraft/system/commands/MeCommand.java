@@ -5,6 +5,7 @@ import dev.jorel.commandapi.CommandPermission;
 import dev.jorel.commandapi.CommandTree;
 import dev.jorel.commandapi.arguments.GreedyStringArgument;
 import dev.jorel.commandapi.executors.CommandArguments;
+import net.md_5.bungee.api.chat.TranslatableComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 
@@ -23,9 +24,7 @@ public class MeCommand {
     }
 
     private static void meManager(CommandSender sender, CommandArguments args) {
-        String msg = (String) args.get("message");
-
-        Bukkit.broadcastMessage("* " + sender.getName() + " " + msg);
+        Bukkit.spigot().broadcast(new TranslatableComponent("chat.type.emote", sender.getName(), args.get("message")));
     }
 
 }
