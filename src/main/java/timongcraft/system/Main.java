@@ -18,7 +18,6 @@ public class Main extends JavaPlugin {
     private static Main instance;
     private final String prefix = getConfig().getString("prefix.pluginPrefix");
     private DataConfigHandler dataConfigHandler;
-    private AutoSaveHandler autoSaveHandler;
     private boolean noLoad;
 
     @Override
@@ -27,9 +26,9 @@ public class Main extends JavaPlugin {
 
         noLoad = !new File(getDataFolder(), "config.yml").exists();
 
-        if (noLoad || Main.get().getConfig().getBoolean("CommandAPI.autoDownload")) {
+        if (noLoad || Main.get().getConfig().getBoolean("commandAPI.autoDownload")) {
             try {
-                CommandAPILoader.load("9.2.0", noLoad);
+                CommandAPILoader.load("9.3.0", noLoad);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -44,16 +43,12 @@ public class Main extends JavaPlugin {
         configVersionCheck();
         if (noLoad) return;
 
-        PluginCommand.disablePluginsOnBoot();
-
         if (getConfig().getBoolean("newUpdateNotifications.console"))
             UpdateCheckHandler.checkForUpdate(Double.parseDouble(getDescription().getVersion()));
 
         registerCommandsInOnEnable();
 
         registerEvents();
-
-        enableAutoSave();
     }
 
     @Override
@@ -61,7 +56,6 @@ public class Main extends JavaPlugin {
         if (noLoad) return;
 
         if (dataConfigHandler != null) dataConfigHandler.save();
-        if (getConfig().getBoolean("autoSave.enabled")) autoSaveHandler.cancel();
     }
 
     private void configVersionCheck() {
@@ -92,7 +86,6 @@ public class Main extends JavaPlugin {
         MaintenanceCommand.register();
         if (Main.get().getConfig().getBoolean("permissionSystem.enabled"))
             PermissionManagerCommand.register();
-        PluginCommand.register();
         RebootCommand.register();
         ReloadConfigsCommand.register();
         ResourcePackCommand.register();
@@ -114,12 +107,6 @@ public class Main extends JavaPlugin {
             pluginManager.registerEvents(new SpawnElytraListeners(), this);
         if (getConfig().getBoolean("hopperFilters.enabled"))
             pluginManager.registerEvents(new HopperFilterHandler(), this);
-    }
-
-    private void enableAutoSave() {
-        autoSaveHandler = new AutoSaveHandler();
-        if (getConfig().getBoolean("autoSave.enabled"))
-            autoSaveHandler.runTaskTimer(this, autoSaveHandler.parseInterval(Main.get().getConfig().getString("autoSave.time")), autoSaveHandler.parseInterval(Main.get().getConfig().getString("autoSave.time")));
     }
 
     private void loadConfigs() {

@@ -13,6 +13,7 @@ import java.nio.file.Path;
 import java.util.stream.Stream;
 
 public class CommandAPILoader {
+
     public static void load(String version, boolean noConfig) throws IOException, InvalidPluginException, InvalidDescriptionException {
         try (Stream<Path> pathStream = Files.list(Path.of("plugins"))) {
             if (pathStream.anyMatch(file -> {
@@ -20,7 +21,7 @@ public class CommandAPILoader {
                     return false;
 
                 if (!file.getFileName().toString().toLowerCase().equals("commandapi-" + version + ".jar")) {
-                    if (noConfig || Main.get().getConfig().getBoolean("CommandAPI.warnings")) {
+                    if (noConfig || Main.get().getConfig().getBoolean("commandAPI.warnings")) {
                         Main.get().getLogger().warning("You may have loaded an incompatible version of CommandAPI. For best compatibility, use version " + version + ".");
                     }
                 }
@@ -36,7 +37,7 @@ public class CommandAPILoader {
 
         int responseCode = con.getResponseCode();
         if (responseCode != 200) {
-            Main.get().getLogger().warning("Failed to check for updates. Response code: " + responseCode);
+            Main.get().getLogger().warning("Failed to load required library CommandAPI. Response code: " + responseCode);
         }
 
         Path commandAPIPath = Path.of("plugins/CommandAPI-" + version + ".jar");
@@ -45,4 +46,5 @@ public class CommandAPILoader {
         con.disconnect();
         Bukkit.getPluginManager().loadPlugin(commandAPIPath.toFile());
     }
+
 }

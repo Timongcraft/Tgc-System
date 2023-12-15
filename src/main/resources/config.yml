@@ -1,5 +1,5 @@
 #Do not edit config version or things might break!
-configVersion: 1.8
+configVersion: 1.9
 
 prefix:
   pluginPrefix: '§7[§1System§7] §f'
@@ -101,11 +101,6 @@ maintenance:
   #Must be called maintenance-icon.png
   icon: false
 
-#Auto save your world if your hoster doesn't have that functionality
-autoSave:
-  enabled: false
-  time: '1h'
-
 #This makes to so if you right-click on wheat, potatoes, carrots, beetroots and cocoa beans
 easyHarvest:
   enabled: false
@@ -121,7 +116,7 @@ blockedCommands: []
 #These prefixes are blocked e.g. 'bukkit:'
 blockedPrefixes: []
 
-CommandAPI:
+commandAPI:
   #Warns if an incompatible version of CommandAPI is loaded etc.
   warnings: true
   #Automaticly downloads and loads the CommandAPI if it isn't present
