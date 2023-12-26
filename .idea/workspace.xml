@@ -4,10 +4,49 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c085279f-3fca-4b5c-a6cc-39ec7ca0c6a2" name="Changes" comment="">
+    <list default="true" id="c085279f-3fca-4b5c-a6cc-39ec7ca0c6a2" name="Changes" comment="Code cleanup&#10;Updated CommandAPI&#10;Deprecated Plugin Command because of fear of usage from users that don't understand how plugin loading and unloading works&#10;Deprecated auto saving because bukkit already has that&#10;Removed speed command">
+      <change afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/util/MessageUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/commands/SayCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/commands/SayCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/AlertCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/AlertCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/ColorCodesCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/ColorCodesCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/CoordinatesCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/CoordinatesCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/FlySpeedCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/FlySpeedCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/HopperFiltersCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/HopperFiltersCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/MaintenanceCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/MaintenanceCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/MeCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/MeCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/MsgCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/MsgCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/PermissionManagerCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/PermissionManagerCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/PluginCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/PluginCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/RebootCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/RebootCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/ReloadConfigsCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/ReloadConfigsCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/ReplyCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/ReplyCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/ResourcePackCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/ResourcePackCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/SayCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/SayCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/SpeedCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/StatusCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/StatusCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/TeamMsgCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/TeamMsgCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/WalkSpeedCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/commands/WalkSpeedCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/listeners/BlockCommandsListeners.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/listeners/BlockCommandsListeners.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/listeners/ConnectionListeners.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/listeners/ConnectionListeners.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/listeners/OtherListeners.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/listeners/OtherListeners.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/listeners/SpawnElytraListeners.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/listeners/SpawnElytraListeners.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/util/AutoSaveHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/util/AutoSaveHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/util/CommandAPILoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/util/CommandAPILoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/util/ComponentUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/util/ComponentUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/util/CoordsMessageUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/util/CoordsMessageUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/util/CropDrop.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/util/CropDrops.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/util/CropDrops.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/util/DataConfigHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/util/DataConfigHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/util/HopperFilterHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/util/HopperFilterHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/util/PlayerOnlyArgument.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/util/PlayerOnlyArgument.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/util/PlayerUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/util/StatusHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/util/StatusHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/timongcraft/system/util/UpdateCheckHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/timongcraft/system/util/UpdateCheckHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,6 +56,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -32,10 +72,13 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 5
+}</component>
   <component name="ProjectId" id="2PO2VHRtIoVP4ElGk1V3iiVUGC4" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
-    <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">{
@@ -43,18 +86,24 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Timongcraft/IdeaProjects/Tgc-System (Plugin)/src/main/java/timongcraft/util&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Timongcraft/IdeaProjects/Coords-Saver&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Timongcraft\IdeaProjects\Tgc-System (Plugin)\src\main\java\timongcraft\system\util" />
       <recent name="C:\Users\Timongcraft\IdeaProjects\Tgc-System (Plugin)\src\main\java\timongcraft\util" />
       <recent name="C:\Users\Timongcraft\IdeaProjects\Tgc-System new\src\main\java\timongcraft\commands" />
       <recent name="C:\Users\Timongcraft\IdeaProjects\Tgc-System new\src\main\resources" />
@@ -64,6 +113,8 @@
       <recent name="C:\Users\Timongcraft\IdeaProjects\Tgc-System (Plugin)" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="timongcraft.system.commands" />
+      <recent name="timongcraft.system.util" />
       <recent name="timongcraft.util" />
       <recent name="timongcraft.commands" />
       <recent name="timongcraft.listeners" />
@@ -76,6 +127,7 @@
         <option name="myRunnerSettings" />
         <option name="myRunnerParameters">
           <MavenRunnerParameters>
+            <option name="cmdOptions" />
             <option name="profiles">
               <set />
             </option>
@@ -87,6 +139,9 @@
             <option name="pomFileName" />
             <option name="profilesMap">
               <map />
+            </option>
+            <option name="projectsCmdOptionValues">
+              <list />
             </option>
             <option name="resolveToWorkspace" value="false" />
             <option name="workingDirPath" value="$PROJECT_DIR$" />
@@ -136,7 +191,110 @@
       <workItem from="1683891804875" duration="32000" />
       <workItem from="1683891901123" duration="3082000" />
       <workItem from="1683988011020" duration="23000" />
-      <workItem from="1684124239033" duration="1288000" />
+      <workItem from="1684124239033" duration="1682000" />
+      <workItem from="1684169623609" duration="599000" />
+      <workItem from="1684211835870" duration="138000" />
+      <workItem from="1684353578455" duration="156000" />
+      <workItem from="1684423352451" duration="1073000" />
+      <workItem from="1684489456251" duration="28000" />
+      <workItem from="1684489589807" duration="30000" />
+      <workItem from="1684594761458" duration="20000" />
+      <workItem from="1684763513938" duration="38000" />
+      <workItem from="1684763576779" duration="27000" />
+      <workItem from="1685267559813" duration="25000" />
+      <workItem from="1685298860458" duration="32000" />
+      <workItem from="1685373259370" duration="21000" />
+      <workItem from="1685698266495" duration="179000" />
+      <workItem from="1685699024933" duration="5000" />
+      <workItem from="1685699255374" duration="43000" />
+      <workItem from="1685700567064" duration="4361000" />
+      <workItem from="1685706195522" duration="25000" />
+      <workItem from="1685720631772" duration="918000" />
+      <workItem from="1685746296137" duration="271000" />
+      <workItem from="1685746602915" duration="80000" />
+      <workItem from="1685746708322" duration="62000" />
+      <workItem from="1685747162289" duration="1556000" />
+      <workItem from="1685826509848" duration="12000" />
+      <workItem from="1685826573654" duration="29000" />
+      <workItem from="1686133768931" duration="14000" />
+      <workItem from="1686250064880" duration="100000" />
+      <workItem from="1686250180610" duration="16000" />
+      <workItem from="1686250480949" duration="136000" />
+      <workItem from="1686253013882" duration="17000" />
+      <workItem from="1686253369532" duration="266000" />
+      <workItem from="1686334268937" duration="449000" />
+      <workItem from="1686392618588" duration="5402000" />
+      <workItem from="1686402299440" duration="1518000" />
+      <workItem from="1686404040866" duration="582000" />
+      <workItem from="1686515485728" duration="190000" />
+      <workItem from="1686547723425" duration="45000" />
+      <workItem from="1686685499138" duration="52000" />
+      <workItem from="1686759285354" duration="58000" />
+      <workItem from="1686806010430" duration="451000" />
+      <workItem from="1686915870167" duration="17875000" />
+      <workItem from="1686990428515" duration="38000" />
+      <workItem from="1686990472401" duration="5000" />
+      <workItem from="1686991446032" duration="9000" />
+      <workItem from="1686992501580" duration="2152000" />
+      <workItem from="1687020356758" duration="496000" />
+      <workItem from="1687067039375" duration="249000" />
+      <workItem from="1687097332856" duration="653000" />
+      <workItem from="1687179607008" duration="917000" />
+      <workItem from="1687183243605" duration="23000" />
+      <workItem from="1687861474545" duration="9000" />
+      <workItem from="1687861956846" duration="25000" />
+      <workItem from="1687892419859" duration="354000" />
+      <workItem from="1687962367415" duration="2085000" />
+      <workItem from="1687966189981" duration="67000" />
+      <workItem from="1687969721694" duration="45000" />
+      <workItem from="1688014544569" duration="1679000" />
+      <workItem from="1688016879702" duration="20000" />
+      <workItem from="1688032181804" duration="16000" />
+      <workItem from="1688032304023" duration="20000" />
+      <workItem from="1688292313708" duration="637000" />
+      <workItem from="1688293204458" duration="40000" />
+      <workItem from="1689427713836" duration="4988000" />
+      <workItem from="1689434322081" duration="6986000" />
+      <workItem from="1689442738768" duration="2849000" />
+      <workItem from="1689448580510" duration="1620000" />
+      <workItem from="1689488164498" duration="17000" />
+      <workItem from="1689491412491" duration="15000" />
+      <workItem from="1689754595463" duration="1109000" />
+      <workItem from="1689972359735" duration="14000" />
+      <workItem from="1690792641580" duration="126000" />
+      <workItem from="1691244764708" duration="5486000" />
+      <workItem from="1691250941869" duration="6986000" />
+      <workItem from="1691257944769" duration="132000" />
+      <workItem from="1691271133096" duration="205000" />
+      <workItem from="1691321752357" duration="104000" />
+      <workItem from="1691321960731" duration="81000" />
+      <workItem from="1691324596414" duration="26000" />
+      <workItem from="1692288451456" duration="99000" />
+      <workItem from="1692628909119" duration="153000" />
+      <workItem from="1692946055043" duration="52000" />
+      <workItem from="1693322455934" duration="4664000" />
+      <workItem from="1693333787588" duration="128000" />
+      <workItem from="1693336347239" duration="45000" />
+      <workItem from="1693336871516" duration="623000" />
+      <workItem from="1693641723294" duration="821000" />
+      <workItem from="1693977220607" duration="3000" />
+      <workItem from="1694935572621" duration="1709000" />
+      <workItem from="1694949118732" duration="608000" />
+      <workItem from="1695216434105" duration="74000" />
+      <workItem from="1695216611756" duration="17000" />
+      <workItem from="1695821633343" duration="32000" />
+      <workItem from="1697274403624" duration="18000" />
+      <workItem from="1697309127157" duration="52000" />
+      <workItem from="1697365669179" duration="11000" />
+      <workItem from="1697658955464" duration="5519000" />
+      <workItem from="1697717115144" duration="4426000" />
+      <workItem from="1697811126912" duration="390000" />
+      <workItem from="1697814111631" duration="23000" />
+      <workItem from="1698245115527" duration="11000" />
+      <workItem from="1698636657947" duration="68000" />
+      <workItem from="1698636733484" duration="146000" />
+      <workItem from="1698938071449" duration="540000" />
+      <workItem from="1698938818775" duration="49000" />
     </task>
     <task id="LOCAL-00001" summary="Because with this the entire plugin was rewritten there may be some bugs I have overlooked please report them to me &#10;- Rewrote the entire plugin&#10;- Now uses the [CommandAPI](https://commandapi.jorel.dev)&#10;- Made the src available&#10;- Added a permission system&#10;- Added a reply command&#10;- Added highlighting for chat messages with your name&#10;- Added a fly speed command&#10;- Some other small changes and fixes">
       <created>1683395873207</created>
@@ -208,7 +366,51 @@
       <option name="project" value="LOCAL" />
       <updated>1683811095673</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Fixed the permission for the SayCommand&#10;Changed the readme text">
+      <created>1684125673274</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1684125673275</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Fixed the permission for the SayCommand&#10;Fixed status showing up incorrectly&#10;Added an override for the teammsg and me command because chat reporting also applies there&#10;Changed the readme text&#10;Changed how the color of the player name is handled in tab to match the vanilla behavior&#10;Made it possible to add/remove players to the maintenance list that are currently not online&#10;Updated CommandAPI&#10;Changed the namespace">
+      <created>1686334705625</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1686334705625</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Made the commands not use inner classes&#10;Now compatible with 1.19-1.20 (not tested)&#10;Updated ResourcePackCommand&#10;Optimized RebootCommand&#10;Some other small tweaks&#10;Fixed SpeedCommand having alias of WalkSpeedCommand&#10;Added usages to all commands">
+      <created>1686515664928</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1686515664928</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Now compatible with 1.20.1 (not tested)&#10;Reformatted the whole code correctly">
+      <created>1686806447863</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1686806447863</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Fixed the chat being logged with colors&#10;Fixed speed commands having wrong argument names&#10;Added Coordinates Saver&#10;Added Hopper Filters&#10;Now requires CommandAPi as external plugin instead of shading it&#10;Added loader to automatically load the CommandAPI&#10;(Idk why I did not made a push for so long and why I don't use git correctly)">
+      <option name="closed" value="true" />
+      <created>1691271269012</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1691271269012</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Added CommandAPI-LICENSE">
+      <option name="closed" value="true" />
+      <created>1698636742591</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1698636742591</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -237,6 +439,13 @@
     <MESSAGE value="Changed versions in bug report template" />
     <MESSAGE value="Added a simple TeamChat&#10;Added a walk speed command&#10;Added a speed command&#10;Added the say command because chat reporting also applies there&#10;Updated CommandAPI to version 9.0.1 -&gt; RebootCommand's max minutes can now be as high as the int limit&#10;Reworked the StatusHandler so it no longer relies on minecrafts teams" />
     <MESSAGE value="Added a simple TeamChat&#10;Added a walk speed command&#10;Added a speed command&#10;Added the say command because chat reporting also applies there&#10;Updated CommandAPI to version 9.0.1 -&gt; RebootCommands max minutes can now be as high as the int limit&#10;Reworked the StatusHandler so it no longer relies on minecrafts teams" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added a simple TeamChat&#10;Added a walk speed command&#10;Added a speed command&#10;Added the say command because chat reporting also applies there&#10;Updated CommandAPI to version 9.0.1 -&gt; RebootCommands max minutes can now be as high as the int limit&#10;Reworked the StatusHandler so it no longer relies on minecrafts teams" />
+    <MESSAGE value="Fixed the permission for the SayCommand&#10;Changed the readme text" />
+    <MESSAGE value="Fixed the permission for the SayCommand&#10;Fixed status showing up incorrectly&#10;Added an override for the teammsg and me command because chat reporting also applies there&#10;Changed the readme text&#10;Changed how the color of the player name is handled in tab to match the vanilla behavior&#10;Made it possible to add/remove players to the maintenance list that are currently not online&#10;Updated CommandAPI&#10;Changed the namespace" />
+    <MESSAGE value="Made the commands not use inner classes&#10;Now compatible with 1.19-1.20 (not tested)&#10;Updated ResourcePackCommand&#10;Optimized RebootCommand&#10;Some other small tweaks&#10;Fixed SpeedCommand having alias of WalkSpeedCommand&#10;Added usages to all commands" />
+    <MESSAGE value="Now compatible with 1.20.1 (not tested)&#10;Reformatted the whole code correctly" />
+    <MESSAGE value="Fixed the chat being logged with colors&#10;Fixed speed commands having wrong argument names&#10;Added Coordinates Saver&#10;Added Hopper Filters&#10;Now requires CommandAPi as external plugin instead of shading it&#10;Added loader to automatically load the CommandAPI&#10;(Idk why I did not made a push for so long and why I don't use git correctly)" />
+    <MESSAGE value="Added CommandAPI-LICENSE" />
+    <MESSAGE value="Code cleanup&#10;Updated CommandAPI&#10;Deprecated Plugin Command because of fear of usage from users that don't understand how plugin loading and unloading works&#10;Deprecated auto saving because bukkit already has that&#10;Removed speed command" />
+    <option name="LAST_COMMIT_MESSAGE" value="Code cleanup&#10;Updated CommandAPI&#10;Deprecated Plugin Command because of fear of usage from users that don't understand how plugin loading and unloading works&#10;Deprecated auto saving because bukkit already has that&#10;Removed speed command" />
   </component>
 </project>

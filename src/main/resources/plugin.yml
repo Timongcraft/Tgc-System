@@ -1,8 +1,10 @@
 name: Tgc-System
 version: '${project.version}'
-main: timongcraft.Main
+main: timongcraft.system.Main
 api-version: 1.19
 load: STARTUP
-authors: [ Timongcraft ]
+author: Timongcraft
 description: A system plugin
 website: modrinth.com/plugin/Tgc-System
+softdepend:
+  - CommandAPI

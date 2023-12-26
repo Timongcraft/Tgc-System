@@ -1,5 +1,5 @@
-#Do not edit or things might break!
-configVersion: 1.6
+#Do not edit config version or things might break!
+configVersion: 1.9
 
 prefix:
   pluginPrefix: '§7[§1System§7] §f'
@@ -21,8 +21,8 @@ onJoin:
   #If a player joins and has a status set he will be shown a message with the players status
   status: false
 
-#This makes chat reporting impossible my overriding the msg command and sending all chat messages as the server
-#But also includes features like a sound/highlighting when your name is in a message
+#This makes chat reporting impossible by overriding the msg, say and me commands and sending all chat messages as the server
+#But also includes features like a sound/highlighting when your name is in a message and a reply command
 chatSystem:
   enabled: true
   noLinks: false
@@ -32,6 +32,15 @@ chatSystem:
     format: 'HH:mm'
     #https://www.php.net/manual/en/timezones
     timeZone: 'America/New_York'
+
+#The coordinate list
+coordsSaver:
+  enabled: true
+  #If players on your server use Xaero's Minimap you may want to enable this,
+  #so they can add coords from this plugin, and also you can add waypoints from Xaero's Minimap
+  xaerosWaypointCompatability: false
+  #The limit of coordinates a player should be able to save
+  limit: 10
 
 #The permission manager command and the permission handling
 permissionSystem:
@@ -43,6 +52,19 @@ permissionSystem:
 statuses:
   enabled: false
   characterLimit: 10
+
+#Allow renamed hoppers to work as filters
+#Inspired by https://www.youtube.com/watch?v=Gi2PPBCEHuM&t=232s (LiveOverflow)
+#You can use commas to separate and stars as wildcards
+#also question marks act as wildcards but only for one character
+#and exclamation marks invert e.g. if you have '*spruce*,!*boat' it will
+#let every spruce item except boats trough
+hopperFilters:
+  enabled: false
+
+#Cobblestone/Stone Generators under the y level 0 are producing their deepslate variant respectively
+deepslateGenerator:
+  enabled: false
 
 spawnElytra:
   enabled: false
@@ -79,11 +101,6 @@ maintenance:
   #Must be called maintenance-icon.png
   icon: false
 
-#Auto save your world if your hoster doesn't have that functionality
-autoSave:
-  enabled: false
-  time: '1h'
-
 #This makes to so if you right-click on wheat, potatoes, carrots, beetroots and cocoa beans
 easyHarvest:
   enabled: false
@@ -98,3 +115,10 @@ blockedCommands: []
 
 #These prefixes are blocked e.g. 'bukkit:'
 blockedPrefixes: []
+
+commandAPI:
+  #Warns if an incompatible version of CommandAPI is loaded etc.
+  warnings: true
+  #Automaticly downloads and loads the CommandAPI if it isn't present
+  #If disabled warnings are automatically disabled as well
+  autoDownload: true

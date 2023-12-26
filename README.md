@@ -21,13 +21,13 @@
 - Sound/Highlight your player name in chat
 - A permission system
 - A maintenance system
-- A auto save system
+- A hopper sorting system
+- A coordinate save system
 - A team chat
 - A resource pack system
 - A alert/broadcast command
-- A speed, walkspeed and flyspeed command
+- A walkspeed and flyspeed command
 - A reboot command that reboots server after a specified amount of minutes with a reason
-- A plugin command to disable plugins
 - Time in chat messages with formatting
 - A configs reload command for the plugin
 - Block commands & prefixes
@@ -249,9 +249,6 @@ blockedCommands:
   - 'icanhasbukkit'
   - 'pl'
   - 'plugins'
-  - 'me'
-  - 'tm'
-  - 'teammsg'
   - 'ver'
   - 'version'
 
@@ -260,7 +257,7 @@ blockedCommands:
 blockedPrefix:
   - 'bukkit:'
   - 'minecraft:'
-  - 'sbs-system:'
+  - 'tgc-system:'
 ````
 </details>
 
